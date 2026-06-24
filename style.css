@@ -68,3 +68,46 @@ video {
     box-shadow: 0 4px 15px rgba(0,0,0,0.5);
     background: black;
 }
+/* Bottom Navigation Styling */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #1a202c; /* ডার্ক ব্যাকগ্রাউন্ড */
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 0;
+    border-top: 1px solid #2d3748;
+    z-index: 1000;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.5);
+}
+
+.nav-item {
+    color: #a0aec0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    font-size: 12px;
+    transition: 0.3s;
+}
+
+.nav-item i {
+    font-size: 20px;
+    margin-bottom: 3px;
+}
+
+/* অ্যাক্টিভ বাটনের কালার */
+.nav-item.active {
+    color: #3b82f6; /* ব্লু কালার */
+}
+
+.nav-item:hover {
+    color: #ffffff;
+}
+
+/* কন্টেন্ট যেন মেনুবারের নিচে ঢাকা না পড়ে সেজন্য বডিতে প্যাডিং দিন */
+body {
+    padding-bottom: 70px; 
+}
