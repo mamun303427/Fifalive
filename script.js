@@ -1,7 +1,11 @@
+// Video.js প্লেয়ার ইনস্ট্যান্সগুলো ট্র্যাক করার জন্য গ্লোবাল ভেরিয়েবল
+let mainPlayerInstance = null;
+let catPlayerInstance = null;
+
 const m3uLinks = {
-    home: 'https://raw.githubusercontent.com/bugsfreeweb/LiveTVCollector/refs/heads/main/LiveTV/Bangladesh/LiveTV.m3u',
-    sports: 'https://raw.githubusercontent.com/bugsfreeweb/LiveTVCollector/refs/heads/main/LiveTV/Bangladesh/LiveTV.m3u',
-    news: 'https://raw.githubusercontent.com/Free-TV/IPTV/refs/heads/master/playlist.m3u8',
+    home: 'https://iptv-org.github.io/iptv/countries/bd.m3u',
+    sports: 'YOUR_SPORTS_LINK',
+    news: 'YOUR_NEWS_LINK',
     kids: 'YOUR_KIDS_LINK',
     doc: 'YOUR_DOC_LINK',
     islamic: 'YOUR_ISLAMIC_LINK',
@@ -10,20 +14,23 @@ const m3uLinks = {
     pk: 'https://iptv-org.github.io/iptv/countries/pk.m3u'
 };
 
-const mainVideo = document.getElementById('main-player');
-const catVideo = document.getElementById('cat-player');
-
-// Theme Switch
+// থিম পরিবর্তন লজিক
 document.querySelector('#checkbox').addEventListener('change', (e) => {
     document.body.className = e.target.checked ? 'light-theme' : 'dark-theme';
 });
 
-// Initial Load
-window.onload = () => fetchChannels('home', 'main-grid', mainVideo, 'main-ch-name', 'main-player-container');
+// পেজ লোড হলে চ্যানেল লিস্ট দেখাবে কিন্তু প্লে হবে না
+window.onload = () => {
+    // Video.js প্লেয়ার ইনিশিয়ালাইজ করুন
+    mainPlayerInstance = videojs('main-player');
+    catPlayerInstance = videojs('cat-player');
+    
+    fetchChannels('home', 'main-grid', mainPlayerInstance, 'main-ch-name', 'main-player-container');
+};
 
-async function fetchChannels(key, gridId, videoElem, titleId, containerId) {
+async function fetchChannels(key, gridId, playerInstance, titleId, containerId) {
     const grid = document.getElementById(gridId);
-    grid.innerHTML = '<p style="text-align:center; width:100%;">Loading...</p>';
+    grid.innerHTML = '<p style="text-align:center; width:100%;">Loading Channels...</p>';
     
     try {
         const response = await fetch(m3uLinks[key]);
@@ -36,15 +43,15 @@ async function fetchChannels(key, gridId, videoElem, titleId, containerId) {
             card.className = 'channel-card';
             card.innerHTML = `<img src="${ch.logo}" onerror="this.src='https://via.placeholder.com/100?text=TV'"><span>${ch.name}</span>`;
             card.onclick = () => {
-                // চ্যানেল ক্লিক করলে প্লেয়ার দেখাবে
                 document.getElementById(containerId).style.display = 'block';
-                playStream(videoElem, ch.url, ch.name, titleId);
+                playStream(playerInstance, ch.url, ch.name, titleId);
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             };
             grid.appendChild(card);
         });
     } catch (e) {
-        grid.innerHTML = '<p>Error.</p>';
+        grid.innerHTML = '<p>Error loading channels.</p>';
+        console.error("Error fetching channels:", e);
     }
 }
 
@@ -62,17 +69,13 @@ function parseM3U(data) {
     return list;
 }
 
-function playStream(videoElem, url, name, titleId) {
+function playStream(playerInstance, url, name, titleId) {
     document.getElementById(titleId).innerText = name;
-    if (Hls.isSupported()) {
-        const hls = new Hls();
-        hls.loadSource(url);
-        hls.attachMedia(videoElem);
-        hls.on(Hls.Events.MANIFEST_PARSED, () => videoElem.play());
-    } else {
-        videoElem.src = url;
-        videoElem.play();
-    }
+    playerInstance.src({
+        src: url,
+        type: 'application/x-mpegURL' // HLS স্ট্রিমের জন্য সঠিক টাইপ
+    });
+    playerInstance.play();
 }
 
 function navTo(view) {
@@ -83,9 +86,15 @@ function navTo(view) {
     document.getElementById('nav-home').classList.toggle('active', view === 'home');
     document.getElementById('nav-cat').classList.toggle('active', view === 'cat');
     
-    // ভিউ চেঞ্জ করলে প্লেয়ার পজ হবে
-    mainVideo.pause();
-    catVideo.pause();
+    // ভিউ চেঞ্জ করলে প্লেয়ার পজ হবে এবং প্লেয়ার কন্টেইনার হাইড হবে
+    if (mainPlayerInstance) {
+        mainPlayerInstance.pause();
+        document.getElementById('main-player-container').style.display = 'none';
+    }
+    if (catPlayerInstance) {
+        catPlayerInstance.pause();
+        document.getElementById('cat-player-container').style.display = 'none';
+    }
 }
 
 function openCategory(key) {
@@ -93,5 +102,5 @@ function openCategory(key) {
     document.getElementById('cat-player-view').style.display = 'block';
     // ক্যাটেগরি চ্যানেলের ক্ষেত্রেও প্লেয়ার শুরুতে লুকানো থাকবে
     document.getElementById('cat-player-container').style.display = 'none';
-    fetchChannels(key, 'cat-grid', catVideo, 'cat-ch-name', 'cat-player-container');
+    fetchChannels(key, 'cat-grid', catPlayerInstance, 'cat-ch-name', 'cat-player-container');
 }
