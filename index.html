@@ -13,7 +13,7 @@
     <header>
         <div class="header-container">
             <div class="logo-area">
-                <!-- আপনার লোগো ইমেজের লিঙ্ক এখানে দিন -->
+                <!-- আপনার লোগো ইমেজ এখানে দিন -->
                 <img src="https://via.placeholder.com/150x50?text=YOUR+LOGO" alt="Logo" id="site-logo">
             </div>
             <div class="theme-switch-wrapper">
@@ -29,43 +29,43 @@
     </header>
 
     <div class="container">
-        <!-- Home Section -->
+        <!-- Home View -->
         <div id="home-view">
-            <div class="sticky-player">
+            <!-- প্লেয়ারটি শুরুতে লুকানো থাকবে -->
+            <div id="main-player-container" class="sticky-player" style="display: none;">
                 <video id="main-player" controls playsinline></video>
                 <div class="status-indicator">
                     <span class="live-label">Live</span>
                     <span class="pulse-dot"></span>
-                    <span id="main-ch-name">Select a Channel to Watch</span>
+                    <span id="main-ch-name"></span>
                 </div>
             </div>
             <div class="channel-grid" id="main-grid"></div>
         </div>
 
-        <!-- Category List View -->
+        <!-- Category Selection View -->
         <div id="cat-list-view" style="display: none;">
-            <h2 class="page-title">Categories</h2>
             <div class="category-grid">
-                <div class="cat-card" onclick="openCategory('sports', 'Sports Channel')"><i class="fas fa-trophy"></i><span>Sports Channel</span></div>
-                <div class="cat-card" onclick="openCategory('news', 'News Channel')"><i class="fas fa-newspaper"></i><span>News Channel</span></div>
-                <div class="cat-card" onclick="openCategory('kids', 'Kids Channel')"><i class="fas fa-child"></i><span>Kids Channel</span></div>
-                <div class="cat-card" onclick="openCategory('doc', 'Documentary')"><i class="fas fa-globe-americas"></i><span>Documentary</span></div>
-                <div class="cat-card" onclick="openCategory('islamic', 'Islamic Tv')"><i class="fas fa-mosque"></i><span>Islamic Tv</span></div>
-                <div class="cat-card" onclick="openCategory('bd', 'Bangladeshi Tv')"><img src="https://flagcdn.com/w80/bd.png"><span>Bangladeshi Tv</span></div>
-                <div class="cat-card" onclick="openCategory('pk', 'Pakistani Tv')"><img src="https://flagcdn.com/w80/pk.png"><span>Pakistani Tv</span></div>
-                <div class="cat-card" onclick="openCategory('in', 'Indian Tv')"><img src="https://flagcdn.com/w80/in.png"><span>Indian Tv</span></div>
+                <div class="cat-card" onclick="openCategory('sports')"><i class="fas fa-trophy"></i><span>Sports Channel</span></div>
+                <div class="cat-card" onclick="openCategory('news')"><i class="fas fa-newspaper"></i><span>News Channel</span></div>
+                <div class="cat-card" onclick="openCategory('kids')"><i class="fas fa-child"></i><span>Kids Channel</span></div>
+                <div class="cat-card" onclick="openCategory('doc')"><i class="fas fa-globe-americas"></i><span>Documentary</span></div>
+                <div class="cat-card" onclick="openCategory('islamic')"><i class="fas fa-mosque"></i><span>Islamic Tv</span></div>
+                <div class="cat-card" onclick="openCategory('bd')"><img src="https://flagcdn.com/w80/bd.png"><span>Bangladeshi Tv</span></div>
+                <div class="cat-card" onclick="openCategory('pk')"><img src="https://flagcdn.com/w80/pk.png"><span>Pakistani Tv</span></div>
+                <div class="cat-card" onclick="openCategory('in')"><img src="https://flagcdn.com/w80/in.png"><span>Indian Tv</span></div>
             </div>
         </div>
 
-        <!-- Category Player View -->
+        <!-- Category Channels View -->
         <div id="cat-player-view" style="display: none;">
-            <button class="back-btn" onclick="navTo('cat')"><i class="fas fa-chevron-left"></i> Back to Categories</button>
-            <div class="sticky-player">
+            <button class="back-btn" onclick="navTo('cat')"><i class="fas fa-chevron-left"></i> Back</button>
+            <div id="cat-player-container" class="sticky-player" style="display: none;">
                 <video id="cat-player" controls playsinline></video>
                 <div class="status-indicator">
                     <span class="live-label">Live</span>
                     <span class="pulse-dot"></span>
-                    <span id="cat-ch-name">Select a Channel</span>
+                    <span id="cat-ch-name"></span>
                 </div>
             </div>
             <div class="channel-grid" id="cat-grid"></div>
