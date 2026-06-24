@@ -6,14 +6,15 @@
     <title>Live TV Pro</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <!-- Video.js CSS -->
+    <link href="https://vjs.zencdn.net/8.10.0/video-js.css" rel="stylesheet" />
 </head>
 <body class="dark-theme">
 
     <header>
         <div class="header-container">
             <div class="logo-area">
-                <!-- আপনার লোগো ইমেজ এখানে দিন -->
+                <!-- আপনার লোগো ইমেজের লিঙ্ক এখানে দিন -->
                 <img src="https://via.placeholder.com/150x50?text=YOUR+LOGO" alt="Logo" id="site-logo">
             </div>
             <div class="theme-switch-wrapper">
@@ -31,9 +32,9 @@
     <div class="container">
         <!-- Home View -->
         <div id="home-view">
-            <!-- প্লেয়ারটি শুরুতে লুকানো থাকবে -->
             <div id="main-player-container" class="sticky-player" style="display: none;">
-                <video id="main-player" controls playsinline></video>
+                <!-- Video.js Player -->
+                <video id="main-player" class="video-js vjs-big-play-centered" controls playsinline preload="auto"></video>
                 <div class="status-indicator">
                     <span class="live-label">Live</span>
                     <span class="pulse-dot"></span>
@@ -43,8 +44,9 @@
             <div class="channel-grid" id="main-grid"></div>
         </div>
 
-        <!-- Category Selection View -->
+        <!-- Category List View -->
         <div id="cat-list-view" style="display: none;">
+            <h2 class="page-title">Categories</h2>
             <div class="category-grid">
                 <div class="cat-card" onclick="openCategory('sports')"><i class="fas fa-trophy"></i><span>Sports Channel</span></div>
                 <div class="cat-card" onclick="openCategory('news')"><i class="fas fa-newspaper"></i><span>News Channel</span></div>
@@ -57,11 +59,12 @@
             </div>
         </div>
 
-        <!-- Category Channels View -->
+        <!-- Category Player View -->
         <div id="cat-player-view" style="display: none;">
             <button class="back-btn" onclick="navTo('cat')"><i class="fas fa-chevron-left"></i> Back</button>
             <div id="cat-player-container" class="sticky-player" style="display: none;">
-                <video id="cat-player" controls playsinline></video>
+                <!-- Video.js Player -->
+                <video id="cat-player" class="video-js vjs-big-play-centered" controls playsinline preload="auto"></video>
                 <div class="status-indicator">
                     <span class="live-label">Live</span>
                     <span class="pulse-dot"></span>
@@ -88,6 +91,10 @@
         </a>
     </nav>
 
+    <!-- Video.js JS -->
+    <script src="https://vjs.zencdn.net/8.10.0/video.min.js"></script>
+    <!-- HLS.js for Video.js (if not already included by video.js) -->
+    <script src="https://cdn.jsdelivr.net/npm/videojs-contrib-hls@5.15.0/dist/videojs-contrib-hls.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
