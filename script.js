@@ -5,40 +5,46 @@ const m3uLinks = {
     home: 'https://iptv-org.github.io/iptv/countries/bd.m3u',
     sports: 'YOUR_SPORTS_LINK',
     news: 'YOUR_NEWS_LINK',
+    kids: 'YOUR_KIDS_LINK',
+    doc: 'YOUR_DOC_LINK',
+    islamic: 'YOUR_ISLAMIC_LINK',
     bd: 'https://iptv-org.github.io/iptv/countries/bd.m3u',
-    in: 'https://iptv-org.github.io/iptv/countries/in.m3u'
+    in: 'https://iptv-org.github.io/iptv/countries/in.m3u',
+    pk: 'https://iptv-org.github.io/iptv/countries/pk.m3u'
 };
 
-// Theme Toggle Logic
-const toggleSwitch = document.querySelector('#checkbox');
-toggleSwitch.addEventListener('change', (e) => {
-    if (e.target.checked) {
-        document.body.classList.replace('dark-theme', 'light-theme');
-    } else {
-        document.body.classList.replace('light-theme', 'dark-theme');
-    }
+// Theme Toggle
+document.querySelector('#checkbox').addEventListener('change', (e) => {
+    document.body.className = e.target.checked ? 'light-theme' : 'dark-theme';
 });
 
-// Auto-play on Load
-window.onload = () => loadCategoryData('home', 'main-grid', mainVideo, 'main-ch-name');
+// Load Home on Start (No Auto-play)
+window.onload = () => fetchAndRender('home', 'main-grid', mainVideo, 'main-ch-name', false);
 
-async function loadCategoryData(key, gridId, videoElem, titleId) {
+async function fetchAndRender(key, gridId, videoElem, titleId, autoPlay = false) {
     const grid = document.getElementById(gridId);
-    grid.innerHTML = '<p>Loading Channels...</p>';
+    grid.innerHTML = '<p style="text-align:center; width:100%;">Loading Channels...</p>';
     
     try {
         const response = await fetch(m3uLinks[key]);
         const data = await response.text();
         const channels = parseM3U(data);
         
-        renderGrid(channels, grid, videoElem, titleId);
-        
-        // Auto-play the first channel
-        if (channels.length > 0) {
-            playStream(videoElem, channels[0].url, channels[0].name, titleId);
-        }
+        grid.innerHTML = '';
+        channels.forEach(ch => {
+            const card = document.createElement('div');
+            card.className = 'channel-card';
+            card.innerHTML = `<img src="${ch.logo}" onerror="this.src='https://via.placeholder.com/100?text=TV'"><span>${ch.name}</span>`;
+            card.onclick = () => {
+                playStream(videoElem, ch.url, ch.name, titleId);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            };
+            grid.appendChild(card);
+        });
+
+        // Auto-play is disabled as per request
     } catch (e) {
-        grid.innerHTML = '<p>Error loading playlist.</p>';
+        grid.innerHTML = '<p>Error loading channels.</p>';
     }
 }
 
@@ -47,27 +53,13 @@ function parseM3U(data) {
     const list = [];
     for (let i = 0; i < lines.length; i++) {
         if (lines[i].includes('#EXTINF')) {
-            const name = lines[i].split(',')[1] || "TV Channel";
-            const logo = lines[i].match(/tvg-logo="([^"]+)"/)?.[1] || "https://via.placeholder.com/100";
+            const name = lines[i].split(',')[1] || "Unknown";
+            const logo = lines[i].match(/tvg-logo="([^"]+)"/)?.[1] || "";
             const url = lines[i + 1]?.trim();
             if (url) list.push({ name, logo, url });
         }
     }
     return list;
-}
-
-function renderGrid(channels, grid, videoElem, titleId) {
-    grid.innerHTML = '';
-    channels.forEach(ch => {
-        const card = document.createElement('div');
-        card.className = 'channel-card';
-        card.innerHTML = `<img src="${ch.logo}"><span>${ch.name}</span>`;
-        card.onclick = () => {
-            playStream(videoElem, ch.url, ch.name, titleId);
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        };
-        grid.appendChild(card);
-    });
 }
 
 function playStream(videoElem, url, name, titleId) {
@@ -83,7 +75,6 @@ function playStream(videoElem, url, name, titleId) {
     }
 }
 
-// Navigation
 function navTo(view) {
     document.getElementById('home-view').style.display = view === 'home' ? 'block' : 'none';
     document.getElementById('cat-list-view').style.display = view === 'cat' ? 'block' : 'none';
@@ -94,11 +85,10 @@ function navTo(view) {
     
     mainVideo.pause();
     catVideo.pause();
-    if(view === 'home') mainVideo.play();
 }
 
 function openCategory(key, name) {
     document.getElementById('cat-list-view').style.display = 'none';
     document.getElementById('cat-player-view').style.display = 'block';
-    loadCategoryData(key, 'cat-grid', catVideo, 'cat-ch-name');
+    fetchAndRender(key, 'cat-grid', catVideo, 'cat-ch-name', false);
 }
