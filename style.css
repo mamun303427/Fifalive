@@ -1,91 +1,73 @@
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body {
-    background-color: #0b0f1a;
-    color: #ffffff;
-    font-family: 'Inter', sans-serif;
-    padding-bottom: 70px;
-}
-header {
-    padding: 15px;
-    background: #161b29;
-    text-align: center;
-    border-bottom: 1px solid #242b3d;
-}
-.container { padding: 10px; max-width: 900px; margin: auto; }
-
-/* Player Area */
-.player-container {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    background: #0b0f1a;
-    margin-bottom: 15px;
-}
-video {
-    width: 100%;
-    aspect-ratio: 16/9;
-    background: #000;
-    border-radius: 8px;
-}
-#status-bar {
-    padding: 8px;
-    font-size: 14px;
-    color: #3b82f6;
-    font-weight: bold;
-    text-align: center;
+:root {
+    --bg-color: #ffffff;
+    --text-color: #1a1a1a;
+    --card-bg: #f3f4f6;
+    --nav-bg: #ffffff;
+    --border: #e5e7eb;
+    --cyan: #00ffff;
 }
 
-/* Grids */
-.channel-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
-    gap: 10px;
+.dark-theme {
+    --bg-color: #0b0f1a;
+    --text-color: #ffffff;
+    --card-bg: #161b29;
+    --nav-bg: #161b29;
+    --border: #242b3d;
 }
-.channel-card {
-    background: #161b29;
-    padding: 10px;
-    border-radius: 10px;
-    text-align: center;
-    cursor: pointer;
-    border: 1px solid #242b3d;
-}
-.channel-card img {
-    width: 100%;
-    aspect-ratio: 1/1;
-    object-fit: contain;
-    background: #fff;
-    border-radius: 5px;
-    margin-bottom: 5px;
-}
-.channel-card span { font-size: 10px; display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
 
-/* Category Grid */
-.category-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-.cat-item {
-    background: #161b29;
-    padding: 25px;
-    border-radius: 12px;
-    text-align: center;
-    cursor: pointer;
-    border: 1px solid #242b3d;
-}
-.cat-item i { font-size: 24px; color: #3b82f6; display: block; margin-bottom: 8px; }
-.cat-item img { width: 35px; display: block; margin: 0 auto 8px; }
+* { margin: 0; padding: 0; box-sizing: border-box; transition: background 0.3s, color 0.3s; }
 
-/* Navigation Bar */
-.bottom-menu {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    background: #161b29;
-    display: flex;
-    justify-content: space-around;
-    padding: 10px 0;
-    border-top: 1px solid #242b3d;
-}
-.menu-item { color: #64748b; text-align: center; cursor: pointer; text-decoration: none; }
-.menu-item i { font-size: 18px; display: block; }
-.menu-item span { font-size: 11px; }
-.menu-item.active { color: #3b82f6; }
+body { background: var(--bg-color); color: var(--text-color); font-family: sans-serif; padding-bottom: 80px; }
 
-.section-heading { text-align: center; margin-bottom: 20px; color: #3b82f6; }
+header { padding: 10px 15px; background: var(--nav-bg); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 1000; }
+.header-container { display: flex; justify-content: space-between; align-items: center; max-width: 900px; margin: auto; }
+#site-logo { height: 40px; object-fit: contain; }
+
+/* Sticky Player Section */
+.sticky-player { position: sticky; top: 60px; z-index: 900; background: var(--bg-color); padding-bottom: 10px; }
+video { width: 100%; aspect-ratio: 16/9; background: #000; border-radius: 12px; }
+
+/* Live Status Indicator */
+.status-indicator { display: flex; align-items: center; justify-content: center; padding: 10px; gap: 8px; }
+.live-label { color: #ff0000; font-weight: bold; text-transform: uppercase; font-size: 14px; }
+.pulse-dot { width: 10px; height: 10px; background: #ffffff; border-radius: 50%; animation: pulse 1.5s infinite; }
+
+@keyframes pulse {
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7); }
+    70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(255, 255, 255, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
+}
+
+/* Grids & Cards */
+.container { max-width: 900px; margin: auto; padding: 10px; }
+.channel-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 12px; }
+.channel-card { background: var(--card-bg); border-radius: 12px; padding: 10px; text-align: center; border: 1px solid var(--border); cursor: pointer; }
+
+/* Cyan Hover Effect */
+.channel-card:hover, .cat-card:hover, .nav-item:hover { color: var(--cyan); border-color: var(--cyan); }
+.channel-card img { width: 100%; aspect-ratio: 1/1; object-fit: contain; background: #fff; border-radius: 8px; margin-bottom: 5px; }
+.channel-card span { font-size: 11px; }
+
+/* Category Cards */
+.category-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+.cat-card { background: var(--card-bg); padding: 30px; border-radius: 15px; text-align: center; cursor: pointer; border: 1px solid var(--border); }
+.cat-card i { font-size: 30px; margin-bottom: 10px; color: var(--cyan); }
+.cat-card img { width: 40px; margin-bottom: 10px; }
+
+/* Navigation */
+.bottom-nav { position: fixed; bottom: 0; width: 100%; background: var(--nav-bg); display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid var(--border); z-index: 1000; }
+.nav-item { color: #888; text-align: center; cursor: pointer; text-decoration: none; }
+.nav-item i { font-size: 20px; display: block; }
+.nav-item span { font-size: 11px; }
+.nav-item.active { color: var(--cyan); }
+
+/* Theme Toggle Switch */
+.theme-switch { display: inline-block; height: 34px; position: relative; width: 60px; }
+.theme-switch input { display:none; }
+.slider { background-color: #ccc; bottom: 0; cursor: pointer; left: 0; position: absolute; right: 0; top: 0; transition: .4s; display: flex; align-items: center; justify-content: space-around; padding: 0 5px; }
+.slider:before { background-color: #fff; bottom: 4px; content: ""; height: 26px; left: 4px; position: absolute; transition: .4s; width: 26px; z-index: 2; }
+input:checked + .slider { background-color: var(--cyan); }
+input:checked + .slider:before { transform: translateX(26px); }
+.slider.round { border-radius: 34px; }
+.slider.round:before { border-radius: 50%; }
+.back-btn { background: var(--cyan); color: #000; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; margin-bottom: 15px; font-weight: bold; }
