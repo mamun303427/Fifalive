@@ -1,141 +1,121 @@
-/* পুরো বডির ব্যাকগ্রাউন্ড */
+/* General Styles */
 body {
-    background-color: #0f1621; /* ডার্ক থিম */
+    background-color: #0f172a;
     color: white;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
-    padding: 0;
+    padding-bottom: 80px; /* Space for bottom nav */
 }
 
-/* চ্যানেল গ্রিড সেটআপ */
-.channel-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); /* ছোট সাইজ */
-    gap: 12px;
+header {
+    background-color: #1e293b;
+    padding: 15px;
+    text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.container {
+    max-width: 1000px;
+    margin: auto;
     padding: 15px;
 }
 
-/* চ্যানেল কার্ড ডিজাইন */
-.channel-card {
-    background: #1c2532; /* কার্ডের রঙ */
-    border-radius: 12px; /* রাউন্ডেড কোণা */
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-    border: 1px solid #2d3748;
-    aspect-ratio: 1 / 1; /* বক্সটি একদম বর্গাকার হবে */
-    cursor: pointer;
-}
-
-/* লোগো সেটআপ (পুরো বক্স জুড়ে থাকার জন্য) */
-.channel-card img {
+/* Video Player */
+.player-section video {
     width: 100%;
-    height: 100%;
-    object-fit: contain; /* লোগো ফেটে যাবে না, সুন্দরভাবে ফিট হবে */
-    padding: 10px; /* লোগোর চারদিকে সামান্য গ্যাপ রাখবে যাতে প্রফেশনাল লাগে */
-    background: #ffffff; /* লোগোর ব্যাকগ্রাউন্ড সাদা দিলে লোগো ফুটে উঠবে */
-    transition: transform 0.3s ease;
-}
-
-/* মাউস নিলে যা হবে */
-.channel-card:hover {
-    transform: translateY(-5px);
-    border-color: #3b82f6;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
-}
-
-.channel-card:hover img {
-    transform: scale(1.1); /* হালকা জুম হবে */
-}
-
-/* চ্যানেলের নাম (লোগোর নিচে ছোট করে) */
-.channel-card p {
-    font-size: 11px;
-    margin: 5px 0;
-    text-align: center;
-    font-weight: 500;
-    color: #cbd5e0;
-    display: none; /* আপনি চাইলে নাম লুকাতে পারেন শুধু লোগো দেখানোর জন্য */
-}
-
-/* প্লেয়ার সেকশন রাউন্ডেড করা */
-video {
-    width: 100%;
-    border-radius: 15px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    border-radius: 12px;
     background: black;
-}
-/* Bottom Navigation Styling */
-.bottom-nav {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background-color: #1a202c; /* ডার্ক ব্যাকগ্রাউন্ড */
-    display: flex;
-    justify-content: space-around;
-    padding: 10px 0;
-    border-top: 1px solid #2d3748;
-    z-index: 1000;
-    box-shadow: 0 -2px 10px rgba(0,0,0,0.5);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
 }
 
-.nav-item {
-    color: #a0aec0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+#now-playing {
+    font-size: 16px;
+    margin: 10px 0;
+    text-align: center;
+    color: #3b82f6;
+}
+
+/* Channel Grid (Square & Professional) */
+.channel-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.channel-card {
+    background: #1e293b;
+    border-radius: 12px;
+    padding: 8px;
+    text-align: center;
     cursor: pointer;
-    font-size: 12px;
+    border: 1px solid #334155;
     transition: 0.3s;
 }
 
-.nav-item i {
-    font-size: 20px;
-    margin-bottom: 3px;
+.channel-card img {
+    width: 100%;
+    aspect-ratio: 1/1;
+    object-fit: contain;
+    background: white;
+    border-radius: 8px;
 }
 
-/* অ্যাক্টিভ বাটনের কালার */
-.nav-item.active {
-    color: #3b82f6; /* ব্লু কালার */
+.channel-card p {
+    font-size: 11px;
+    margin-top: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.nav-item:hover {
-    color: #ffffff;
+/* Category Grid */
+.section-title {
+    text-align: center;
+    color: #3b82f6;
+    margin-bottom: 20px;
 }
 
-/* কন্টেন্ট যেন মেনুবারের নিচে ঢাকা না পড়ে সেজন্য বডিতে প্যাডিং দিন */
-body {
-    padding-bottom: 70px; 
-}
-/* ক্যাটেগরি গ্রিড ডিজাইন */
 .category-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 15px;
 }
+
 .cat-card {
-    background: linear-gradient(45deg, #1e293b, #3b82f6);
-    padding: 30px 10px;
-    text-align: center;
+    background: #1e293b;
+    padding: 20px;
     border-radius: 15px;
-    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid #334155;
     cursor: pointer;
-    font-size: 18px;
-    transition: 0.3s;
-}
-.cat-card:hover {
-    transform: scale(1.05);
-    background: linear-gradient(45deg, #3b82f6, #1e293b);
 }
 
-/* হাইলাইটস লিংকের কালার ঠিক করা */
-.nav-item i, .nav-item span {
-    color: #a0aec0;
+.cat-icon { font-size: 30px; margin-bottom: 10px; }
+.cat-flag { width: 50px; border-radius: 4px; margin-bottom: 10px; }
+
+/* Bottom Nav */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background: #1e293b;
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 0;
+    border-top: 1px solid #334155;
 }
-.nav-item.active i, .nav-item.active span {
-    color: #3b82f6;
+
+.nav-item {
+    text-align: center;
+    color: #94a3b8;
+    cursor: pointer;
+    font-size: 12px;
 }
+
+.nav-item i { font-size: 20px; display: block; }
+.nav-item.active { color: #3b82f6; }
