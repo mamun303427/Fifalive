@@ -3,7 +3,7 @@ let mainPlayerInstance = null;
 let catPlayerInstance = null;
 
 const m3uLinks = {
-    home: 'https://iptv-org.github.io/iptv/countries/bd.m3u',
+    home: 'https://raw.githubusercontent.com/bugsfreeweb/LiveTVCollector/refs/heads/main/LiveTV/Bangladesh/LiveTV.m3u',
     sports: 'YOUR_SPORTS_LINK',
     news: 'YOUR_NEWS_LINK',
     kids: 'YOUR_KIDS_LINK',
