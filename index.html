@@ -3,58 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Live TV Platform</title>
+    <title>Live TV Pro</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 </head>
-<body>
+<body class="dark-theme"> <!-- Default Theme -->
 
     <header>
-        <h1 id="page-title">Live TV</h1>
+        <div class="header-container">
+            <div class="logo-area">
+                <!-- Replace 'logo.png' with your image URL -->
+                <img src="https://via.placeholder.com/150x50?text=YOUR+LOGO" alt="Logo" id="site-logo">
+            </div>
+            <div class="theme-switch-wrapper">
+                <label class="theme-switch" for="checkbox">
+                    <input type="checkbox" id="checkbox" />
+                    <div class="slider round">
+                        <i class="fas fa-sun"></i>
+                        <i class="fas fa-moon"></i>
+                    </div>
+                </label>
+            </div>
+        </div>
     </header>
 
     <div class="container">
-        <!-- Main Section (Player + List) -->
-        <div id="main-view">
-            <div class="player-container">
-                <video id="video-player" controls autoplay playsinline></video>
-                <div id="status-bar">
-                    <span id="current-channel-name">Loading...</span>
+        <!-- Home Section -->
+        <div id="home-view">
+            <div class="sticky-player">
+                <video id="main-player" controls autoplay playsinline></video>
+                <div class="status-indicator">
+                    <span class="pulse-dot"></span>
+                    <span class="live-label">Live</span>
+                    <span id="main-ch-name">Loading...</span>
                 </div>
             </div>
-
-            <!-- This grid will be filled by JS -->
-            <div class="channel-grid" id="channel-list"></div>
+            <div class="channel-grid" id="main-grid"></div>
         </div>
 
-        <!-- Category View (Hidden by default) -->
-        <div id="category-view" style="display: none;">
-            <h2 class="section-heading">Categories</h2>
+        <!-- Category List Section -->
+        <div id="cat-list-view" style="display: none;">
+            <h2 class="page-title">Categories</h2>
             <div class="category-grid">
-                <div class="cat-item" onclick="loadCategory('sports')"><i class="fas fa-trophy"></i><span>Sports</span></div>
-                <div class="cat-item" onclick="loadCategory('news')"><i class="fas fa-newspaper"></i><span>News</span></div>
-                <div class="cat-item" onclick="loadCategory('kids')"><i class="fas fa-child"></i><span>Kids</span></div>
-                <div class="cat-item" onclick="loadCategory('doc')"><i class="fas fa-globe"></i><span>Documentary</span></div>
-                <div class="cat-item" onclick="loadCategory('islamic')"><i class="fas fa-mosque"></i><span>Islamic</span></div>
-                <div class="cat-item" onclick="loadCategory('bd')"><img src="https://flagcdn.com/w40/bd.png"><span>Bangladesh</span></div>
-                <div class="cat-item" onclick="loadCategory('in')"><img src="https://flagcdn.com/w40/in.png"><span>India</span></div>
-                <div class="cat-item" onclick="loadCategory('pk')"><img src="https://flagcdn.com/w40/pk.png"><span>Pakistan</span></div>
+                <div class="cat-card" onclick="openCategory('sports', 'Sports')"><i class="fas fa-trophy"></i><span>Sports</span></div>
+                <div class="cat-card" onclick="openCategory('news', 'News')"><i class="fas fa-newspaper"></i><span>News</span></div>
+                <div class="cat-card" onclick="openCategory('bd', 'Bangladesh')"><img src="https://flagcdn.com/w40/bd.png"><span>Bangladesh</span></div>
+                <div class="cat-card" onclick="openCategory('in', 'India')"><img src="https://flagcdn.com/w40/in.png"><span>India</span></div>
             </div>
+        </div>
+
+        <!-- Category Player Section (Dedicated Player) -->
+        <div id="cat-player-view" style="display: none;">
+            <button class="back-btn" onclick="navTo('cat')"><i class="fas fa-chevron-left"></i> Back</button>
+            <div class="sticky-player">
+                <video id="cat-player" controls autoplay playsinline></video>
+                <div class="status-indicator">
+                    <span class="pulse-dot"></span>
+                    <span class="live-label">Live</span>
+                    <span id="cat-ch-name">Selecting...</span>
+                </div>
+            </div>
+            <div class="channel-grid" id="cat-grid"></div>
         </div>
     </div>
 
-    <!-- Navigation -->
-    <nav class="bottom-menu">
-        <div class="menu-item active" id="btn-home" onclick="navTo('home')">
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+        <div class="nav-item active" id="nav-home" onclick="navTo('home')">
             <i class="fas fa-home"></i>
             <span>Home</span>
         </div>
-        <div class="menu-item" id="btn-cat" onclick="navTo('cat')">
+        <div class="nav-item" id="nav-cat" onclick="navTo('cat')">
             <i class="fas fa-th-large"></i>
             <span>Categories</span>
         </div>
-        <a href="https://hoofoot.com/" target="_blank" class="menu-item">
+        <a href="https://hoofoot.com/" target="_blank" class="nav-item">
             <i class="fas fa-play-circle"></i>
             <span>Highlights</span>
         </a>
