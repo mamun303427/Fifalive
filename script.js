@@ -1,35 +1,44 @@
-const video = document.getElementById('video-player');
-const channelGrid = document.getElementById('channel-list');
-const channelTitle = document.getElementById('current-channel-name');
+const mainVideo = document.getElementById('main-player');
+const catVideo = document.getElementById('cat-player');
 
-// Configuration: Map your M3U links here
-const m3uSources = {
-    'home': 'https://iptv-org.github.io/iptv/countries/bd.m3u',
-    'sports': 'YOUR_SPORTS_M3U_URL',
-    'news': 'YOUR_NEWS_M3U_URL',
-    'bd': 'https://iptv-org.github.io/iptv/countries/bd.m3u',
-    'in': 'https://iptv-org.github.io/iptv/countries/in.m3u',
-    'pk': 'https://iptv-org.github.io/iptv/countries/pk.m3u',
+const m3uLinks = {
+    home: 'https://iptv-org.github.io/iptv/countries/bd.m3u',
+    sports: 'YOUR_SPORTS_LINK',
+    news: 'YOUR_NEWS_LINK',
+    bd: 'https://iptv-org.github.io/iptv/countries/bd.m3u',
+    in: 'https://iptv-org.github.io/iptv/countries/in.m3u'
 };
 
-// Auto-load Home content on startup
-window.onload = () => loadM3U(m3uSources.home);
+// Theme Toggle Logic
+const toggleSwitch = document.querySelector('#checkbox');
+toggleSwitch.addEventListener('change', (e) => {
+    if (e.target.checked) {
+        document.body.classList.replace('dark-theme', 'light-theme');
+    } else {
+        document.body.classList.replace('light-theme', 'dark-theme');
+    }
+});
 
-async function loadM3U(url) {
-    channelGrid.innerHTML = '<p style="grid-column: 1/-1; text-align:center;">Fetching Channels...</p>';
+// Auto-play on Load
+window.onload = () => loadCategoryData('home', 'main-grid', mainVideo, 'main-ch-name');
+
+async function loadCategoryData(key, gridId, videoElem, titleId) {
+    const grid = document.getElementById(gridId);
+    grid.innerHTML = '<p>Loading Channels...</p>';
+    
     try {
-        const response = await fetch(url);
+        const response = await fetch(m3uLinks[key]);
         const data = await response.text();
         const channels = parseM3U(data);
         
-        displayChannels(channels);
+        renderGrid(channels, grid, videoElem, titleId);
         
-        // AUTO-PLAY First Channel
+        // Auto-play the first channel
         if (channels.length > 0) {
-            playStream(channels[0].url, channels[0].name);
+            playStream(videoElem, channels[0].url, channels[0].name, titleId);
         }
-    } catch (error) {
-        channelGrid.innerHTML = '<p>Error loading playlist.</p>';
+    } catch (e) {
+        grid.innerHTML = '<p>Error loading playlist.</p>';
     }
 }
 
@@ -38,67 +47,58 @@ function parseM3U(data) {
     const list = [];
     for (let i = 0; i < lines.length; i++) {
         if (lines[i].includes('#EXTINF')) {
-            const name = lines[i].split(',')[1] || "Unknown";
-            const logoMatch = lines[i].match(/tvg-logo="([^"]+)"/);
-            const logo = logoMatch ? logoMatch[1] : "https://via.placeholder.com/100?text=TV";
+            const name = lines[i].split(',')[1] || "TV Channel";
+            const logo = lines[i].match(/tvg-logo="([^"]+)"/)?.[1] || "https://via.placeholder.com/100";
             const url = lines[i + 1]?.trim();
-            if (url && url.startsWith('http')) {
-                list.push({ name, logo, url });
-            }
+            if (url) list.push({ name, logo, url });
         }
     }
     return list;
 }
 
-function displayChannels(channels) {
-    channelGrid.innerHTML = '';
+function renderGrid(channels, grid, videoElem, titleId) {
+    grid.innerHTML = '';
     channels.forEach(ch => {
         const card = document.createElement('div');
         card.className = 'channel-card';
-        card.innerHTML = `
-            <img src="${ch.logo}" onerror="this.src='https://via.placeholder.com/100?text=TV'">
-            <span>${ch.name}</span>
-        `;
-        card.onclick = () => playStream(ch.url, ch.name);
-        channelGrid.appendChild(card);
+        card.innerHTML = `<img src="${ch.logo}"><span>${ch.name}</span>`;
+        card.onclick = () => {
+            playStream(videoElem, ch.url, ch.name, titleId);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+        grid.appendChild(card);
     });
 }
 
-function playStream(url, name) {
-    channelTitle.innerText = "Playing: " + name;
+function playStream(videoElem, url, name, titleId) {
+    document.getElementById(titleId).innerText = name;
     if (Hls.isSupported()) {
         const hls = new Hls();
         hls.loadSource(url);
-        hls.attachMedia(video);
-        hls.on(Hls.Events.MANIFEST_PARSED, () => video.play());
+        hls.attachMedia(videoElem);
+        hls.on(Hls.Events.MANIFEST_PARSED, () => videoElem.play());
     } else {
-        video.src = url;
-        video.play();
+        videoElem.src = url;
+        videoElem.play();
     }
 }
 
-// Navigation Logic
-function navTo(page) {
-    const main = document.getElementById('main-view');
-    const cat = document.getElementById('category-view');
-    const bHome = document.getElementById('btn-home');
-    const bCat = document.getElementById('btn-cat');
-
-    if (page === 'home') {
-        main.style.display = 'block';
-        cat.style.display = 'none';
-        bHome.classList.add('active');
-        bCat.classList.remove('active');
-    } else {
-        main.style.display = 'none';
-        cat.style.display = 'block';
-        bCat.classList.add('active');
-        bHome.classList.remove('active');
-        video.pause();
-    }
+// Navigation
+function navTo(view) {
+    document.getElementById('home-view').style.display = view === 'home' ? 'block' : 'none';
+    document.getElementById('cat-list-view').style.display = view === 'cat' ? 'block' : 'none';
+    document.getElementById('cat-player-view').style.display = 'none';
+    
+    document.getElementById('nav-home').classList.toggle('active', view === 'home');
+    document.getElementById('nav-cat').classList.toggle('active', view === 'cat');
+    
+    mainVideo.pause();
+    catVideo.pause();
+    if(view === 'home') mainVideo.play();
 }
 
-function loadCategory(key) {
-    navTo('home');
-    loadM3U(m3uSources[key]);
+function openCategory(key, name) {
+    document.getElementById('cat-list-view').style.display = 'none';
+    document.getElementById('cat-player-view').style.display = 'block';
+    loadCategoryData(key, 'cat-grid', catVideo, 'cat-ch-name');
 }
