@@ -8,12 +8,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 </head>
-<body class="dark-theme"> <!-- Default Theme -->
+<body class="dark-theme">
 
     <header>
         <div class="header-container">
             <div class="logo-area">
-                <!-- Replace 'logo.png' with your image URL -->
+                <!-- Replace with your actual logo URL -->
                 <img src="https://via.placeholder.com/150x50?text=YOUR+LOGO" alt="Logo" id="site-logo">
             </div>
             <div class="theme-switch-wrapper">
@@ -32,11 +32,11 @@
         <!-- Home Section -->
         <div id="home-view">
             <div class="sticky-player">
-                <video id="main-player" controls autoplay playsinline></video>
+                <video id="main-player" controls playsinline></video>
                 <div class="status-indicator">
-                    <span class="pulse-dot"></span>
                     <span class="live-label">Live</span>
-                    <span id="main-ch-name">Loading...</span>
+                    <span class="pulse-dot"></span>
+                    <span id="main-ch-name">Select a Channel</span>
                 </div>
             </div>
             <div class="channel-grid" id="main-grid"></div>
@@ -46,22 +46,26 @@
         <div id="cat-list-view" style="display: none;">
             <h2 class="page-title">Categories</h2>
             <div class="category-grid">
-                <div class="cat-card" onclick="openCategory('sports', 'Sports')"><i class="fas fa-trophy"></i><span>Sports</span></div>
-                <div class="cat-card" onclick="openCategory('news', 'News')"><i class="fas fa-newspaper"></i><span>News</span></div>
-                <div class="cat-card" onclick="openCategory('bd', 'Bangladesh')"><img src="https://flagcdn.com/w40/bd.png"><span>Bangladesh</span></div>
-                <div class="cat-card" onclick="openCategory('in', 'India')"><img src="https://flagcdn.com/w40/in.png"><span>India</span></div>
+                <div class="cat-card" onclick="openCategory('sports', 'Sports Channel')"><i class="fas fa-trophy"></i><span>Sports Channel</span></div>
+                <div class="cat-card" onclick="openCategory('news', 'News Channel')"><i class="fas fa-newspaper"></i><span>News Channel</span></div>
+                <div class="cat-card" onclick="openCategory('kids', 'Kids Channel')"><i class="fas fa-child"></i><span>Kids Channel</span></div>
+                <div class="cat-card" onclick="openCategory('doc', 'Documentary')"><i class="fas fa-globe-americas"></i><span>Documentary</span></div>
+                <div class="cat-card" onclick="openCategory('islamic', 'Islamic Tv')"><i class="fas fa-mosque"></i><span>Islamic Tv</span></div>
+                <div class="cat-card" onclick="openCategory('bd', 'Bangladeshi Tv')"><img src="https://flagcdn.com/w80/bd.png"><span>Bangladeshi Tv</span></div>
+                <div class="cat-card" onclick="openCategory('pk', 'Pakistani Tv')"><img src="https://flagcdn.com/w80/pk.png"><span>Pakistani Tv</span></div>
+                <div class="cat-card" onclick="openCategory('in', 'Indian Tv')"><img src="https://flagcdn.com/w80/in.png"><span>Indian Tv</span></div>
             </div>
         </div>
 
-        <!-- Category Player Section (Dedicated Player) -->
+        <!-- Category Player Section -->
         <div id="cat-player-view" style="display: none;">
             <button class="back-btn" onclick="navTo('cat')"><i class="fas fa-chevron-left"></i> Back</button>
             <div class="sticky-player">
-                <video id="cat-player" controls autoplay playsinline></video>
+                <video id="cat-player" controls playsinline></video>
                 <div class="status-indicator">
-                    <span class="pulse-dot"></span>
                     <span class="live-label">Live</span>
-                    <span id="cat-ch-name">Selecting...</span>
+                    <span class="pulse-dot"></span>
+                    <span id="cat-ch-name">Select a Channel</span>
                 </div>
             </div>
             <div class="channel-grid" id="cat-grid"></div>
