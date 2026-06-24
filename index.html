@@ -4,90 +4,97 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Live TV - Stream Online</title>
+    <!-- CSS link -->
     <link rel="stylesheet" href="style.css">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <!-- HLS.js for Streaming -->
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 </head>
 <body>
 
     <header>
-        <h1>Fifa Live</h1>
+        <h1>লাইভ টিভি প্ল্যাটফর্ম</h1>
     </header>
 
+    <!-- Bottom Navigation Bar -->
+    <nav class="bottom-nav">
+        <div class="nav-item active" id="home-btn" onclick="showSection('home')">
+            <i class="fas fa-home"></i>
+            <span>হোম</span>
+        </div>
+        <div class="nav-item" id="cat-btn" onclick="showSection('category')">
+            <i class="fas fa-list"></i>
+            <span>ক্যাটেগরি</span>
+        </div>
+        <a href="https://hoofoot.com/" target="_blank" class="nav-item" style="text-decoration: none;">
+            <i class="fas fa-play-circle"></i>
+            <span>হাইলাইটস</span>
+        </a>
+    </nav>
+
     <div class="container">
-        <!-- Video Player Section -->
-        <div class="player-section">
-            <video id="video" controls autoplay></video>
-            <h2 id="now-playing">Channel Select</h2>
+        
+        <!-- ১. হোম সেকশন (ভিডিও প্লেয়ার এবং চ্যানেল লিস্ট) -->
+        <div id="home-section">
+            <div class="player-section">
+                <video id="video" controls autoplay></video>
+                <h2 id="now-playing">চ্যানেল সিলেক্ট করুন</h2>
+            </div>
+            
+            <!-- লাইভ স্কোর (ঐচ্ছিক) -->
+            <div class="score-container">
+                <iframe src="https://www.cricbuzz.com/api/html/homepage-scroller" width="100%" height="80" frameborder="0"></iframe>
+            </div>
+
+            <!-- চ্যানেল গ্রিড -->
+            <div class="channel-grid" id="channel-list">
+                <!-- চ্যানেলগুলো এখানে অটোমেটিক লোড হবে -->
+            </div>
         </div>
 
-        <!-- Channel Grid Section -->
-        <div class="channel-grid" id="channel-list">
-            <!-- চ্যানেলগুলো এখানে অটোমেটিক লোড হবে -->
+        <!-- ২. ক্যাটেগরি সেকশন (শুরুতে লুকানো থাকবে) -->
+        <div id="category-section" style="display: none;">
+            <h2 class="section-title">সব ক্যাটেগরি</h2>
+            <div class="category-grid">
+                <div class="cat-card" onclick="alert('Sports loading...')">
+                    <i class="fas fa-trophy cat-icon" style="color: #ff9800;"></i>
+                    <span>Sports Channel</span>
+                </div>
+                <div class="cat-card" onclick="alert('News loading...')">
+                    <i class="fas fa-newspaper cat-icon" style="color: #2196f3;"></i>
+                    <span>News Channel</span>
+                </div>
+                <div class="cat-card" onclick="alert('Kids loading...')">
+                    <i class="fas fa-child cat-icon" style="color: #e91e63;"></i>
+                    <span>Kids Channel</span>
+                </div>
+                <div class="cat-card" onclick="alert('Documentary loading...')">
+                    <i class="fas fa-globe-americas cat-icon" style="color: #4caf50;"></i>
+                    <span>Documentary</span>
+                </div>
+                <div class="cat-card" onclick="alert('Islamic loading...')">
+                    <i class="fas fa-mosque cat-icon" style="color: #009688;"></i>
+                    <span>Islamic Tv</span>
+                </div>
+                <div class="cat-card" onclick="alert('BD loading...')">
+                    <img src="https://flagcdn.com/w80/bd.png" class="cat-flag">
+                    <span>Bangladeshi Tv</span>
+                </div>
+                <div class="cat-card" onclick="alert('India loading...')">
+                    <img src="https://flagcdn.com/w80/in.png" class="cat-flag">
+                    <span>Indian Tv</span>
+                </div>
+                <div class="cat-card" onclick="alert('Pakistan loading...')">
+                    <img src="https://flagcdn.com/w80/pk.png" class="cat-flag">
+                    <span>Pakistani Tv</span>
+                </div>
+            </div>
         </div>
+
     </div>
 
+    <!-- Script link -->
     <script src="script.js"></script>
-    <!-- Font Awesome Icons এর জন্য এই লাইনটি <head> এর ভেতর দিন -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
-<!-- Navigation Bar -->
-<nav class="bottom-nav">
-    <div class="nav-item active" onclick="changeTab('home')">
-        <i class="fas fa-home"></i>
-        <span>Home</span>
-    </div>
-    <div class="nav-item" onclick="changeTab('category')">
-        <i class="fas fa-list"></i>
-        <span>Categories</span>
-    </div>
-    <div class="nav-item" onclick="changeTab('highlights')">
-        <i class="fas fa-play-circle"></i>
-        <span>Highlights</span>
-    </div>
-</nav>
-    <!-- Navigation Bar -->
-<nav class="bottom-nav">
-    <div class="nav-item active" id="home-btn" onclick="showSection('home')">
-        <i class="fas fa-home"></i>
-        <span>হোম</span>
-    </div>
-    <div class="nav-item" id="cat-btn" onclick="showSection('category')">
-        <i class="fas fa-list"></i>
-        <span>ক্যাটেগরি</span>
-    </div>
-    <!-- হাইলাইটস বাটন সরাসরি লিংকে নিয়ে যাবে -->
-    <a href="https://hoofoot.com/" target="_blank" class="nav-item" style="text-decoration: none;">
-        <i class="fas fa-play-circle"></i>
-        <span>হাইলাইটস</span>
-    </a>
-</nav>
-
-<div class="container">
-    <!-- হোম সেকশন: প্লেয়ার এবং চ্যানেল লিস্ট থাকবে এখানে -->
-    <div id="home-section">
-        <div class="player-section">
-            <video id="video" controls autoplay></video>
-            <h2 id="now-playing">চ্যানেল সিলেক্ট করুন</h2>
-        </div>
-        <!-- লাইভ স্কোর উইজেট -->
-        <div style="margin-top: 15px;">
-            <iframe src="https://www.cricbuzz.com/api/html/homepage-scroller" width="100%" height="80" frameborder="0"></iframe>
-        </div>
-        <div class="channel-grid" id="channel-list"></div>
-    </div>
-
-    <!-- ক্যাটেগরি সেকশন: শুরুতে লুকানো থাকবে -->
-    <div id="category-section" style="display: none;">
-        <h2 style="text-align: center; margin-bottom: 20px;">সব ক্যাটেগরি</h2>
-        <div class="category-grid">
-            <!-- ক্যাটেগরি কার্ডসমূহ -->
-            <div class="cat-card" onclick="alert('Sports Channels Load Here')">স্পোর্টস</div>
-            <div class="cat-card" onclick="alert('News Channels Load Here')">নিউজ</div>
-            <div class="cat-card" onclick="alert('Movies Channels Load Here')">মুভিজ</div>
-            <div class="cat-card" onclick="alert('Music Channels Load Here')">মিউজিক</div>
-        </div>
-    </div>
-</div>
 </body>
 </html>
