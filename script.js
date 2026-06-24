@@ -1,6 +1,6 @@
 const m3uLinks = {
-    home: '',
-    sports: 'YOUR_SPORTS_LINK',
+    home: 'https://raw.githubusercontent.com/bugsfreeweb/LiveTVCollector/refs/heads/main/LiveTV/Bangladesh/LiveTV.m3u',
+    sports: 'https://raw.githubusercontent.com/bugsfreeweb/LiveTVCollector/refs/heads/main/LiveTV/Bangladesh/LiveTV.m3u',
     news: 'https://raw.githubusercontent.com/Free-TV/IPTV/refs/heads/master/playlist.m3u8',
     kids: 'YOUR_KIDS_LINK',
     doc: 'YOUR_DOC_LINK',
