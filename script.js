@@ -68,3 +68,27 @@ function changeTab(tabName) {
         alert('হাইলাইটস পেজ শীঘ্রই আসছে!');
     }
 }
+function showSection(section) {
+    const homeSec = document.getElementById('home-section');
+    const catSec = document.getElementById('category-section');
+    const homeBtn = document.getElementById('home-btn');
+    const catBtn = document.getElementById('cat-btn');
+
+    if (section === 'home') {
+        // হোম দেখাবে, ক্যাটেগরি লুকাবে
+        homeSec.style.display = 'block';
+        catSec.style.display = 'none';
+        
+        // বাটন কালার চেঞ্জ
+        homeBtn.classList.add('active');
+        catBtn.classList.remove('active');
+    } else if (section === 'category') {
+        // ক্যাটেগরি দেখাবে, হোম লুকাবে
+        homeSec.style.display = 'none';
+        catSec.style.display = 'block';
+        
+        // বাটন কালার চেঞ্জ
+        catBtn.classList.add('active');
+        homeBtn.classList.remove('active');
+    }
+}
