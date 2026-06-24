@@ -3,7 +3,7 @@ const channelList = document.getElementById('channel-list');
 const playingTitle = document.getElementById('now-playing');
 
 // আপনার .m3u লিঙ্কটি এখানে বসান
-const M3U_URL = "https://raw.githubusercontent.com/mamun303427/Fifalive/refs/heads/main/Fifa%20world%20cup.m3u";
+const M3U_URL = "https://iptv-org.github.io/iptv/countries/bd.m3u";
 
 async function loadChannels() {
     try {
