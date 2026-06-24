@@ -1,121 +1,91 @@
-/* General Styles */
+* { margin: 0; padding: 0; box-sizing: border-box; }
 body {
-    background-color: #0f172a;
-    color: white;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin: 0;
-    padding-bottom: 80px; /* Space for bottom nav */
+    background-color: #0b0f1a;
+    color: #ffffff;
+    font-family: 'Inter', sans-serif;
+    padding-bottom: 70px;
 }
-
 header {
-    background-color: #1e293b;
     padding: 15px;
+    background: #161b29;
     text-align: center;
+    border-bottom: 1px solid #242b3d;
+}
+.container { padding: 10px; max-width: 900px; margin: auto; }
+
+/* Player Area */
+.player-container {
     position: sticky;
     top: 0;
     z-index: 100;
+    background: #0b0f1a;
+    margin-bottom: 15px;
 }
-
-.container {
-    max-width: 1000px;
-    margin: auto;
-    padding: 15px;
-}
-
-/* Video Player */
-.player-section video {
+video {
     width: 100%;
-    border-radius: 12px;
-    background: black;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+    aspect-ratio: 16/9;
+    background: #000;
+    border-radius: 8px;
 }
-
-#now-playing {
-    font-size: 16px;
-    margin: 10px 0;
-    text-align: center;
+#status-bar {
+    padding: 8px;
+    font-size: 14px;
     color: #3b82f6;
+    font-weight: bold;
+    text-align: center;
 }
 
-/* Channel Grid (Square & Professional) */
+/* Grids */
 .channel-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-    gap: 12px;
-    margin-top: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+    gap: 10px;
 }
-
 .channel-card {
-    background: #1e293b;
-    border-radius: 12px;
-    padding: 8px;
+    background: #161b29;
+    padding: 10px;
+    border-radius: 10px;
     text-align: center;
     cursor: pointer;
-    border: 1px solid #334155;
-    transition: 0.3s;
+    border: 1px solid #242b3d;
 }
-
 .channel-card img {
     width: 100%;
     aspect-ratio: 1/1;
     object-fit: contain;
-    background: white;
-    border-radius: 8px;
+    background: #fff;
+    border-radius: 5px;
+    margin-bottom: 5px;
 }
-
-.channel-card p {
-    font-size: 11px;
-    margin-top: 5px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
+.channel-card span { font-size: 10px; display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
 
 /* Category Grid */
-.section-title {
+.category-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.cat-item {
+    background: #161b29;
+    padding: 25px;
+    border-radius: 12px;
     text-align: center;
-    color: #3b82f6;
-    margin-bottom: 20px;
-}
-
-.category-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
-}
-
-.cat-card {
-    background: #1e293b;
-    padding: 20px;
-    border-radius: 15px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border: 1px solid #334155;
     cursor: pointer;
+    border: 1px solid #242b3d;
 }
+.cat-item i { font-size: 24px; color: #3b82f6; display: block; margin-bottom: 8px; }
+.cat-item img { width: 35px; display: block; margin: 0 auto 8px; }
 
-.cat-icon { font-size: 30px; margin-bottom: 10px; }
-.cat-flag { width: 50px; border-radius: 4px; margin-bottom: 10px; }
-
-/* Bottom Nav */
-.bottom-nav {
+/* Navigation Bar */
+.bottom-menu {
     position: fixed;
     bottom: 0;
     width: 100%;
-    background: #1e293b;
+    background: #161b29;
     display: flex;
     justify-content: space-around;
     padding: 10px 0;
-    border-top: 1px solid #334155;
+    border-top: 1px solid #242b3d;
 }
+.menu-item { color: #64748b; text-align: center; cursor: pointer; text-decoration: none; }
+.menu-item i { font-size: 18px; display: block; }
+.menu-item span { font-size: 11px; }
+.menu-item.active { color: #3b82f6; }
 
-.nav-item {
-    text-align: center;
-    color: #94a3b8;
-    cursor: pointer;
-    font-size: 12px;
-}
-
-.nav-item i { font-size: 20px; display: block; }
-.nav-item.active { color: #3b82f6; }
+.section-heading { text-align: center; margin-bottom: 20px; color: #3b82f6; }
