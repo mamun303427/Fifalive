@@ -1,7 +1,7 @@
 const m3uLinks = {
-    home: 'https://raw.githubusercontent.com/Free-TV/IPTV/refs/heads/master/playlist.m3u8',
+    home: '',
     sports: 'YOUR_SPORTS_LINK',
-    news: 'YOUR_NEWS_LINK',
+    news: 'https://raw.githubusercontent.com/Free-TV/IPTV/refs/heads/master/playlist.m3u8',
     kids: 'YOUR_KIDS_LINK',
     doc: 'YOUR_DOC_LINK',
     islamic: 'YOUR_ISLAMIC_LINK',
