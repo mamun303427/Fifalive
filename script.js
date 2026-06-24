@@ -53,3 +53,18 @@ function playVideo(url, name) {
 }
 
 loadChannels();
+function changeTab(tabName) {
+    // সব আইটেম থেকে 'active' ক্লাস সরিয়ে ফেলুন
+    const navItems = document.querySelectorAll('.nav-item');
+    navItems.forEach(item => item.classList.remove('active'));
+
+    // যেটিতে ক্লিক করা হয়েছে সেটিতে 'active' ক্লাস যোগ করুন
+    event.currentTarget.classList.add('active');
+
+    // এখানে আপনি ভবিষ্যতে ট্যাব অনুযায়ী কন্টেন্ট পরিবর্তন করার কোড লিখতে পারেন
+    if(tabName === 'category') {
+        alert('ক্যাটেগরি পেজ শীঘ্রই আসছে!');
+    } else if(tabName === 'highlights') {
+        alert('হাইলাইটস পেজ শীঘ্রই আসছে!');
+    }
+}
