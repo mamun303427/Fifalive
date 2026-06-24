@@ -1,5 +1,5 @@
 const links = {
-    home: 'https://raw.githubusercontent.com/abusaeeidx/Mrgify-BDIX-IPTV/refs/heads/main/playlist.m3u',
+    home: 'https://raw.githubusercontent.com/imShakil/tvlink/refs/heads/main/iptv.m3u8',
     sports: 'YOUR_URL', news: 'YOUR_URL', kids: 'YOUR_URL', doc: 'YOUR_URL', 
     islamic: 'YOUR_URL', bd: 'https://iptv-org.github.io/iptv/countries/bd.m3u', 
     in: 'https://iptv-org.github.io/iptv/countries/in.m3u', pk: 'https://iptv-org.github.io/iptv/countries/pk.m3u'
