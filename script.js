@@ -1,5 +1,5 @@
 const m3uLinks = {
-    home: 'https://iptv-org.github.io/iptv/countries/bd.m3u',
+    home: 'https://raw.githubusercontent.com/Free-TV/IPTV/refs/heads/master/playlist.m3u8',
     sports: 'YOUR_SPORTS_LINK',
     news: 'YOUR_NEWS_LINK',
     kids: 'YOUR_KIDS_LINK',
