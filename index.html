@@ -28,5 +28,23 @@
     </div>
 
     <script src="script.js"></script>
+    <!-- Font Awesome Icons এর জন্য এই লাইনটি <head> এর ভেতর দিন -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+<!-- Navigation Bar -->
+<nav class="bottom-nav">
+    <div class="nav-item active" onclick="changeTab('home')">
+        <i class="fas fa-home"></i>
+        <span>Home</span>
+    </div>
+    <div class="nav-item" onclick="changeTab('category')">
+        <i class="fas fa-list"></i>
+        <span>Categories</span>
+    </div>
+    <div class="nav-item" onclick="changeTab('highlights')">
+        <i class="fas fa-play-circle"></i>
+        <span>Highlights</span>
+    </div>
+</nav>
 </body>
 </html>
