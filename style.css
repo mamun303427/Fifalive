@@ -18,7 +18,7 @@ video { width: 100%; aspect-ratio: 16/9; display: block; }
 
 .status-bar { display: flex; align-items: center; justify-content: center; padding: 8px; gap: 8px; border-bottom: 1px solid var(--border); background: var(--bg); }
 .live-txt { color: #ff0000; font-weight: bold; font-size: 14px; text-transform: uppercase; }
-.dot { width: 8px; height: 8px; background: #fff; border-radius: 50%; animation: blink 1s infinite; }
+.dot { width: 8px; height: 8px; background: #ff0000; border-radius: 50%; animation: blink 1s infinite; }
 @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
 
 .container { width: 100%; max-width: 1000px; margin: 0 auto; padding: 10px; }
