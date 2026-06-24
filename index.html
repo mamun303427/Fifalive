@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live TV - Stream Online</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- HLS.js for Streaming -->
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+</head>
+<body>
+
+    <header>
+        <h1>লাইভ টিভি প্ল্যাটফর্ম</h1>
+    </header>
+
+    <div class="container">
+        <!-- Video Player Section -->
+        <div class="player-section">
+            <video id="video" controls autoplay></video>
+            <h2 id="now-playing">চ্যানেল সিলেক্ট করুন</h2>
+        </div>
+
+        <!-- Channel Grid Section -->
+        <div class="channel-grid" id="channel-list">
+            <!-- চ্যানেলগুলো এখানে অটোমেটিক লোড হবে -->
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
