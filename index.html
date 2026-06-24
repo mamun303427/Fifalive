@@ -2,99 +2,85 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Live TV Pro</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <!-- Video.js CSS -->
-    <link href="https://vjs.zencdn.net/8.10.0/video-js.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 </head>
 <body class="dark-theme">
 
     <header>
         <div class="header-container">
-            <div class="logo-area">
-                <!-- আপনার লোগো ইমেজের লিঙ্ক এখানে দিন -->
-                <img src="https://via.placeholder.com/150x50?text=YOUR+LOGO" alt="Logo" id="site-logo">
-            </div>
+            <img src="https://via.placeholder.com/150x50?text=LOGO" alt="Logo" id="site-logo">
             <div class="theme-switch-wrapper">
-                <label class="theme-switch" for="checkbox">
-                    <input type="checkbox" id="checkbox" />
-                    <div class="slider round">
-                        <i class="fas fa-sun"></i>
-                        <i class="fas fa-moon"></i>
-                    </div>
+                <label class="theme-switch">
+                    <input type="checkbox" id="checkbox">
+                    <div class="slider round"></div>
                 </label>
             </div>
         </div>
     </header>
 
-    <div class="container">
-        <!-- Home View -->
+    <div class="main-content">
+        <!-- Home Section -->
         <div id="home-view">
-            <div id="main-player-container" class="sticky-player" style="display: none;">
-                <!-- Video.js Player -->
-                <video id="main-player" class="video-js vjs-big-play-centered" controls playsinline preload="auto"></video>
-                <div class="status-indicator">
-                    <span class="live-label">Live</span>
-                    <span class="pulse-dot"></span>
-                    <span id="main-ch-name"></span>
+            <div id="main-player-wrapper" class="player-wrapper" style="display: none;">
+                <video id="main-video" playsinline></video>
+                <div class="status-bar">
+                    <span class="live-txt">Live</span>
+                    <span class="dot"></span>
+                    <span id="main-name"></span>
                 </div>
             </div>
-            <div class="channel-grid" id="main-grid"></div>
-        </div>
-
-        <!-- Category List View -->
-        <div id="cat-list-view" style="display: none;">
-            <h2 class="page-title">Categories</h2>
-            <div class="category-grid">
-                <div class="cat-card" onclick="openCategory('sports')"><i class="fas fa-trophy"></i><span>Sports Channel</span></div>
-                <div class="cat-card" onclick="openCategory('news')"><i class="fas fa-newspaper"></i><span>News Channel</span></div>
-                <div class="cat-card" onclick="openCategory('kids')"><i class="fas fa-child"></i><span>Kids Channel</span></div>
-                <div class="cat-card" onclick="openCategory('doc')"><i class="fas fa-globe-americas"></i><span>Documentary</span></div>
-                <div class="cat-card" onclick="openCategory('islamic')"><i class="fas fa-mosque"></i><span>Islamic Tv</span></div>
-                <div class="cat-card" onclick="openCategory('bd')"><img src="https://flagcdn.com/w80/bd.png"><span>Bangladeshi Tv</span></div>
-                <div class="cat-card" onclick="openCategory('pk')"><img src="https://flagcdn.com/w80/pk.png"><span>Pakistani Tv</span></div>
-                <div class="cat-card" onclick="openCategory('in')"><img src="https://flagcdn.com/w80/in.png"><span>Indian Tv</span></div>
+            <div class="container">
+                <div class="grid" id="main-grid"></div>
             </div>
         </div>
 
-        <!-- Category Player View -->
+        <!-- Category Selection -->
+        <div id="cat-list-view" style="display: none;" class="container">
+            <div class="cat-grid">
+                <div class="cat-card" onclick="openCat('sports')"><i class="fas fa-trophy"></i><span>Sports Channel</span></div>
+                <div class="cat-card" onclick="openCat('news')"><i class="fas fa-newspaper"></i><span>News Channel</span></div>
+                <div class="cat-card" onclick="openCat('kids')"><i class="fas fa-child"></i><span>Kids Channel</span></div>
+                <div class="cat-card" onclick="openCat('doc')"><i class="fas fa-globe-americas"></i><span>Documentary</span></div>
+                <div class="cat-card" onclick="openCat('islamic')"><i class="fas fa-mosque"></i><span>Islamic Tv</span></div>
+                <div class="cat-card" onclick="openCat('bd')"><img src="https://flagcdn.com/w80/bd.png"><span>Bangladeshi Tv</span></div>
+                <div class="cat-card" onclick="openCat('pk')"><img src="https://flagcdn.com/w80/pk.png"><span>Pakistani Tv</span></div>
+                <div class="cat-card" onclick="openCat('in')"><img src="https://flagcdn.com/w80/in.png"><span>Indian Tv</span></div>
+            </div>
+        </div>
+
+        <!-- Category Player -->
         <div id="cat-player-view" style="display: none;">
-            <button class="back-btn" onclick="navTo('cat')"><i class="fas fa-chevron-left"></i> Back</button>
-            <div id="cat-player-container" class="sticky-player" style="display: none;">
-                <!-- Video.js Player -->
-                <video id="cat-player" class="video-js vjs-big-play-centered" controls playsinline preload="auto"></video>
-                <div class="status-indicator">
-                    <span class="live-label">Live</span>
-                    <span class="pulse-dot"></span>
-                    <span id="cat-ch-name"></span>
+            <div id="cat-player-wrapper" class="player-wrapper" style="display: none;">
+                <video id="cat-video" playsinline></video>
+                <div class="status-bar">
+                    <span class="live-txt">Live</span>
+                    <span class="dot"></span>
+                    <span id="cat-name"></span>
                 </div>
             </div>
-            <div class="channel-grid" id="cat-grid"></div>
+            <div class="container">
+                <button class="back-btn" onclick="navTo('cat')">← Back</button>
+                <div class="grid" id="cat-grid"></div>
+            </div>
         </div>
     </div>
 
-    <!-- Bottom Navigation -->
     <nav class="bottom-nav">
-        <div class="nav-item active" id="nav-home" onclick="navTo('home')">
-            <i class="fas fa-home"></i>
-            <span>Home</span>
+        <div class="nav-btn active" id="btn-home" onclick="navTo('home')">
+            <i class="fas fa-home"></i><span>Home</span>
         </div>
-        <div class="nav-item" id="nav-cat" onclick="navTo('cat')">
-            <i class="fas fa-th-large"></i>
-            <span>Categories</span>
+        <div class="nav-btn" id="btn-cat" onclick="navTo('cat')">
+            <i class="fas fa-th-large"></i><span>Categories</span>
         </div>
-        <a href="https://hoofoot.com/" target="_blank" class="nav-item">
-            <i class="fas fa-play-circle"></i>
-            <span>Highlights</span>
+        <a href="https://hoofoot.com/" target="_blank" class="nav-btn">
+            <i class="fas fa-play-circle"></i><span>Highlights</span>
         </a>
     </nav>
 
-    <!-- Video.js JS -->
-    <script src="https://vjs.zencdn.net/8.10.0/video.min.js"></script>
-    <!-- HLS.js for Video.js (if not already included by video.js) -->
-    <script src="https://cdn.jsdelivr.net/npm/videojs-contrib-hls@5.15.0/dist/videojs-contrib-hls.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
