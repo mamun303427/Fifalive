@@ -111,3 +111,31 @@ video {
 body {
     padding-bottom: 70px; 
 }
+/* ক্যাটেগরি গ্রিড ডিজাইন */
+.category-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+.cat-card {
+    background: linear-gradient(45deg, #1e293b, #3b82f6);
+    padding: 30px 10px;
+    text-align: center;
+    border-radius: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 18px;
+    transition: 0.3s;
+}
+.cat-card:hover {
+    transform: scale(1.05);
+    background: linear-gradient(45deg, #3b82f6, #1e293b);
+}
+
+/* হাইলাইটস লিংকের কালার ঠিক করা */
+.nav-item i, .nav-item span {
+    color: #a0aec0;
+}
+.nav-item.active i, .nav-item.active span {
+    color: #3b82f6;
+}
