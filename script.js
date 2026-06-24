@@ -13,15 +13,15 @@ const m3uLinks = {
     pk: 'https://iptv-org.github.io/iptv/countries/pk.m3u'
 };
 
-// Theme Toggle
+// থিম পরিবর্তন লজিক
 document.querySelector('#checkbox').addEventListener('change', (e) => {
     document.body.className = e.target.checked ? 'light-theme' : 'dark-theme';
 });
 
-// Load Home on Start (No Auto-play)
-window.onload = () => fetchAndRender('home', 'main-grid', mainVideo, 'main-ch-name', false);
+// পেজ লোড হলে চ্যানেল লিস্ট দেখাবে কিন্তু প্লে হবে না
+window.onload = () => fetchChannels('home', 'main-grid', mainVideo, 'main-ch-name');
 
-async function fetchAndRender(key, gridId, videoElem, titleId, autoPlay = false) {
+async function fetchChannels(key, gridId, videoElem, titleId) {
     const grid = document.getElementById(gridId);
     grid.innerHTML = '<p style="text-align:center; width:100%;">Loading Channels...</p>';
     
@@ -41,8 +41,7 @@ async function fetchAndRender(key, gridId, videoElem, titleId, autoPlay = false)
             };
             grid.appendChild(card);
         });
-
-        // Auto-play is disabled as per request
+        // অটো-প্লে ফাংশন এখান থেকে সরিয়ে দেওয়া হয়েছে।
     } catch (e) {
         grid.innerHTML = '<p>Error loading channels.</p>';
     }
@@ -53,7 +52,7 @@ function parseM3U(data) {
     const list = [];
     for (let i = 0; i < lines.length; i++) {
         if (lines[i].includes('#EXTINF')) {
-            const name = lines[i].split(',')[1] || "Unknown";
+            const name = lines[i].split(',')[1] || "Unknown Channel";
             const logo = lines[i].match(/tvg-logo="([^"]+)"/)?.[1] || "";
             const url = lines[i + 1]?.trim();
             if (url) list.push({ name, logo, url });
@@ -90,5 +89,5 @@ function navTo(view) {
 function openCategory(key, name) {
     document.getElementById('cat-list-view').style.display = 'none';
     document.getElementById('cat-player-view').style.display = 'block';
-    fetchAndRender(key, 'cat-grid', catVideo, 'cat-ch-name', false);
+    fetchChannels(key, 'cat-grid', catVideo, 'cat-ch-name');
 }
