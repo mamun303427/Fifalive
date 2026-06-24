@@ -1,100 +1,65 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Live TV - Stream Online</title>
-    <!-- CSS link -->
+    <title>Live TV Platform</title>
     <link rel="stylesheet" href="style.css">
-    <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <!-- HLS.js for Streaming -->
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 </head>
 <body>
 
     <header>
-        <h1>লাইভ টিভি প্ল্যাটফর্ম</h1>
+        <h1 id="page-title">Live TV</h1>
     </header>
 
-    <!-- Bottom Navigation Bar -->
-    <nav class="bottom-nav">
-        <div class="nav-item active" id="home-btn" onclick="showSection('home')">
+    <div class="container">
+        <!-- Main Section (Player + List) -->
+        <div id="main-view">
+            <div class="player-container">
+                <video id="video-player" controls autoplay playsinline></video>
+                <div id="status-bar">
+                    <span id="current-channel-name">Loading...</span>
+                </div>
+            </div>
+
+            <!-- This grid will be filled by JS -->
+            <div class="channel-grid" id="channel-list"></div>
+        </div>
+
+        <!-- Category View (Hidden by default) -->
+        <div id="category-view" style="display: none;">
+            <h2 class="section-heading">Categories</h2>
+            <div class="category-grid">
+                <div class="cat-item" onclick="loadCategory('sports')"><i class="fas fa-trophy"></i><span>Sports</span></div>
+                <div class="cat-item" onclick="loadCategory('news')"><i class="fas fa-newspaper"></i><span>News</span></div>
+                <div class="cat-item" onclick="loadCategory('kids')"><i class="fas fa-child"></i><span>Kids</span></div>
+                <div class="cat-item" onclick="loadCategory('doc')"><i class="fas fa-globe"></i><span>Documentary</span></div>
+                <div class="cat-item" onclick="loadCategory('islamic')"><i class="fas fa-mosque"></i><span>Islamic</span></div>
+                <div class="cat-item" onclick="loadCategory('bd')"><img src="https://flagcdn.com/w40/bd.png"><span>Bangladesh</span></div>
+                <div class="cat-item" onclick="loadCategory('in')"><img src="https://flagcdn.com/w40/in.png"><span>India</span></div>
+                <div class="cat-item" onclick="loadCategory('pk')"><img src="https://flagcdn.com/w40/pk.png"><span>Pakistan</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="bottom-menu">
+        <div class="menu-item active" id="btn-home" onclick="navTo('home')">
             <i class="fas fa-home"></i>
-            <span>হোম</span>
+            <span>Home</span>
         </div>
-        <div class="nav-item" id="cat-btn" onclick="showSection('category')">
-            <i class="fas fa-list"></i>
-            <span>ক্যাটেগরি</span>
+        <div class="menu-item" id="btn-cat" onclick="navTo('cat')">
+            <i class="fas fa-th-large"></i>
+            <span>Categories</span>
         </div>
-        <a href="https://hoofoot.com/" target="_blank" class="nav-item" style="text-decoration: none;">
+        <a href="https://hoofoot.com/" target="_blank" class="menu-item">
             <i class="fas fa-play-circle"></i>
-            <span>হাইলাইটস</span>
+            <span>Highlights</span>
         </a>
     </nav>
 
-    <div class="container">
-        
-        <!-- ১. হোম সেকশন (ভিডিও প্লেয়ার এবং চ্যানেল লিস্ট) -->
-        <div id="home-section">
-            <div class="player-section">
-                <video id="video" controls autoplay></video>
-                <h2 id="now-playing">চ্যানেল সিলেক্ট করুন</h2>
-            </div>
-            
-            <!-- লাইভ স্কোর (ঐচ্ছিক) -->
-            <div class="score-container">
-                <iframe src="https://www.cricbuzz.com/api/html/homepage-scroller" width="100%" height="80" frameborder="0"></iframe>
-            </div>
-
-            <!-- চ্যানেল গ্রিড -->
-            <div class="channel-grid" id="channel-list">
-                <!-- চ্যানেলগুলো এখানে অটোমেটিক লোড হবে -->
-            </div>
-        </div>
-
-        <!-- ২. ক্যাটেগরি সেকশন (শুরুতে লুকানো থাকবে) -->
-        <div id="category-section" style="display: none;">
-            <h2 class="section-title">সব ক্যাটেগরি</h2>
-            <div class="category-grid">
-                <div class="cat-card" onclick="alert('Sports loading...')">
-                    <i class="fas fa-trophy cat-icon" style="color: #ff9800;"></i>
-                    <span>Sports Channel</span>
-                </div>
-                <div class="cat-card" onclick="alert('News loading...')">
-                    <i class="fas fa-newspaper cat-icon" style="color: #2196f3;"></i>
-                    <span>News Channel</span>
-                </div>
-                <div class="cat-card" onclick="alert('Kids loading...')">
-                    <i class="fas fa-child cat-icon" style="color: #e91e63;"></i>
-                    <span>Kids Channel</span>
-                </div>
-                <div class="cat-card" onclick="alert('Documentary loading...')">
-                    <i class="fas fa-globe-americas cat-icon" style="color: #4caf50;"></i>
-                    <span>Documentary</span>
-                </div>
-                <div class="cat-card" onclick="alert('Islamic loading...')">
-                    <i class="fas fa-mosque cat-icon" style="color: #009688;"></i>
-                    <span>Islamic Tv</span>
-                </div>
-                <div class="cat-card" onclick="alert('BD loading...')">
-                    <img src="https://flagcdn.com/w80/bd.png" class="cat-flag">
-                    <span>Bangladeshi Tv</span>
-                </div>
-                <div class="cat-card" onclick="alert('India loading...')">
-                    <img src="https://flagcdn.com/w80/in.png" class="cat-flag">
-                    <span>Indian Tv</span>
-                </div>
-                <div class="cat-card" onclick="alert('Pakistan loading...')">
-                    <img src="https://flagcdn.com/w80/pk.png" class="cat-flag">
-                    <span>Pakistani Tv</span>
-                </div>
-            </div>
-        </div>
-
-    </div>
-
-    <!-- Script link -->
     <script src="script.js"></script>
 </body>
 </html>
