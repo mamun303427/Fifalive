@@ -13,7 +13,7 @@
     <header>
         <div class="header-container">
             <div class="logo-area">
-                <!-- Replace with your actual logo URL -->
+                <!-- আপনার লোগো ইমেজের লিঙ্ক এখানে দিন -->
                 <img src="https://via.placeholder.com/150x50?text=YOUR+LOGO" alt="Logo" id="site-logo">
             </div>
             <div class="theme-switch-wrapper">
@@ -36,13 +36,13 @@
                 <div class="status-indicator">
                     <span class="live-label">Live</span>
                     <span class="pulse-dot"></span>
-                    <span id="main-ch-name">Select a Channel</span>
+                    <span id="main-ch-name">Select a Channel to Watch</span>
                 </div>
             </div>
             <div class="channel-grid" id="main-grid"></div>
         </div>
 
-        <!-- Category List Section -->
+        <!-- Category List View -->
         <div id="cat-list-view" style="display: none;">
             <h2 class="page-title">Categories</h2>
             <div class="category-grid">
@@ -57,9 +57,9 @@
             </div>
         </div>
 
-        <!-- Category Player Section -->
+        <!-- Category Player View -->
         <div id="cat-player-view" style="display: none;">
-            <button class="back-btn" onclick="navTo('cat')"><i class="fas fa-chevron-left"></i> Back</button>
+            <button class="back-btn" onclick="navTo('cat')"><i class="fas fa-chevron-left"></i> Back to Categories</button>
             <div class="sticky-player">
                 <video id="cat-player" controls playsinline></video>
                 <div class="status-indicator">
