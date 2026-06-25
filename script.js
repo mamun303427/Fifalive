@@ -1,6 +1,6 @@
 const wcServers = [
-    { name: "FIFA Server 1", url: "https://iptv-org.github.io/iptv/countries/bd.m3u8" },
-    { name: "FIFA Server 2", url: "LINK_2" },
+    { name: "T Sports HD", url: "https://trs1.aynaott.com/tsports/index.m3u8" },
+    { name: "Bein Sports 1", url: "https://1nyaler.streamhostingcdn.top/stream/23/index.m3u8" },
     { name: "FIFA Server 3", url: "LINK_3" },
     { name: "FIFA Server 4", url: "LINK_4" },
     { name: "FIFA Server 5", url: "LINK_5" },
