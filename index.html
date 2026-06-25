@@ -13,7 +13,6 @@
     <header>
         <div class="header-container">
             <img src="https://via.placeholder.com/150x50?text=LOGO" alt="Logo" id="site-logo">
-            <!-- Theme Toggle Button (Sun/Moon) -->
             <div id="theme-toggle" class="theme-btn" onclick="toggleTheme()">
                 <i class="fas fa-sun" id="theme-icon"></i>
             </div>
@@ -23,23 +22,31 @@
     <div class="main-content">
         <!-- Home Section -->
         <div id="home-view">
-            <div class="player-wrapper">
-                <video id="main-video" poster="https://via.placeholder.com/800x450?text=Live+Streaming" playsinline controls></video>
-                <div class="status-bar">
-                    <span class="live-txt">Live</span>
-                    <span class="dot"></span>
-                    <span id="main-name">FIFA Server 1</span>
+            <div class="container">
+                <!-- Server Selection ABOVE Player -->
+                <div class="server-box">
+                    <div class="server-grid">
+                        <button class="srv-btn active" onclick="playWC(0, this)"><span class="hd">HD</span> Server 1</button>
+                        <button class="srv-btn" onclick="playWC(1, this)"><span class="hd">HD</span> Server 2</button>
+                        <button class="srv-btn" onclick="playWC(2, this)"><span class="hd">HD</span> Server 3</button>
+                        <button class="srv-btn" onclick="playWC(3, this)"><span class="hd">HD</span> Server 4</button>
+                    </div>
                 </div>
-            </div>
-            
-            <!-- Server Selection for FIFA -->
-            <div class="server-box">
-                <p>FIFA World Cup Servers</p>
-                <div class="server-grid">
-                    <button class="srv-btn active" onclick="playWC(0, this)">Server 1</button>
-                    <button class="srv-btn" onclick="playWC(1, this)">Server 2</button>
-                    <button class="srv-btn" onclick="playWC(2, this)">Server 3</button>
-                    <button class="srv-btn" onclick="playWC(3, this)">Server 4</button>
+
+                <!-- Squared Video Player -->
+                <div class="player-wrapper home-player">
+                    <video id="main-video" playsinline controls muted autoplay></video>
+                    <div class="status-bar">
+                        <span class="live-txt">Live</span>
+                        <span class="dot"></span>
+                        <span id="main-name">FIFA Server 1</span>
+                    </div>
+                </div>
+
+                <!-- Extra Channels below Home Player -->
+                <div class="extra-heading">More Channels</div>
+                <div class="grid" id="home-extra-grid">
+                    <!-- Home page extra channels will load here -->
                 </div>
             </div>
         </div>
@@ -47,6 +54,7 @@
         <!-- Category View -->
         <div id="cat-list-view" style="display: none;" class="container">
             <div class="cat-grid">
+                <!-- Same categories as before -->
                 <div class="cat-card" onclick="openCat('sports')"><i class="fas fa-trophy"></i><span>Sports</span></div>
                 <div class="cat-card" onclick="openCat('news')"><i class="fas fa-newspaper"></i><span>News</span></div>
                 <div class="cat-card" onclick="openCat('kids')"><i class="fas fa-child"></i><span>Kids</span></div>
@@ -61,15 +69,15 @@
         <!-- Category Player View -->
         <div id="cat-player-view" style="display: none;">
             <div class="player-wrapper">
-                <video id="cat-video" playsinline controls></video>
+                <video id="cat-video" playsinline controls muted autoplay></video>
                 <div class="status-bar">
                     <span class="live-txt">Live</span>
                     <span class="dot"></span>
-                    <span id="cat-name">Select Channel</span>
+                    <span id="cat-name">Selecting...</span>
                 </div>
             </div>
             <div class="container">
-                <button class="back-btn" onclick="navTo('cat')">← Back to Categories</button>
+                <button class="back-btn" onclick="navTo('cat')">← Back</button>
                 <div class="grid" id="cat-grid"></div>
             </div>
         </div>
