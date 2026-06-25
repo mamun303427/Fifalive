@@ -13,7 +13,6 @@
     <header>
         <div class="header-container">
             <img src="https://via.placeholder.com/150x50?text=LOGO" alt="Logo" id="site-logo">
-            <!-- Theme Toggle Button (Sun/Moon Design) -->
             <div id="theme-toggle" class="theme-btn" onclick="toggleTheme()">
                 <i class="fas fa-sun" id="theme-icon"></i>
             </div>
@@ -21,20 +20,18 @@
     </header>
 
     <div class="main-content">
+        <!-- Home View -->
         <div id="home-view">
             <div class="container">
-                
-                <!-- Large Video Player -->
                 <div class="player-wrapper home-player">
                     <video id="main-video" playsinline controls muted autoplay></video>
                     <div class="status-bar">
-                        <span class="dot"></span> <!-- Dot is on the LEFT -->
+                        <span class="dot"></span>
                         <span class="live-txt">Live</span>
                         <span id="main-name">Server 1</span>
                     </div>
                 </div>
 
-                <!-- Server Selection in ONE LINE (5 Servers) -->
                 <div class="server-box" id="server-section">
                     <div class="server-one-line">
                         <button class="srv-btn active" onclick="playWC(0, this)"><span class="hd">HD</span> Server 1</button>
@@ -45,23 +42,47 @@
                     </div>
                 </div>
 
-                <!-- Extra Channels Section -->
-                <div class="extra-heading">Sports Channels</div>
+                <div class="extra-heading">Recommended Channels</div>
                 <div class="grid" id="home-extra-grid"></div>
             </div>
         </div>
 
-        <!-- Category View -->
+        <!-- Category View (New Design) -->
         <div id="cat-list-view" style="display: none;" class="container">
-            <div class="cat-grid">
-                <div class="cat-card" onclick="openCat('sports')"><i class="fas fa-trophy"></i><span>Sports Channel</span></div>
-                <div class="cat-card" onclick="openCat('news')"><i class="fas fa-newspaper"></i><span>News Channel</span></div>
-                <div class="cat-card" onclick="openCat('kids')"><i class="fas fa-child"></i><span>Kids Channel</span></div>
-                <div class="cat-card" onclick="openCat('doc')"><i class="fas fa-globe-americas"></i><span>Documentary</span></div>
-                <div class="cat-card" onclick="openCat('islamic')"><i class="fas fa-mosque"></i><span>Islamic Tv</span></div>
-                <div class="cat-card" onclick="openCat('bd')"><img src="https://flagcdn.com/w80/bd.png"><span>Bangladeshi Tv</span></div>
-                <div class="cat-card" onclick="openCat('pk')"><img src="https://flagcdn.com/w80/pk.png"><span>Pakistani Tv</span></div>
-                <div class="cat-card" onclick="openCat('in')"><img src="https://flagcdn.com/w80/in.png"><span>Indian Tv</span></div>
+            <h2 class="page-title">Categories</h2>
+            <div class="cat-grid-new">
+                <div class="cat-item" onclick="openCat('sports')">
+                    <div class="cat-circle"><i class="fas fa-trophy"></i></div>
+                    <span>Sports</span>
+                </div>
+                <div class="cat-item" onclick="openCat('news')">
+                    <div class="cat-circle"><i class="fas fa-newspaper"></i></div>
+                    <span>News</span>
+                </div>
+                <div class="cat-item" onclick="openCat('kids')">
+                    <div class="cat-circle"><i class="fas fa-child"></i></div>
+                    <span>Kids</span>
+                </div>
+                <div class="cat-item" onclick="openCat('doc')">
+                    <div class="cat-circle"><i class="fas fa-globe-americas"></i></div>
+                    <span>Documentary</span>
+                </div>
+                <div class="cat-item" onclick="openCat('islamic')">
+                    <div class="cat-circle"><i class="fas fa-mosque"></i></div>
+                    <span>Islamic</span>
+                </div>
+                <div class="cat-item" onclick="openCat('bd')">
+                    <div class="cat-circle"><img src="https://flagcdn.com/w160/bd.png"></div>
+                    <span>Bangladesh</span>
+                </div>
+                <div class="cat-item" onclick="openCat('in')">
+                    <div class="cat-circle"><img src="https://flagcdn.com/w160/in.png"></div>
+                    <span>India</span>
+                </div>
+                <div class="cat-item" onclick="openCat('pk')">
+                    <div class="cat-circle"><img src="https://flagcdn.com/w160/pk.png"></div>
+                    <span>Pakistan</span>
+                </div>
             </div>
         </div>
 
