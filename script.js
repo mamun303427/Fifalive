@@ -1,7 +1,6 @@
 // FIFA Servers (আপনার M3U8 লিঙ্ক এখানে দিন)
 const wcServers = [
-    { name: "FIFA Server 1", url: "https://assets.football-logos.cc/logos/tournaments/1500x1500/fifa-world-cup-2026--white.10e0b37b.png" group-title="Sports",T Sports HD
-https://trs1.aynaott.com/tsports/index.m3u8" },
+    { name: "https://trs1.aynaott.com/tsports/index.m3u8" },
     { name: "FIFA Server 2", url: "URL_HERE" },
     { name: "FIFA Server 3", url: "URL_HERE" },
     { name: "FIFA Server 4", url: "URL_HERE" }
