@@ -1,7 +1,7 @@
 const wcServers = [
-    { name: "FIFA Server 1", url: "https://trs1.aynaott.com/tsports/index.m3u8" },
-    { name: "FIFA Server 2", url: "http://s.rocketdns.info:8080/live/monstercable/Dq6jjknxCr/3146.ts" },
-    { name: "FIFA Server 3", url: "http://s.rocketdns.info:8080/live/monstercable/Dq6jjknxCr/3145.ts" },
+    { name: "FIFA Server 1", url: "https://iptv-org.github.io/iptv/countries/bd.m3u8" },
+    { name: "FIFA Server 2", url: "URL_2" },
+    { name: "FIFA Server 3", url: "URL_3" },
     { name: "FIFA Server 4", url: "URL_4" }
 ];
 
@@ -10,14 +10,13 @@ const categoryLinks = {
     bd: 'https://iptv-org.github.io/iptv/countries/bd.m3u',
     in: 'https://iptv-org.github.io/iptv/countries/in.m3u',
     pk: 'https://iptv-org.github.io/iptv/countries/pk.m3u',
-    homeExtra: 'https://iptv-org.github.io/iptv/countries/bd.m3u' // হোমস্ক্রিনের নিচের চ্যানেলের জন্য লিংক
+    homeExtra: 'https://iptv-org.github.io/iptv/countries/bd.m3u'
 };
 
 const mainVid = document.getElementById('main-video');
 const catVid = document.getElementById('cat-video');
 let hlsMain, hlsCat;
 
-// ১. অটো-প্লে প্রথম সার্ভার এবং হোমস্ক্রিন চ্যানেল লোড
 window.onload = () => {
     playWC(0, document.querySelector('.srv-btn'));
     loadHomeExtra();
@@ -29,7 +28,7 @@ async function loadHomeExtra() {
     const data = await res.text();
     const channels = parseM3U(data);
     
-    channels.slice(0, 12).forEach(ch => { // শুরুতে ১২টি চ্যানেল দেখাবে
+    channels.slice(0, 16).forEach(ch => { 
         const card = document.createElement('div');
         card.className = 'channel-card';
         card.innerHTML = `<img src="${ch.logo}" onerror="this.src='https://via.placeholder.com/100?text=TV'"><span>${ch.name}</span>`;
@@ -78,7 +77,28 @@ function toggleTheme() {
     }
 }
 
-// ক্যাটেগরি পার্সার এবং নেভিগেশন আগের মতোই থাকবে...
+function parseM3U(data) {
+    const list = [];
+    const lines = data.split('\n');
+    for (let i = 0; i < lines.length; i++) {
+        if (lines[i].includes('#EXTINF')) {
+            const name = lines[i].split(',')[1] || "TV";
+            const logo = lines[i].match(/tvg-logo="([^"]+)"/)?.[1] || "";
+            const url = lines[i + 1]?.trim();
+            if (url) list.push({ name, logo, url });
+        }
+    }
+    return list;
+}
+
+function navTo(v) {
+    document.getElementById('home-view').style.display = v === 'home' ? 'block' : 'none';
+    document.getElementById('cat-list-view').style.display = v === 'cat' ? 'block' : 'none';
+    document.getElementById('cat-player-view').style.display = 'none';
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('btn-' + v).classList.add('active');
+}
+
 async function openCat(k) {
     document.getElementById('cat-list-view').style.display = 'none';
     document.getElementById('cat-player-view').style.display = 'block';
@@ -103,28 +123,4 @@ async function openCat(k) {
             document.getElementById('cat-name').innerText = ch.name;
         }
     });
-}
-
-function parseM3U(data) {
-    const list = [];
-    const lines = data.split('\n');
-    for (let i = 0; i < lines.length; i++) {
-        if (lines[i].includes('#EXTINF')) {
-            const name = lines[i].split(',')[1] || "TV";
-            const logo = lines[i].match(/tvg-logo="([^"]+)"/)?.[1] || "";
-            const url = lines[i + 1]?.trim();
-            if (url) list.push({ name, logo, url });
-        }
-    }
-    return list;
-}
-
-function navTo(v) {
-    document.getElementById('home-view').style.display = v === 'home' ? 'block' : 'none';
-    document.getElementById('cat-list-view').style.display = v === 'cat' ? 'block' : 'none';
-    document.getElementById('cat-player-view').style.display = 'none';
-    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-    document.getElementById('btn-' + v).classList.add('active');
-    mainVid.pause(); catVid.pause();
-    if(v === 'home') mainVid.play();
 }
