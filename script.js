@@ -7,8 +7,15 @@ const wcServers = [
 ];
 
 const categoryLinks = {
+    sports: 'এখানে_স্পোর্টস_লিঙ্ক_দিন',
+    news: 'এখানে_নিউজ_লিঙ্ক_দিন',
+    kids: 'এখানে_কিডস_লিঙ্ক_দিন',
+    doc: 'এখানে_ডকুমেন্টারি_লিঙ্ক_দিন',
+    islamic: 'এখানে_ইসলামিক_লিঙ্ক_দিন',
     bd: 'https://iptv-org.github.io/iptv/countries/bd.m3u',
-    homeExtra: 'https://iptv-org.github.io/iptv/categories/sports.m3u'
+    in: 'https://raw.githubusercontent.com/iptv-org/iptv/refs/heads/master/streams/in.m3u',
+    pk: 'https://iptv-org.github.io/iptv/countries/pk.m3u',
+    homeExtra: 'https://iptv-org.github.io/iptv/countries/bd.m3u' // হোম পেজের নিচের চ্যানেল
 };
 
 const mainVid = document.getElementById('main-video');
