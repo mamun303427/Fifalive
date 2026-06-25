@@ -15,7 +15,7 @@ const categoryLinks = {
     bd: 'https://iptv-org.github.io/iptv/countries/bd.m3u',
     in: 'https://raw.githubusercontent.com/iptv-org/iptv/refs/heads/master/streams/in.m3u',
     pk: 'https://iptv-org.github.io/iptv/countries/pk.m3u',
-    homeExtra: 'https://github.com/mamun303427/Fifalive/blob/main/Fifa%20world%20cup.m3u' // হোম পেজের নিচের চ্যানেল
+    homeExtra: 'https://raw.githubusercontent.com/mamun303427/Fifalive/refs/heads/main/Fifa%20world%20cup.m3u' // হোম পেজের নিচের চ্যানেল
 };
 
 const mainVid = document.getElementById('main-video');
