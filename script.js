@@ -1,8 +1,8 @@
 const wcServers = [
-    { name: "FIFA Server 1", url: "https://trs1.aynaott.com/tsports/index.m3u8" },
-    { name: "FIFA Server 2", url: "URL_2" },
-    { name: "FIFA Server 3", url: "URL_3" },
-    { name: "FIFA Server 4", url: "URL_4" }
+    { name: "T Sports HD", url: "https://trs1.aynaott.com/tsports/index.m3u8" },
+    { name: "Fox Sports", url: "http://84.17.50.102/fox/index.m3u8" },
+    { name: "FIFA Server 3", url: "https://1nyaler.streamhostingcdn.top/stream/23/index.m3u8" },
+    { name: "FIFA Server 4", url: "http://212.102.34.8:9080/AndFlixHD/video.m3u8" }
 ];
 
 const categoryLinks = {
