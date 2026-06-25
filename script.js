@@ -1,7 +1,7 @@
 // FIFA Servers (আপনার M3U8 লিঙ্ক এখানে দিন)
 const wcServers = [
     { name: "https://trs1.aynaott.com/tsports/index.m3u8" },
-    { name: "FIFA Server 2", url: "URL_HERE" },
+    { name: "FIFA Server 2", url: "https://trs1.aynaott.com/tsports/index.m3u8" },
     { name: "FIFA Server 3", url: "URL_HERE" },
     { name: "FIFA Server 4", url: "URL_HERE" }
 ];
