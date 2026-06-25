@@ -1,53 +1,55 @@
-// FIFA Servers (আপনার M3U8 লিঙ্ক এখানে দিন)
 const wcServers = [
-    { name: "FIFA Server 1", url: "https://trs1.aynaott.com/tsports/index.m3u8" },
-    { name: "FIFA Server 2", url: "https://trs1.aynaott.com/tsports/index.m3u8" },
-    { name: "FIFA Server 3", url: "URL_HERE" },
-    { name: "FIFA Server 4", url: "URL_HERE" }
+    { name: "FIFA Server 1", url: "https://iptv-org.github.io/iptv/countries/bd.m3u8" },
+    { name: "FIFA Server 2", url: "URL_2" },
+    { name: "FIFA Server 3", url: "URL_3" },
+    { name: "FIFA Server 4", url: "URL_4" }
 ];
 
 const categoryLinks = {
     sports: 'URL', news: 'URL', kids: 'URL', doc: 'URL', islamic: 'URL',
     bd: 'https://iptv-org.github.io/iptv/countries/bd.m3u',
     in: 'https://iptv-org.github.io/iptv/countries/in.m3u',
-    pk: 'https://iptv-org.github.io/iptv/countries/pk.m3u'
+    pk: 'https://iptv-org.github.io/iptv/countries/pk.m3u',
+    homeExtra: 'https://iptv-org.github.io/iptv/countries/bd.m3u' // হোমস্ক্রিনের নিচের চ্যানেলের জন্য লিংক
 };
 
 const mainVid = document.getElementById('main-video');
 const catVid = document.getElementById('cat-video');
 let hlsMain, hlsCat;
 
-// ১. অটো-প্লে প্রথম সার্ভার অন হোমপেজ
+// ১. অটো-প্লে প্রথম সার্ভার এবং হোমস্ক্রিন চ্যানেল লোড
 window.onload = () => {
     playWC(0, document.querySelector('.srv-btn'));
+    loadHomeExtra();
 };
 
-// ২. FIFA Server Play Function
+async function loadHomeExtra() {
+    const grid = document.getElementById('home-extra-grid');
+    const res = await fetch(categoryLinks.homeExtra);
+    const data = await res.text();
+    const channels = parseM3U(data);
+    
+    channels.slice(0, 12).forEach(ch => { // শুরুতে ১২টি চ্যানেল দেখাবে
+        const card = document.createElement('div');
+        card.className = 'channel-card';
+        card.innerHTML = `<img src="${ch.logo}" onerror="this.src='https://via.placeholder.com/100?text=TV'"><span>${ch.name}</span>`;
+        card.onclick = () => {
+            loadStream(mainVid, ch.url, 'main');
+            document.getElementById('main-name').innerText = ch.name;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+        grid.appendChild(card);
+    });
+}
+
 function playWC(index, btn) {
     const srv = wcServers[index];
     document.getElementById('main-name').innerText = srv.name;
-    
-    // বাটন অ্যাক্টিভ করা
     document.querySelectorAll('.srv-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-
     loadStream(mainVid, srv.url, 'main');
 }
 
-// ৩. থিম পরিবর্তন (Sun/Moon Icon)
-function toggleTheme() {
-    const body = document.body;
-    const icon = document.getElementById('theme-icon');
-    if (body.classList.contains('dark-theme')) {
-        body.classList.replace('dark-theme', 'light-theme');
-        icon.classList.replace('fa-sun', 'fa-moon');
-    } else {
-        body.classList.replace('light-theme', 'dark-theme');
-        icon.classList.replace('fa-moon', 'fa-sun');
-    }
-}
-
-// ৪. স্ট্রীম লোড ফাংশন
 function loadStream(vid, url, type) {
     if (Hls.isSupported()) {
         if (type === 'main') {
@@ -64,17 +66,27 @@ function loadStream(vid, url, type) {
     }
 }
 
-// ৫. ক্যাটেগরি লজিক
+function toggleTheme() {
+    const body = document.body;
+    const icon = document.getElementById('theme-icon');
+    if (body.classList.contains('dark-theme')) {
+        body.classList.replace('dark-theme', 'light-theme');
+        icon.classList.replace('fa-sun', 'fa-moon');
+    } else {
+        body.classList.replace('light-theme', 'dark-theme');
+        icon.classList.replace('fa-moon', 'fa-sun');
+    }
+}
+
+// ক্যাটেগরি পার্সার এবং নেভিগেশন আগের মতোই থাকবে...
 async function openCat(k) {
     document.getElementById('cat-list-view').style.display = 'none';
     document.getElementById('cat-player-view').style.display = 'block';
     const grid = document.getElementById('cat-grid');
     grid.innerHTML = '<p>Loading...</p>';
-
     const res = await fetch(categoryLinks[k]);
     const data = await res.text();
     const channels = parseM3U(data);
-
     grid.innerHTML = '';
     channels.forEach((ch, idx) => {
         const card = document.createElement('div');
@@ -86,7 +98,7 @@ async function openCat(k) {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         };
         grid.appendChild(card);
-        if(idx === 0) { // ক্যাটেগরিতেও প্রথমটা অটো-প্লে হবে
+        if(idx === 0) {
             loadStream(catVid, ch.url, 'cat');
             document.getElementById('cat-name').innerText = ch.name;
         }
