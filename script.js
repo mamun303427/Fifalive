@@ -8,7 +8,7 @@ const wcServers = [
 
 const categoryLinks = {
     bd: 'https://iptv-org.github.io/iptv/countries/bd.m3u',
-    homeExtra: 'https://iptv-org.github.io/iptv/countries/bd.m3u'
+    homeExtra: 'https://iptv-org.github.io/iptv/categories/sports.m3u'
 };
 
 const mainVid = document.getElementById('main-video');
