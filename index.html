@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Fifa Live TV</title>
+    <title>Live TV Pro</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
@@ -12,12 +12,10 @@
 
     <header>
         <div class="header-container">
-            <img src="https://drive.google.com/file/d/1QKXCjZyt_qkpxfEbckI4dMTvjT59wFhC/view?usp=drivesdk" alt="Logo" id="site-logo">
-            <div class="theme-switch-wrapper">
-                <label class="theme-switch">
-                    <input type="checkbox" id="checkbox">
-                    <div class="slider round"></div>
-                </label>
+            <img src="https://via.placeholder.com/150x50?text=LOGO" alt="Logo" id="site-logo">
+            <!-- Theme Toggle Button (Sun/Moon) -->
+            <div id="theme-toggle" class="theme-btn" onclick="toggleTheme()">
+                <i class="fas fa-sun" id="theme-icon"></i>
             </div>
         </div>
     </header>
@@ -25,50 +23,59 @@
     <div class="main-content">
         <!-- Home Section -->
         <div id="home-view">
-            <div id="main-player-wrapper" class="player-wrapper" style="display: none;">
-                <video id="main-video" playsinline></video>
+            <div class="player-wrapper">
+                <video id="main-video" poster="https://via.placeholder.com/800x450?text=Live+Streaming" playsinline controls></video>
                 <div class="status-bar">
                     <span class="live-txt">Live</span>
                     <span class="dot"></span>
-                    <span id="main-name"></span>
+                    <span id="main-name">FIFA Server 1</span>
                 </div>
             </div>
-            <div class="container">
-                <div class="grid" id="main-grid"></div>
+            
+            <!-- Server Selection for FIFA -->
+            <div class="server-box">
+                <p>FIFA World Cup Servers</p>
+                <div class="server-grid">
+                    <button class="srv-btn active" onclick="playWC(0, this)">Server 1</button>
+                    <button class="srv-btn" onclick="playWC(1, this)">Server 2</button>
+                    <button class="srv-btn" onclick="playWC(2, this)">Server 3</button>
+                    <button class="srv-btn" onclick="playWC(3, this)">Server 4</button>
+                </div>
             </div>
         </div>
 
-        <!-- Category Selection -->
+        <!-- Category View -->
         <div id="cat-list-view" style="display: none;" class="container">
             <div class="cat-grid">
-                <div class="cat-card" onclick="openCat('sports')"><i class="fas fa-trophy"></i><span>Sports Channel</span></div>
-                <div class="cat-card" onclick="openCat('news')"><i class="fas fa-newspaper"></i><span>News Channel</span></div>
-                <div class="cat-card" onclick="openCat('kids')"><i class="fas fa-child"></i><span>Kids Channel</span></div>
+                <div class="cat-card" onclick="openCat('sports')"><i class="fas fa-trophy"></i><span>Sports</span></div>
+                <div class="cat-card" onclick="openCat('news')"><i class="fas fa-newspaper"></i><span>News</span></div>
+                <div class="cat-card" onclick="openCat('kids')"><i class="fas fa-child"></i><span>Kids</span></div>
                 <div class="cat-card" onclick="openCat('doc')"><i class="fas fa-globe-americas"></i><span>Documentary</span></div>
-                <div class="cat-card" onclick="openCat('islamic')"><i class="fas fa-mosque"></i><span>Islamic Tv</span></div>
-                <div class="cat-card" onclick="openCat('bd')"><img src="https://flagcdn.com/w80/bd.png"><span>Bangladeshi Tv</span></div>
-                <div class="cat-card" onclick="openCat('pk')"><img src="https://flagcdn.com/w80/pk.png"><span>Pakistani Tv</span></div>
-                <div class="cat-card" onclick="openCat('in')"><img src="https://flagcdn.com/w80/in.png"><span>Indian Tv</span></div>
+                <div class="cat-card" onclick="openCat('islamic')"><i class="fas fa-mosque"></i><span>Islamic</span></div>
+                <div class="cat-card" onclick="openCat('bd')"><img src="https://flagcdn.com/w80/bd.png"><span>Bangladesh</span></div>
+                <div class="cat-card" onclick="openCat('pk')"><img src="https://flagcdn.com/w80/pk.png"><span>Pakistan</span></div>
+                <div class="cat-card" onclick="openCat('in')"><img src="https://flagcdn.com/w80/in.png"><span>India</span></div>
             </div>
         </div>
 
-        <!-- Category Player -->
+        <!-- Category Player View -->
         <div id="cat-player-view" style="display: none;">
-            <div id="cat-player-wrapper" class="player-wrapper" style="display: none;">
-                <video id="cat-video" playsinline></video>
+            <div class="player-wrapper">
+                <video id="cat-video" playsinline controls></video>
                 <div class="status-bar">
                     <span class="live-txt">Live</span>
                     <span class="dot"></span>
-                    <span id="cat-name"></span>
+                    <span id="cat-name">Select Channel</span>
                 </div>
             </div>
             <div class="container">
-                <button class="back-btn" onclick="navTo('cat')">← Back</button>
+                <button class="back-btn" onclick="navTo('cat')">← Back to Categories</button>
                 <div class="grid" id="cat-grid"></div>
             </div>
         </div>
     </div>
 
+    <!-- Bottom Navigation -->
     <nav class="bottom-nav">
         <div class="nav-btn active" id="btn-home" onclick="navTo('home')">
             <i class="fas fa-home"></i><span>Home</span>
