@@ -1,5 +1,5 @@
 const wcServers = [
-    { name: "FIFA Server 1", url: "https://iptv-org.github.io/iptv/countries/bd.m3u8" },
+    { name: "FIFA Server 1", url: "https://trs1.aynaott.com/tsports/index.m3u8" },
     { name: "FIFA Server 2", url: "URL_2" },
     { name: "FIFA Server 3", url: "URL_3" },
     { name: "FIFA Server 4", url: "URL_4" }
