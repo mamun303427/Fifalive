@@ -1,6 +1,6 @@
 const wcServers = [
     { name: "T Sports HD", url: "https://trs1.aynaott.com/tsports/index.m3u8" }, // আপনার লিঙ্ক দিন
-    { name: "Server 2", url: "URL_2" },
+    { name: "T Sports", url: "https://tv.beyondtaxconsultants.com/api/proxy?url=http://198.195.239.50:8095/tsports/index.m3u8" },
     { name: "Server 3", url: "URL_3" },
     { name: "Server 4", url: "URL_4" },
     { name: "Server 5", url: "URL_5" }
