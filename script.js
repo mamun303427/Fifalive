@@ -7,7 +7,7 @@ const wcServers = [
 ];
 
 const categoryLinks = {
-    sports: 'এখানে_স্পোর্টস_লিঙ্ক_দিন',
+    sports: 'https://raw.githubusercontent.com/mamun303427/Fifalive/refs/heads/main/New%20Channels.m3u',
     news: 'এখানে_নিউজ_লিঙ্ক_দিন',
     kids: 'এখানে_কিডস_লিঙ্ক_দিন',
     doc: 'এখানে_ডকুমেন্টারি_লিঙ্ক_দিন',
