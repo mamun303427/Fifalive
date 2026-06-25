@@ -23,7 +23,18 @@
         <!-- Home Section -->
         <div id="home-view">
             <div class="container">
-                <!-- Server Selection ABOVE Player -->
+                
+                <!-- Large Video Player -->
+                <div class="player-wrapper home-player">
+                    <video id="main-video" playsinline controls muted autoplay></video>
+                    <div class="status-bar">
+                        <span class="dot"></span> <!-- Dot is now on the LEFT -->
+                        <span class="live-txt">Live</span>
+                        <span id="main-name">FIFA Server 1</span>
+                    </div>
+                </div>
+
+                <!-- Server Selection BELOW Player -->
                 <div class="server-box">
                     <div class="server-grid">
                         <button class="srv-btn active" onclick="playWC(0, this)"><span class="hd">HD</span> Server 1</button>
@@ -33,28 +44,15 @@
                     </div>
                 </div>
 
-                <!-- Squared Video Player -->
-                <div class="player-wrapper home-player">
-                    <video id="main-video" playsinline controls muted autoplay></video>
-                    <div class="status-bar">
-                        <span class="live-txt">Live</span>
-                        <span class="dot"></span>
-                        <span id="main-name">FIFA Server 1</span>
-                    </div>
-                </div>
-
-                <!-- Extra Channels below Home Player -->
-                <div class="extra-heading">More Channels</div>
-                <div class="grid" id="home-extra-grid">
-                    <!-- Home page extra channels will load here -->
-                </div>
+                <!-- Extra Channels -->
+                <div class="extra-heading">Recommended Channels</div>
+                <div class="grid" id="home-extra-grid"></div>
             </div>
         </div>
 
         <!-- Category View -->
         <div id="cat-list-view" style="display: none;" class="container">
             <div class="cat-grid">
-                <!-- Same categories as before -->
                 <div class="cat-card" onclick="openCat('sports')"><i class="fas fa-trophy"></i><span>Sports</span></div>
                 <div class="cat-card" onclick="openCat('news')"><i class="fas fa-newspaper"></i><span>News</span></div>
                 <div class="cat-card" onclick="openCat('kids')"><i class="fas fa-child"></i><span>Kids</span></div>
@@ -71,8 +69,8 @@
             <div class="player-wrapper">
                 <video id="cat-video" playsinline controls muted autoplay></video>
                 <div class="status-bar">
-                    <span class="live-txt">Live</span>
                     <span class="dot"></span>
+                    <span class="live-txt">Live</span>
                     <span id="cat-name">Selecting...</span>
                 </div>
             </div>
