@@ -1,15 +1,17 @@
 const wcServers = [
-    { name: "T Sports HD", url: "https://trs1.aynaott.com/tsports/index.m3u8" },
+    { name: "T Sports HD", url: "https://trs1.aynaott.com/tsports/index.m3u8" }, // আপনার লিঙ্ক দিন
     { name: "Bein Sports 1", url: "https://1nyaler.streamhostingcdn.top/stream/23/index.m3u8" },
-    { name: "FIFA Server 3", url: "LINK_3" },
-    { name: "FIFA Server 4", url: "LINK_4" },
-    { name: "FIFA Server 5", url: "LINK_5" },
-    { name: "FIFA Server 6", url: "LINK_6" }
+    { name: "Server 3", url: "URL_3" },
+    { name: "Server 4", url: "URL_4" },
+    { name: "Server 5", url: "URL_5" }
 ];
 
 const categoryLinks = {
+    sports: 'URL', news: 'URL', kids: 'URL', doc: 'URL', islamic: 'URL',
     bd: 'https://iptv-org.github.io/iptv/countries/bd.m3u',
-    homeExtra: 'https://iptv-org.github.io/iptv/countries/bd.m3u'
+    in: 'https://iptv-org.github.io/iptv/countries/in.m3u',
+    pk: 'https://iptv-org.github.io/iptv/countries/pk.m3u',
+    homeExtra: 'https://iptv-org.github.io/iptv/countries/bd.m3u' // রিকমেন্ডেড চ্যানেলের জন্য লিঙ্ক
 };
 
 const mainVid = document.getElementById('main-video');
@@ -17,6 +19,7 @@ const catVid = document.getElementById('cat-video');
 const serverSection = document.getElementById('server-section');
 let hlsMain, hlsCat;
 
+// ১. অটো-প্লে প্রথম সার্ভার অন লোড
 window.onload = () => {
     playWC(0, document.querySelector('.srv-btn'));
     loadHomeExtra();
@@ -28,12 +31,12 @@ async function loadHomeExtra() {
     const data = await res.text();
     const channels = parseM3U(data);
     
-    channels.slice(0, 20).forEach(ch => { 
+    channels.slice(0, 16).forEach(ch => { 
         const card = document.createElement('div');
         card.className = 'channel-card';
         card.innerHTML = `<img src="${ch.logo}" onerror="this.src='https://via.placeholder.com/100?text=TV'"><span>${ch.name}</span>`;
         card.onclick = () => {
-            // নিচের চ্যানেলে ক্লিক করলে সার্ভার হাইড হবে
+            // চ্যানেলে ক্লিক করলে সার্ভার হাইড হবে
             serverSection.style.display = 'none';
             loadStream(mainVid, ch.url, 'main');
             document.getElementById('main-name').innerText = ch.name;
@@ -45,7 +48,6 @@ async function loadHomeExtra() {
 
 function playWC(index, btn) {
     const srv = wcServers[index];
-    // সার্ভার বাটনে ক্লিক করলে সার্ভার সেকশন দৃশ্যমান থাকবে
     serverSection.style.display = 'block';
     document.getElementById('main-name').innerText = srv.name;
     document.querySelectorAll('.srv-btn').forEach(b => b.classList.remove('active'));
@@ -101,10 +103,6 @@ function navTo(v) {
     document.getElementById('cat-player-view').style.display = 'none';
     document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
     document.getElementById('btn-' + v).classList.add('active');
-    // হোমে ফিরলে সার্ভার আবার দেখাবে (যদি প্রথম সার্ভারটি প্লে হয়)
-    if(v === 'home') {
-        serverSection.style.display = 'block';
-    }
 }
 
 async function openCat(k) {
@@ -126,5 +124,9 @@ async function openCat(k) {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         };
         grid.appendChild(card);
+        if(idx === 0) {
+            loadStream(catVid, ch.url, 'cat');
+            document.getElementById('cat-name').innerText = ch.name;
+        }
     });
 }
