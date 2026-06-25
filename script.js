@@ -1,7 +1,7 @@
 const wcServers = [
     { name: "FIFA Server 1", url: "https://trs1.aynaott.com/tsports/index.m3u8" },
-    { name: "FIFA Server 2", url: "URL_2" },
-    { name: "FIFA Server 3", url: "URL_3" },
+    { name: "FIFA Server 2", url: "http://s.rocketdns.info:8080/live/monstercable/Dq6jjknxCr/3146.ts" },
+    { name: "FIFA Server 3", url: "http://s.rocketdns.info:8080/live/monstercable/Dq6jjknxCr/3145.ts" },
     { name: "FIFA Server 4", url: "URL_4" }
 ];
 
