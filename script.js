@@ -176,7 +176,66 @@ function playStream(videoElem, url, name, titleId) {
     
     // ভিডিও প্লে শুরু হলে স্ক্রিন অন রাখার কমান্ড দিন
     requestWakeLock();
+const mainVid = document.getElementById('main-video');
+const brightnessOverlay = document.getElementById('brightness-overlay');
 
+// ১. সাউন্ডসহ প্লে করার ফাংশন
+function loadStream(vid, url, type) {
+    vid.muted = false; // সাউন্ড অন করা
+    vid.volume = 1.0;  // ফুল ভলিউম
+
+    if (Hls.isSupported()) {
+        if (type === 'main') {
+            if(hlsMain) hlsMain.destroy();
+            hlsMain = new Hls(); hlsMain.loadSource(url); hlsMain.attachMedia(vid);
+            hlsMain.on(Hls.Events.MANIFEST_PARSED, () => {
+                vid.play().catch(() => {
+                    // যদি ব্রাউজার ব্লক করে, তবে মিউট করে প্লে করবে
+                    vid.muted = true;
+                    vid.play();
+                });
+            });
+        }
+        // ... ক্যাটেগরির জন্য একই লজিক
+    }
+}
+
+// ২. ভলিউম এবং ব্রাইটনেস টাচ কন্ট্রোল (মোবাইল ফুল স্ক্রিন)
+let startY = 0;
+let startVol = 1;
+let startBright = 0;
+
+mainVid.addEventListener('touchstart', (e) => {
+    startY = e.touches[0].clientY;
+    startVol = mainVid.volume;
+    // বর্তমান ব্রাইটনেস (ওভারলে অপাসিটি থেকে উল্টোটা)
+    startBright = 1 - parseFloat(window.getComputedStyle(brightnessOverlay).opacity);
+}, { passive: false });
+
+mainVid.addEventListener('touchmove', (e) => {
+    const currentY = e.touches[0].clientY;
+    const currentX = e.touches[0].clientX;
+    const diffY = startY - currentY;
+    const screenWidth = window.innerWidth;
+
+    // স্ক্রিনের ডান অর্ধেকের টাচ = ভলিউম কন্ট্রোল
+    if (currentX > screenWidth / 2) {
+        let newVol = startVol + (diffY / 200); // সংবেদনশীলতা
+        if (newVol > 1) newVol = 1;
+        if (newVol < 0) newVol = 0;
+        mainVid.volume = newVol;
+    } 
+    // স্ক্রিনের বাম অর্ধেকের টাচ = ব্রাইটনেস কন্ট্রোল
+    else {
+        let newBright = startBright + (diffY / 200);
+        if (newBright > 1) newBright = 1;
+        if (newBright < 0) newBright = 0;
+        // ব্রাইটনেস বাড়াতে অপাসিটি কমাতে হবে
+        brightnessOverlay.style.opacity = 1 - newBright;
+    }
+    
+    e.preventDefault(); // স্ক্রল হওয়া বন্ধ করতে
+}, { passive: false });
     if (Hls.isSupported()) {
         const hls = new Hls();
         hls.loadSource(url);
