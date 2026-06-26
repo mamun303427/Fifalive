@@ -11,7 +11,7 @@ const categoryLinks = {
     news: 'https://raw.githubusercontent.com/mamun303427/Fifalive/refs/heads/main/News%20Channel.m3u',
     kids: 'এখানে_কিডস_লিঙ্ক_দিন',
     doc: 'এখানে_ডকুমেন্টারি_লিঙ্ক_দিন',
-    islamic: 'এখানে_ইসলামিক_লিঙ্ক_দিন',
+    islamic: 'https://raw.githubusercontent.com/mamun303427/Fifalive/refs/heads/main/Islamic%20Tv.m3u',
     bd: 'https://raw.githubusercontent.com/mamun303427/Fifalive/refs/heads/main/Bangladeshi%20Tv.m3u',
     in: 'https://raw.githubusercontent.com/iptv-org/iptv/refs/heads/master/streams/in.m3u',
     pk: 'https://iptv-org.github.io/iptv/countries/pk.m3u',
