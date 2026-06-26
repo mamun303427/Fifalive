@@ -97,13 +97,15 @@ video { width: 100%; aspect-ratio: 16/9; background: #000; display: block; }
 /* ভিডিও প্লেয়ার স্টাইল */
 video { 
     width: 100%; 
-    height: 75%; /* উচ্চতা ১০০% করা হয়েছে */
+    height: 100%; /* উচ্চতা ১০০% করা হয়েছে */
     background: #000; 
     object-fit: contain; /* ডিফল্টভাবে ভিডিওর পুরো অংশ দেখাবে */
 }
 
 /* যখন ফুল স্ক্রিন বাটনে চাপ দেওয়া হবে */
 video:fullscreen {
+    width: 100%; 
+    height: 90%
     object-fit: cover; /* এটি ভিডিওটিকে পুরো স্ক্রিন জুড়ে ছড়িয়ে দেবে, কোনো ফাঁকা থাকবে না */
 }
 
