@@ -12,7 +12,7 @@ const categoryLinks = {
     kids: 'এখানে_কিডস_লিঙ্ক_দিন',
     doc: 'এখানে_ডকুমেন্টারি_লিঙ্ক_দিন',
     islamic: 'এখানে_ইসলামিক_লিঙ্ক_দিন',
-    bd: 'https://iptv-org.github.io/iptv/countries/bd.m3u',
+    bd: 'https://github.com/mamun303427/Fifalive/blob/main/Bangladeshi%20Tv.m3u',
     in: 'https://raw.githubusercontent.com/iptv-org/iptv/refs/heads/master/streams/in.m3u',
     pk: 'https://iptv-org.github.io/iptv/countries/pk.m3u',
     homeExtra: 'https://is.gd/yQuS1g.m3u' // হোম পেজের নিচের চ্যানেল
