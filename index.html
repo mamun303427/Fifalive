@@ -24,9 +24,7 @@
         <div id="home-view">
             <div class="container">
                 <div class="player-wrapper home-player">
-                    <video id="main-video"webkit-playsinline controls autoplay></video>
-                    <!-- ব্রাইটনেস ওভারলে -->
-                    <div id="brightness-overlay"></div>
+                    <video id="main-video" playsinline webkit-playsinline controls autoplay></video>
                     <div class="status-bar">
                         <span class="dot"></span>
                         <span class="live-txt">Live</span>
@@ -92,7 +90,6 @@
         <div id="cat-player-view" style="display: none;">
             <div class="player-wrapper">
                 <video id="cat-video" playsinline webkit-playsinline controls autoplay></video>
-                <div id="cat-brightness-overlay" style="position: absolute; top:0; left:0; width:100%; height:100%; background:black; opacity:0; pointer-events:none;"></div>
                 <div class="status-bar">
                     <span class="dot"></span>
                     <span class="live-txt">Live</span>
