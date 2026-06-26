@@ -4,14 +4,12 @@ const wcServers = [
     { name: "Bein Sports", url: "https://cp11.adabmedia.com/hls2/sport.m3u8" },
     { name: "Caze Tv", url: "https://dfr80qz435crc.cloudfront.net/MNOP/Amagi/Caze/Caze_TV_BR/1080p-vtt/index.m3u8" },
     { name: "Toffee", url: "https://sm-monirul.top/tof/live/toffee4/index.m3u8" },
-    { name: "Server 6", url: "URL_6" },
-    { name: "Server 7", url: "URL_7" },
-    { name: "Server 8", url: "URL_8" },
+    { name: "Server 6", url: "https://example.com/stream6.m3u8" },
+    { name: "Server 7", url: "https://example.com/stream7.m3u8" },
+    { name: "Server 8", url: "https://example.com/stream8.m3u8" },
     { name: "CCTV 5", url: "https://play1.gzxdby.com/live/783234345958_4547667094.m3u8" },
-    { name: "T Sports HD", url: "https://trs1.aynaott.com/tsports/tracks-v1a1/mono.ts.m3u8" }
+    { name: "T Sports HD 2", url: "https://trs1.aynaott.com/tsports/tracks-v1a1/mono.ts.m3u8" }
 ];
-
-// বাকি ফাংশনগুলো (playWC, loadStream, navTo ইত্যাদি) আপনার আগের কোডেই ঠিক আছে।
 
 const categoryLinks = {
     sports: 'https://is.gd/yQuS1g.m3u',
@@ -38,26 +36,25 @@ window.onload = () => {
     loadHomeExtra();
 };
 
-// সাউন্ড আনমিউট লজিক (ইউজার প্রথমবার টাচ করলেই সাউন্ড আসবে)
+// সাউন্ড আনমিউট লজিক
 document.body.addEventListener('touchstart', function unmute() {
     mainVid.muted = false;
     catVid.muted = false;
-    document.body.removeEventListener('touchstart', unmute);
 }, { once: true });
 
 function playWC(index, btn) {
     const srv = wcServers[index];
+    if(!srv) return;
     serverSection.style.display = 'block';
     document.getElementById('main-name').innerText = srv.name;
     document.querySelectorAll('.srv-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
+    if(btn) btn.classList.add('active');
     loadStream(mainVid, srv.url, 'main');
 }
 
 function loadStream(vid, url, type) {
     vid.muted = false;
 
-    // আগের HLS কানেকশন বন্ধ করা
     if (type === 'main' && hlsMain) {
         hlsMain.destroy();
         hlsMain = null;
@@ -95,7 +92,7 @@ async function loadHomeExtra() {
         const data = await res.text();
         const channels = parseM3U(data);
         grid.innerHTML = '';
-        channels.slice(0, 16).forEach(ch => { 
+        channels.slice(0, 20).forEach(ch => { 
             const card = document.createElement('div');
             card.className = 'channel-card';
             card.innerHTML = `<img src="${ch.logo}" onerror="this.src='https://via.placeholder.com/100?text=TV'"><span>${ch.name}</span>`;
@@ -110,34 +107,22 @@ async function loadHomeExtra() {
     } catch (e) { console.log('Home Extra Error'); }
 }
 
-// নেভিগেশন লজিক (ভিডিও এবং অডিও পুরোপুরি বন্ধ করার জন্য আপডেট করা হয়েছে)
 function navTo(v) {
-    // সব ভিডিও পজ করা
     mainVid.pause();
     catVid.pause();
-
-    // ভিডিওর সোর্স খালি করা যাতে ডাটা লোড বন্ধ হয়
     mainVid.src = "";
     catVid.src = "";
 
-    // HLS কানেকশন পুরোপুরি বিচ্ছিন্ন করা
-    if (hlsMain) {
-        hlsMain.destroy();
-        hlsMain = null;
-    }
-    if (hlsCat) {
-        hlsCat.destroy();
-        hlsCat = null;
-    }
+    if (hlsMain) { hlsMain.destroy(); hlsMain = null; }
+    if (hlsCat) { hlsCat.destroy(); hlsCat = null; }
 
     document.getElementById('home-view').style.display = v === 'home' ? 'block' : 'none';
     document.getElementById('cat-list-view').style.display = v === 'cat' ? 'block' : 'none';
     document.getElementById('cat-player-view').style.display = 'none';
     
     document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-    if (document.getElementById('btn-' + v)) {
-        document.getElementById('btn-' + v).classList.add('active');
-    }
+    const btn = document.getElementById('btn-' + v);
+    if (btn) btn.classList.add('active');
 
     if(v === 'home') {
         playWC(0, document.querySelector('.srv-btn'));
@@ -150,13 +135,9 @@ function navTo(v) {
 }
 
 async function openCat(k) {
-    // হোম পেজের ভিডিও পুরোপুরি বন্ধ করা
     mainVid.pause();
     mainVid.src = "";
-    if (hlsMain) {
-        hlsMain.destroy();
-        hlsMain = null;
-    }
+    if (hlsMain) { hlsMain.destroy(); hlsMain = null; }
 
     document.getElementById('cat-list-view').style.display = 'none';
     document.getElementById('cat-player-view').style.display = 'block';
@@ -183,7 +164,7 @@ async function openCat(k) {
                 document.getElementById('cat-name').innerText = ch.name; 
             }
         });
-    } catch (e) { grid.innerHTML = 'Error'; }
+    } catch (e) { grid.innerHTML = 'Error loading channels'; }
 }
 
 function parseM3U(data) {
@@ -191,10 +172,11 @@ function parseM3U(data) {
     const lines = data.split('\n');
     for (let i = 0; i < lines.length; i++) {
         if (lines[i].includes('#EXTINF')) {
-            const name = lines[i].split(',')[1] || "TV";
-            const logo = lines[i].match(/tvg-logo="([^"]+)"/)?.[1] || "";
+            const info = lines[i];
+            const name = info.split(',')[1] || "Unknown TV";
+            const logo = info.match(/tvg-logo="([^"]+)"/)?.[1] || "";
             const url = lines[i + 1]?.trim();
-            if (url) list.push({ name, logo, url });
+            if (url && url.startsWith('http')) list.push({ name, logo, url });
         }
     }
     return list;
