@@ -1,4 +1,3 @@
-// ১. কনফিগারেশন
 const wcServers = [
     { name: "T Sports HD", url: "https://trs1.aynaott.com/tsports/index.m3u8" },
     { name: "T Sports", url: "https://trs1.aynaott.com/tsports/tracks-v1a1/mono.ts.m3u8" },
@@ -22,121 +21,50 @@ const categoryLinks = {
 const mainVid = document.getElementById('main-video');
 const catVid = document.getElementById('cat-video');
 const serverSection = document.getElementById('server-section');
-const brightnessOverlay = document.getElementById('brightness-overlay');
 let hlsMain, hlsCat, wakeLock = null;
 
-// ২. ইনিশিয়াল লোড
+// ইনিশিয়াল লোড
 window.onload = () => {
     playWC(0, document.querySelector('.srv-btn'));
     loadHomeExtra();
 };
 
-// ৩. অটো-সাউন্ড আনমিউট লজিক (ব্রাউজার পলিসি ফিক্স)
-// ইউজারের প্রথম টাচ বা ক্লিকের সাথে সাথেই সাউন্ড অন হবে
+// সাউন্ড আনমিউট লজিক (ইউজার প্রথমবার টাচ করলেই সাউন্ড আসবে)
 document.body.addEventListener('touchstart', function unmute() {
     mainVid.muted = false;
     catVid.muted = false;
     document.body.removeEventListener('touchstart', unmute);
 }, { once: true });
 
-// ৪. স্ট্রীম লোড ফাংশন (Improved Sound Logic)
-function loadStream(vid, url, type, name, titleId) {
-    document.getElementById(titleId).innerText = name;
-    
-    // ভিডিও লোড করার সময় সাউন্ড অন রাখার নির্দেশ
-    vid.muted = false;
-    vid.volume = 1.0;
-
-    if (Hls.isSupported()) {
-        const hls = (type === 'main') ? (hlsMain = hlsMain || new Hls()) : (hlsCat = hlsCat || new Hls());
-        if(type === 'main' && hlsMain) hlsMain.destroy();
-        if(type === 'cat' && hlsCat) hlsCat.destroy();
-        
-        const newHls = new Hls();
-        if(type === 'main') hlsMain = newHls; else hlsCat = newHls;
-        
-        newHls.loadSource(url);
-        newHls.attachMedia(vid);
-        newHls.on(Hls.Events.MANIFEST_PARSED, () => {
-            vid.play().catch(() => {
-                vid.muted = true; // অটো-প্লে না হলে মিউট করে প্লে করবে
-                vid.play();
-            });
-        });
-    } else if (vid.canPlayType('application/vnd.apple.mpegurl')) {
-        vid.src = url;
-        vid.play().catch(() => { vid.muted = true; vid.play(); });
-    }
-    requestWakeLock();
-}
-
-// ৫. জেস্টচার কন্ট্রোল (ফুল স্ক্রিনেও কাজ করবে)
-let startY = 0, startVol = 1, startBright = 0;
-
-function handleGestureStart(e) {
-    startY = e.touches[0].clientY;
-    startVol = mainVid.volume;
-    const opacity = window.getComputedStyle(brightnessOverlay).opacity;
-    startBright = 1 - parseFloat(opacity);
-}
-
-function handleGestureMove(e) {
-    const currentY = e.touches[0].clientY;
-    const currentX = e.touches[0].clientX;
-    const diffY = startY - currentY;
-    const screenWidth = window.innerWidth;
-    const targetVid = (document.getElementById('home-view').style.display !== 'none') ? mainVid : catVid;
-
-    // স্ক্রিনের ডান পাশ (ভলিউম)
-    if (currentX > screenWidth / 2) {
-        let newVol = startVol + (diffY / 300);
-        targetVid.volume = Math.max(0, Math.min(1, newVol));
-    } 
-    // স্ক্রিনের বাম পাশ (ব্রাইটনেস)
-    else {
-        let newBright = startBright + (diffY / 300);
-        brightnessOverlay.style.opacity = 1 - Math.max(0, Math.min(1, newBright));
-    }
-    
-    if(e.cancelable) e.preventDefault();
-}
-
-// ইভেন্ট লিসেনারগুলো প্লেয়ারের ওপর সেট করা
-mainVid.addEventListener('touchstart', handleGestureStart, { passive: false });
-mainVid.addEventListener('touchmove', handleGestureMove, { passive: false });
-catVid.addEventListener('touchstart', handleGestureStart, { passive: false });
-catVid.addEventListener('touchmove', handleGestureMove, { passive: false });
-
-// ৬. নেভিগেশন এবং অন্যান্য ফাংশন
 function playWC(index, btn) {
     const srv = wcServers[index];
     serverSection.style.display = 'block';
+    document.getElementById('main-name').innerText = srv.name;
     document.querySelectorAll('.srv-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-    loadStream(mainVid, srv.url, 'main', srv.name, 'main-name');
+    loadStream(mainVid, srv.url, 'main');
 }
 
-async function openCat(k) {
-    mainVid.pause();
-    document.getElementById('cat-list-view').style.display = 'none';
-    document.getElementById('cat-player-view').style.display = 'block';
-    const grid = document.getElementById('cat-grid');
-    grid.innerHTML = '<p style="text-align:center;">Loading...</p>';
-    
-    try {
-        const res = await fetch(categoryLinks[k] || categoryLinks.bd);
-        const data = await res.text();
-        const channels = parseM3U(data);
-        grid.innerHTML = '';
-        channels.forEach((ch, idx) => {
-            const card = document.createElement('div');
-            card.className = 'channel-card';
-            card.innerHTML = `<img src="${ch.logo}" onerror="this.src='https://via.placeholder.com/100?text=TV'"><span>${ch.name}</span>`;
-            card.onclick = () => loadStream(catVid, ch.url, 'cat', ch.name, 'cat-name');
-            grid.appendChild(card);
-            if(idx === 0) loadStream(catVid, ch.url, 'cat', ch.name, 'cat-name');
-        });
-    } catch (e) { grid.innerHTML = '<p>Error</p>'; }
+function loadStream(vid, url, type) {
+    vid.muted = false;
+    if (Hls.isSupported()) {
+        if (type === 'main') {
+            if(hlsMain) hlsMain.destroy();
+            hlsMain = new Hls(); hlsMain.loadSource(url); hlsMain.attachMedia(vid);
+            hlsMain.on(Hls.Events.MANIFEST_PARSED, () => {
+                vid.play().catch(() => { vid.muted = true; vid.play(); });
+            });
+        } else {
+            if(hlsCat) hlsCat.destroy();
+            hlsCat = new Hls(); hlsCat.loadSource(url); hlsCat.attachMedia(vid);
+            hlsCat.on(Hls.Events.MANIFEST_PARSED, () => {
+                vid.play().catch(() => { vid.muted = true; vid.play(); });
+            });
+        }
+    } else if (vid.canPlayType('application/vnd.apple.mpegurl')) {
+        vid.src = url; vid.play().catch(() => { vid.muted = true; vid.play(); });
+    }
+    requestWakeLock();
 }
 
 async function loadHomeExtra() {
@@ -151,12 +79,13 @@ async function loadHomeExtra() {
             card.innerHTML = `<img src="${ch.logo}" onerror="this.src='https://via.placeholder.com/100?text=TV'"><span>${ch.name}</span>`;
             card.onclick = () => {
                 serverSection.style.display = 'none';
-                loadStream(mainVid, ch.url, 'main', ch.name, 'main-name');
+                loadStream(mainVid, ch.url, 'main');
+                document.getElementById('main-name').innerText = ch.name;
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             };
             grid.appendChild(card);
         });
-    } catch (e) { }
+    } catch (e) { console.log('Home Extra Error'); }
 }
 
 function navTo(v) {
@@ -165,16 +94,40 @@ function navTo(v) {
     document.getElementById('cat-player-view').style.display = 'none';
     document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
     document.getElementById('btn-' + v).classList.add('active');
+
     if(v === 'home') {
         playWC(0, document.querySelector('.srv-btn'));
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
         mainVid.pause(); catVid.pause();
         if (wakeLock) { wakeLock.release(); wakeLock = null; }
     }
 }
 
-async function requestWakeLock() {
-    try { if ('wakeLock' in navigator) wakeLock = await navigator.wakeLock.request('screen'); } catch (err) { }
+async function openCat(k) {
+    mainVid.pause();
+    document.getElementById('cat-list-view').style.display = 'none';
+    document.getElementById('cat-player-view').style.display = 'block';
+    const grid = document.getElementById('cat-grid');
+    grid.innerHTML = '<p style="text-align:center;">Loading...</p>';
+    try {
+        const res = await fetch(categoryLinks[k] || categoryLinks.bd);
+        const data = await res.text();
+        const channels = parseM3U(data);
+        grid.innerHTML = '';
+        channels.forEach((ch, idx) => {
+            const card = document.createElement('div');
+            card.className = 'channel-card';
+            card.innerHTML = `<img src="${ch.logo}" onerror="this.src='https://via.placeholder.com/100?text=TV'"><span>${ch.name}</span>`;
+            card.onclick = () => {
+                loadStream(catVid, ch.url, 'cat');
+                document.getElementById('cat-name').innerText = ch.name;
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            };
+            grid.appendChild(card);
+            if(idx === 0) { loadStream(catVid, ch.url, 'cat'); document.getElementById('cat-name').innerText = ch.name; }
+        });
+    } catch (e) { grid.innerHTML = 'Error'; }
 }
 
 function parseM3U(data) {
@@ -189,6 +142,10 @@ function parseM3U(data) {
         }
     }
     return list;
+}
+
+async function requestWakeLock() {
+    try { if ('wakeLock' in navigator) wakeLock = await navigator.wakeLock.request('screen'); } catch (err) { }
 }
 
 function toggleTheme() {
