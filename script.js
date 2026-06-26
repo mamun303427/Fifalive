@@ -1,14 +1,14 @@
 const wcServers = [
-    { name: "Server 1", url: "https://trs1.aynaott.com/tsports/index.m3u8" },
-    { name: "Server 2", url: "https://trs1.aynaott.com/tsports/tracks-v1a1/mono.ts.m3u8" },
-    { name: "Server 3", url: "http://198.195.239.50:8095/unt-s/video.m3u8" },
-    { name: "Server 4", url: "http://198.195.239.50:8095/somoyTv/tracks-v1a1/mono.m3u8" },
-    { name: "Server 5", url: "URL_5" },
+    { name: "T Sports HD", url: "https://trs1.aynaott.com/tsports/index.m3u8" },
+    { name: "T Sports Backup", url: "https://trs1.aynaott.com/tsports/tracks-v1a1/mono.ts.m3u8" },
+    { name: "Bein Sports", url: "https://cp11.adabmedia.com/hls2/sport.m3u8" },
+    { name: "Caze Tv", url: "https://dfr80qz435crc.cloudfront.net/MNOP/Amagi/Caze/Caze_TV_BR/1080p-vtt/index.m3u8" },
+    { name: "Toffee", url: "https://sm-monirul.top/tof/live/toffee4/index.m3u8" },
     { name: "Server 6", url: "URL_6" },
     { name: "Server 7", url: "URL_7" },
     { name: "Server 8", url: "URL_8" },
-    { name: "Server 9", url: "URL_9" },
-    { name: "Server 10", url: "URL_10" }
+    { name: "CCTV 5", url: "https://play1.gzxdby.com/live/783234345958_4547667094.m3u8 },
+    { name: "T Sports HD", url: "https://trs1.aynaott.com/tsports/tracks-v1a1/mono.ts.m3u8" }
 ];
 
 // বাকি ফাংশনগুলো (playWC, loadStream, navTo ইত্যাদি) আপনার আগের কোডেই ঠিক আছে।
