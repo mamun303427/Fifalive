@@ -48,6 +48,27 @@ header {
     display: flex;
     flex-direction: column;
 }
+/* ব্রাইটনেস ওভারলে স্টাইল */
+#brightness-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: black;
+    opacity: 0; /* ডিফল্ট ০ */
+    pointer-events: none; /* ভিডিওর টাচ যেন পায় */
+    z-index: 10;
+}
+
+.player-wrapper {
+    position: relative; /* ওভারলে পজিশন ঠিক রাখার জন্য */
+}
+
+/* ভিডিও সাউন্ডসহ অটো-প্লে নিশ্চিত করতে */
+video {
+    object-fit: fill !important; /* আপনার আগের চাহিদা অনুযায়ী */
+}
 
 video { 
     width: 100%; 
