@@ -24,7 +24,9 @@
         <div id="home-view">
             <div class="container">
                 <div class="player-wrapper home-player">
-                    <video id="main-video" playsinline controls muted autoplay></video>
+                    <video id="main-video" playsinline webkit-playsinline controls autoplay></video>
+                      <!-- ব্রাইটনেস ওভারলে -->
+                    <div id="brightness-overlay"></div>
                     <div class="status-bar">
                         <span class="dot"></span>
                         <span class="live-txt">Live</span>
