@@ -49,29 +49,50 @@ header {
     flex-direction: column;
 }
 
-/* ভিডিও ট্যাগ সেটিংস */
+/* ভিডিও প্লেয়ারের মূল স্টাইল */
 video { 
     width: 100%; 
-    height: auto;
-    aspect-ratio: 16/9;
+    height: auto; /* উচ্চতা স্বয়ংক্রিয় থাকবে যাতে রেশিও ঠিক থাকে */
+    aspect-ratio: 16/9; 
     background: #000; 
     display: block;
-    object-fit: contain;
+    object-fit: contain !important; /* ভিডিওর কোনো অংশ কাটবে না */
 }
 
-/* ফুল স্ক্রিন সেটিংস - কোনো ফাঁকা থাকবে না */
+/* ফুল স্ক্রিন মোডে ওপর-নিচ থেকে কাটা রোধ করার ফিক্স */
 video:fullscreen {
-    object-fit: cover !important;
+    object-fit: contain !important; /* জুম হবে না, পুরো ফ্রেম দেখাবে */
     width: 100vw;
-    height: 100vh;
+    height: auto; /* উচ্চতা স্ক্রিনের সমান না হয়ে ভিডিওর রেশিও অনুযায়ী হবে */
+    max-height: 100vh;
 }
 
+/* আইফোন এবং সাফারির জন্য ফিক্স */
 video:-webkit-full-screen {
-    object-fit: cover !important;
+    object-fit: contain !important;
     width: 100vw;
-    height: 100vh;
+    height: auto;
+    max-height: 100vh;
 }
 
+/* মোবাইল ভার্সনে প্লেয়ারের চারপাশের গ্যাপ ফিক্স */
+@media (max-width: 600px) {
+    .player-wrapper { 
+        width: 100%; 
+        max-width: 100%; 
+        border-radius: 0; 
+        margin-top: 0;
+        background: #000;
+        display: flex;
+        align-items: center; /* ভিডিও মাঝখানে রাখবে */
+        justify-content: center;
+    }
+    
+    video {
+        aspect-ratio: 16/9;
+        max-height: 30vh; /* মোবাইলে নরমাল মুডে প্লেয়ারের উচ্চতা নিয়ন্ত্রণ */
+    }
+}
 /* স্ট্যাটাস বার (Live Label) */
 .status-bar { 
     display: flex; 
