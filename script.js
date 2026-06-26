@@ -1,7 +1,7 @@
 const wcServers = [
     { name: "T Sports HD", url: "https://trs1.aynaott.com/tsports/index.m3u8" }, // আপনার লিঙ্ক দিন
     { name: "T Sports", url: "https://trs1.aynaott.com/tsports/tracks-v1a1/mono.ts.m3u8" },
-    { name: "Btv HD", url: "https://tv.beyondtaxconsultants.com/api/btv/btv.m3u8" },
+    { name: "Unite8 Sports", url: "https://trs1.aynaott.com/tsports/tracks-v1a1/mono.ts.m3u8" },
     { name: "Server 4", url: "https://korim.packingggl.workers.dev/api/bc508cf627/playlist.m3u8" },
     { name: "Server 5", url: "URL_5" }
 ];
