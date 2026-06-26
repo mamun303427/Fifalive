@@ -9,7 +9,7 @@ const wcServers = [
 const categoryLinks = {
     sports: 'https://is.gd/yQuS1g.m3u',
     news: 'https://raw.githubusercontent.com/mamun303427/Fifalive/refs/heads/main/News%20Channel.m3u',
-    kids: 'এখানে_কিডস_লিঙ্ক_দিন',
+    kids: 'https://raw.githubusercontent.com/mamun303427/Fifalive/refs/heads/main/Kids%20Channels.m3u',
     doc: 'এখানে_ডকুমেন্টারি_লিঙ্ক_দিন',
     islamic: 'https://raw.githubusercontent.com/mamun303427/Fifalive/refs/heads/main/Islamic%20Tv.m3u',
     bd: 'https://raw.githubusercontent.com/mamun303427/Fifalive/refs/heads/main/Bangladeshi%20Tv.m3u',
