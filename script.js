@@ -7,7 +7,7 @@ const wcServers = [
     { name: "Server 6", url: "URL_6" },
     { name: "Server 7", url: "URL_7" },
     { name: "Server 8", url: "URL_8" },
-    { name: "CCTV 5", url: "https://play1.gzxdby.com/live/783234345958_4547667094.m3u8 },
+    { name: "CCTV 5", url: "https://play1.gzxdby.com/live/783234345958_4547667094.m3u8" },
     { name: "T Sports HD", url: "https://trs1.aynaott.com/tsports/tracks-v1a1/mono.ts.m3u8" }
 ];
 
