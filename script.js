@@ -8,7 +8,7 @@ const wcServers = [
 
 const categoryLinks = {
     sports: 'https://is.gd/yQuS1g.m3u',
-    news: 'এখানে_নিউজ_লিঙ্ক_দিন',
+    news: 'https://raw.githubusercontent.com/mamun303427/Fifalive/refs/heads/main/News%20Channel.m3u',
     kids: 'এখানে_কিডস_লিঙ্ক_দিন',
     doc: 'এখানে_ডকুমেন্টারি_লিঙ্ক_দিন',
     islamic: 'এখানে_ইসলামিক_লিঙ্ক_দিন',
