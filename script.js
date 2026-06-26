@@ -1,10 +1,17 @@
 const wcServers = [
-    { name: "T Sports HD", url: "https://trs1.aynaott.com/tsports/index.m3u8" },
-    { name: "T Sports", url: "https://trs1.aynaott.com/tsports/tracks-v1a1/mono.ts.m3u8" },
-    { name: "Unite8 Sports", url: "http://198.195.239.50:8095/unt-s/video.m3u8" },
-    { name: "Somoy TV", url: "http://198.195.239.50:8095/somoyTv/tracks-v1a1/mono.m3u8" },
-    { name: "Server 5", url: "URL_5" }
+    { name: "Server 1", url: "https://trs1.aynaott.com/tsports/index.m3u8" },
+    { name: "Server 2", url: "https://trs1.aynaott.com/tsports/tracks-v1a1/mono.ts.m3u8" },
+    { name: "Server 3", url: "http://198.195.239.50:8095/unt-s/video.m3u8" },
+    { name: "Server 4", url: "http://198.195.239.50:8095/somoyTv/tracks-v1a1/mono.m3u8" },
+    { name: "Server 5", url: "URL_5" },
+    { name: "Server 6", url: "URL_6" },
+    { name: "Server 7", url: "URL_7" },
+    { name: "Server 8", url: "URL_8" },
+    { name: "Server 9", url: "URL_9" },
+    { name: "Server 10", url: "URL_10" }
 ];
+
+// বাকি ফাংশনগুলো (playWC, loadStream, navTo ইত্যাদি) আপনার আগের কোডেই ঠিক আছে।
 
 const categoryLinks = {
     sports: 'https://is.gd/yQuS1g.m3u',
