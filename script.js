@@ -21,7 +21,9 @@ const categoryLinks = {
 const mainVid = document.getElementById('main-video');
 const catVid = document.getElementById('cat-video');
 const serverSection = document.getElementById('server-section');
-let hlsMain, hlsCat, wakeLock = null;
+let hlsMain = null;
+let hlsCat = null;
+let wakeLock = null;
 
 // ইনিশিয়াল লোড
 window.onload = () => {
@@ -47,22 +49,34 @@ function playWC(index, btn) {
 
 function loadStream(vid, url, type) {
     vid.muted = false;
+
+    // আগের HLS কানেকশন বন্ধ করা
+    if (type === 'main' && hlsMain) {
+        hlsMain.destroy();
+        hlsMain = null;
+    } else if (type === 'cat' && hlsCat) {
+        hlsCat.destroy();
+        hlsCat = null;
+    }
+
     if (Hls.isSupported()) {
-        if (type === 'main') {
-            if(hlsMain) hlsMain.destroy();
-            hlsMain = new Hls(); hlsMain.loadSource(url); hlsMain.attachMedia(vid);
-            hlsMain.on(Hls.Events.MANIFEST_PARSED, () => {
-                vid.play().catch(() => { vid.muted = true; vid.play(); });
+        const hls = new Hls();
+        if (type === 'main') hlsMain = hls; else hlsCat = hls;
+
+        hls.loadSource(url);
+        hls.attachMedia(vid);
+        hls.on(Hls.Events.MANIFEST_PARSED, () => {
+            vid.play().catch(() => {
+                vid.muted = true;
+                vid.play();
             });
-        } else {
-            if(hlsCat) hlsCat.destroy();
-            hlsCat = new Hls(); hlsCat.loadSource(url); hlsCat.attachMedia(vid);
-            hlsCat.on(Hls.Events.MANIFEST_PARSED, () => {
-                vid.play().catch(() => { vid.muted = true; vid.play(); });
-            });
-        }
+        });
     } else if (vid.canPlayType('application/vnd.apple.mpegurl')) {
-        vid.src = url; vid.play().catch(() => { vid.muted = true; vid.play(); });
+        vid.src = url;
+        vid.play().catch(() => {
+            vid.muted = true;
+            vid.play();
+        });
     }
     requestWakeLock();
 }
@@ -73,6 +87,7 @@ async function loadHomeExtra() {
         const res = await fetch(categoryLinks.homeExtra);
         const data = await res.text();
         const channels = parseM3U(data);
+        grid.innerHTML = '';
         channels.slice(0, 16).forEach(ch => { 
             const card = document.createElement('div');
             card.className = 'channel-card';
@@ -88,28 +103,59 @@ async function loadHomeExtra() {
     } catch (e) { console.log('Home Extra Error'); }
 }
 
+// নেভিগেশন লজিক (ভিডিও এবং অডিও পুরোপুরি বন্ধ করার জন্য আপডেট করা হয়েছে)
 function navTo(v) {
+    // সব ভিডিও পজ করা
+    mainVid.pause();
+    catVid.pause();
+
+    // ভিডিওর সোর্স খালি করা যাতে ডাটা লোড বন্ধ হয়
+    mainVid.src = "";
+    catVid.src = "";
+
+    // HLS কানেকশন পুরোপুরি বিচ্ছিন্ন করা
+    if (hlsMain) {
+        hlsMain.destroy();
+        hlsMain = null;
+    }
+    if (hlsCat) {
+        hlsCat.destroy();
+        hlsCat = null;
+    }
+
     document.getElementById('home-view').style.display = v === 'home' ? 'block' : 'none';
     document.getElementById('cat-list-view').style.display = v === 'cat' ? 'block' : 'none';
     document.getElementById('cat-player-view').style.display = 'none';
+    
     document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-    document.getElementById('btn-' + v).classList.add('active');
+    if (document.getElementById('btn-' + v)) {
+        document.getElementById('btn-' + v).classList.add('active');
+    }
 
     if(v === 'home') {
         playWC(0, document.querySelector('.srv-btn'));
         window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
-        mainVid.pause(); catVid.pause();
-        if (wakeLock) { wakeLock.release(); wakeLock = null; }
+        if (wakeLock) { 
+            wakeLock.release().then(() => { wakeLock = null; }); 
+        }
     }
 }
 
 async function openCat(k) {
+    // হোম পেজের ভিডিও পুরোপুরি বন্ধ করা
     mainVid.pause();
+    mainVid.src = "";
+    if (hlsMain) {
+        hlsMain.destroy();
+        hlsMain = null;
+    }
+
     document.getElementById('cat-list-view').style.display = 'none';
     document.getElementById('cat-player-view').style.display = 'block';
     const grid = document.getElementById('cat-grid');
-    grid.innerHTML = '<p style="text-align:center;">Loading...</p>';
+    grid.innerHTML = '<p style="text-align:center; padding:20px;">Loading...</p>';
+    
     try {
         const res = await fetch(categoryLinks[k] || categoryLinks.bd);
         const data = await res.text();
@@ -125,7 +171,10 @@ async function openCat(k) {
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             };
             grid.appendChild(card);
-            if(idx === 0) { loadStream(catVid, ch.url, 'cat'); document.getElementById('cat-name').innerText = ch.name; }
+            if(idx === 0) { 
+                loadStream(catVid, ch.url, 'cat'); 
+                document.getElementById('cat-name').innerText = ch.name; 
+            }
         });
     } catch (e) { grid.innerHTML = 'Error'; }
 }
@@ -145,7 +194,11 @@ function parseM3U(data) {
 }
 
 async function requestWakeLock() {
-    try { if ('wakeLock' in navigator) wakeLock = await navigator.wakeLock.request('screen'); } catch (err) { }
+    try { 
+        if ('wakeLock' in navigator && !wakeLock) {
+            wakeLock = await navigator.wakeLock.request('screen');
+        }
+    } catch (err) { }
 }
 
 function toggleTheme() {
