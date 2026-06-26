@@ -155,3 +155,42 @@ function toggleTheme() {
         icon.classList.replace('fa-moon', 'fa-sun');
     }
 }
+// স্ক্রিন অন রাখার জন্য ভেরিয়েবল
+let wakeLock = null;
+
+// স্ক্রিন অন রাখার ফাংশন
+async function requestWakeLock() {
+    try {
+        if ('wakeLock' in navigator) {
+            wakeLock = await navigator.wakeLock.request('screen');
+            console.log('Wake Lock is active. Screen will not turn off.');
+        }
+    } catch (err) {
+        console.error(`${err.name}, ${err.message}`);
+    }
+}
+
+// ভিডিও প্লে হওয়ার ফাংশনটি আপডেট করুন
+function playStream(videoElem, url, name, titleId) {
+    document.getElementById(titleId).innerText = name;
+    
+    // ভিডিও প্লে শুরু হলে স্ক্রিন অন রাখার কমান্ড দিন
+    requestWakeLock();
+
+    if (Hls.isSupported()) {
+        const hls = new Hls();
+        hls.loadSource(url);
+        hls.attachMedia(videoElem);
+        hls.on(Hls.Events.MANIFEST_PARSED, () => videoElem.play());
+    } else {
+        videoElem.src = url;
+        videoElem.play();
+    }
+}
+
+// যখন ইউজার ট্যাব পরিবর্তন করবে তখন Wake Lock রিলিজ হবে এবং ফিরে আসলে আবার চালু হবে
+document.addEventListener('visibilitychange', async () => {
+    if (wakeLock !== null && document.visibilityState === 'visible') {
+        await requestWakeLock();
+    }
+});
