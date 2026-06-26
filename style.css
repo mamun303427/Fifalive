@@ -49,30 +49,24 @@ header {
     flex-direction: column;
 }
 
-/* ভিডিও প্লেয়ারের মূল স্টাইল */
 video { 
     width: 100%; 
-    height: auto; /* উচ্চতা স্বয়ংক্রিয় থাকবে যাতে রেশিও ঠিক থাকে */
-    aspect-ratio: 16/9; 
+    height: 100%; 
     background: #000; 
-    display: block;
-    object-fit: contain !important; /* ভিডিওর কোনো অংশ কাটবে না */
+    object-fit: fill !important; /* এটি ভিডিওটিকে টেনে পুরো স্ক্রিন ভরাট করবে, কোনো অংশ কাটবে না */
 }
 
-/* ফুল স্ক্রিন মোডে ওপর-নিচ থেকে কাটা রোধ করার ফিক্স */
+/* ফুল স্ক্রিন মোডের জন্য */
 video:fullscreen {
-    object-fit: contain !important; /* জুম হবে না, পুরো ফ্রেম দেখাবে */
+    object-fit: fill !important; 
     width: 100vw;
-    height: auto; /* উচ্চতা স্ক্রিনের সমান না হয়ে ভিডিওর রেশিও অনুযায়ী হবে */
-    max-height: 100vh;
+    height: 100vh;
 }
 
-/* আইফোন এবং সাফারির জন্য ফিক্স */
 video:-webkit-full-screen {
-    object-fit: contain !important;
+    object-fit: fill !important;
     width: 100vw;
-    height: auto;
-    max-height: 100vh;
+    height: 100vh;
 }
 
 /* মোবাইল ভার্সনে প্লেয়ারের চারপাশের গ্যাপ ফিক্স */
