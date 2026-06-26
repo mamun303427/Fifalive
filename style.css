@@ -1,13 +1,34 @@
+/* ১. ভেরিয়েবল এবং গ্লোবাল সেটিংস */
 :root {
-    --bg: #0b0f1a; --text: #fff; --card: #161b29; --border: #242b3d; --red: #ff0000;
+    --bg: #0b0f1a; 
+    --text: #fff; 
+    --card: #161b29; 
+    --border: #242b3d; 
+    --red: #ff0000;
 }
+
 .light-theme {
-    --bg: #f0f2f5; --text: #111; --card: #fff; --border: #ccc;
+    --bg: #f0f2f5; 
+    --text: #111; 
+    --card: #fff; 
+    --border: #ccc;
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { background: var(--bg); color: var(--text); font-family: sans-serif; padding-bottom: 80px; overflow-x: hidden; }
+* { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+}
 
+body { 
+    background: var(--bg); 
+    color: var(--text); 
+    font-family: sans-serif; 
+    padding-bottom: 80px; 
+    overflow-x: hidden; 
+}
+
+/* ২. হেডার এবং লোগো */
 header { 
     background: var(--bg); 
     border-bottom: 1px solid var(--border); 
@@ -27,18 +48,29 @@ header {
     padding: 0 20px; 
 }
 
-#site-logo { height: 45px; width: auto; object-fit: contain; }
-
-.theme-btn { 
-    background: var(--card); color: var(--red); 
-    width: 38px; height: 38px; border-radius: 50%; 
-    display: flex; align-items: center; justify-content: center; 
-    cursor: pointer; border: 1px solid var(--border); 
+#site-logo { 
+    height: 45px; 
+    width: auto; 
+    object-fit: contain; 
 }
 
-/* প্লেয়ার কন্টেইনার - ওয়েব এবং মোবাইল এডজাস্টমেন্ট */
+.theme-btn { 
+    background: var(--card); 
+    color: var(--red); 
+    width: 38px; 
+    height: 38px; 
+    border-radius: 50%; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    cursor: pointer; 
+    border: 1px solid var(--border); 
+}
+
+/* ৩. প্লেয়ার সেকশন (Web & Mobile) */
 .player-wrapper { 
-    width: 100%; 
+    position: relative;
+    width: 95%; 
     max-width: 850px; 
     margin: 10px auto 15px; 
     background: #000; 
@@ -48,7 +80,8 @@ header {
     display: flex;
     flex-direction: column;
 }
-/* ব্রাইটনেস ওভারলে স্টাইল */
+
+/* ব্রাইটনেস ওভারলে */
 #brightness-overlay {
     position: absolute;
     top: 0;
@@ -56,28 +89,22 @@ header {
     width: 100%;
     height: 100%;
     background: black;
-    opacity: 0; /* ডিফল্ট ০ */
-    pointer-events: none; /* ভিডিওর টাচ যেন পায় */
+    opacity: 0;
+    pointer-events: none;
     z-index: 10;
 }
 
-.player-wrapper {
-    position: relative; /* ওভারলে পজিশন ঠিক রাখার জন্য */
-}
-
-/* ভিডিও সাউন্ডসহ অটো-প্লে নিশ্চিত করতে */
-video {
-    object-fit: fill !important; /* আপনার আগের চাহিদা অনুযায়ী */
-}
-
+/* ভিডিও ট্যাগ - Stretch/Fill Mode */
 video { 
     width: 100%; 
-    height: 100%; 
+    height: 100%;
+    aspect-ratio: 16/9;
     background: #000; 
-    object-fit: fill !important; /* এটি ভিডিওটিকে টেনে পুরো স্ক্রিন ভরাট করবে, কোনো অংশ কাটবে না */
+    display: block;
+    object-fit: fill !important; /* কোনো অংশ কাটবে না, পুরো স্ক্রিন ভরাট করবে */
 }
 
-/* ফুল স্ক্রিন মোডের জন্য */
+/* ফুল স্ক্রিন মোড */
 video:fullscreen {
     object-fit: fill !important; 
     width: 100vw;
@@ -90,25 +117,7 @@ video:-webkit-full-screen {
     height: 100vh;
 }
 
-/* মোবাইল ভার্সনে প্লেয়ারের চারপাশের গ্যাপ ফিক্স */
-@media (max-width: 600px) {
-    .player-wrapper { 
-        width: 100%; 
-        max-width: 100%; 
-        border-radius: 0; 
-        margin-top: 0;
-        background: #000;
-        display: flex;
-        align-items: center; /* ভিডিও মাঝখানে রাখবে */
-        justify-content: center;
-    }
-    
-    video {
-        aspect-ratio: 16/9;
-        max-height: 30vh; /* মোবাইলে নরমাল মুডে প্লেয়ারের উচ্চতা নিয়ন্ত্রণ */
-    }
-}
-/* স্ট্যাটাস বার (Live Label) */
+/* ৪. স্ট্যাটাস বার (Live Label) */
 .status-bar { 
     display: flex; 
     align-items: center; 
@@ -118,12 +127,27 @@ video:-webkit-full-screen {
     background: var(--bg); 
 }
 
-.dot { width: 7px; height: 7px; background: #fff; border-radius: 50%; animation: blink 1s infinite; }
-.live-txt { color: var(--red); font-weight: bold; font-size: 13px; text-transform: uppercase; }
+.dot { 
+    width: 7px; 
+    height: 7px; 
+    background: #fff; 
+    border-radius: 50%; 
+    animation: blink 1s infinite; 
+}
 
-@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.2; } }
+.live-txt { 
+    color: var(--red); 
+    font-weight: bold; 
+    font-size: 13px; 
+    text-transform: uppercase; 
+}
 
-/* সার্ভার সেকশন */
+@keyframes blink { 
+    0%, 100% { opacity: 1; } 
+    50% { opacity: 0.2; } 
+}
+
+/* ৫. সার্ভার সেকশন */
 .server-box { margin: 10px auto 25px; max-width: 850px; width: 95%; }
 .server-one-line { display: flex; justify-content: space-between; gap: 5px; width: 100%; }
 
@@ -144,10 +168,22 @@ video:-webkit-full-screen {
     white-space: nowrap; 
 }
 
-.srv-btn .hd { background: var(--red); color: #fff; font-size: 8px; padding: 1px 3px; border-radius: 2px; }
+.srv-btn .hd { 
+    background: var(--red); 
+    color: #fff; 
+    font-size: 8px; 
+    padding: 1px 3px; 
+    border-radius: 2px; 
+}
 
-/* ক্যাটেগরি ডিজাইন */
-.cat-grid-new { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 10px; }
+/* ৬. ক্যাটেগরি ডিজাইন (২ কলাম) */
+.cat-grid-new { 
+    display: grid; 
+    grid-template-columns: 1fr 1fr; 
+    gap: 15px; 
+    margin-top: 10px; 
+}
+
 .cat-item { 
     background: var(--card); 
     border: 1px solid var(--border); 
@@ -161,7 +197,8 @@ video:-webkit-full-screen {
 }
 
 .cat-circle { 
-    width: 55px; height: 55px; 
+    width: 55px; 
+    height: 55px; 
     background: #fff; 
     border-radius: 50%; 
     display: flex; 
@@ -175,18 +212,34 @@ video:-webkit-full-screen {
 .cat-circle img { width: 100%; height: 100%; object-fit: cover; }
 .cat-item span { font-size: 14px; font-weight: bold; color: var(--text); }
 
-/* হোভার এবং একটিভ ইফেক্ট */
-.cat-item:hover, .channel-card:hover, .srv-btn.active, .nav-btn.active, .srv-btn:hover { 
-    color: var(--red); border-color: var(--red); 
-}
-
-/* গ্রিড এবং কন্টেইনার */
+/* ৭. গ্রিড এবং কার্ড হোভার */
 .container { padding: 15px; max-width: 1100px; margin: 0 auto; }
 .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 12px; }
-.channel-card { background: var(--card); border-radius: 8px; padding: 10px; text-align: center; border: 1px solid var(--border); cursor: pointer; }
-.channel-card img { width: 100%; aspect-ratio: 1/1; object-fit: contain; background: #fff; border-radius: 5px; margin-bottom: 5px; }
 
-/* বটম নেভিগেশন */
+.channel-card { 
+    background: var(--card); 
+    border-radius: 8px; 
+    padding: 10px; 
+    text-align: center; 
+    border: 1px solid var(--border); 
+    cursor: pointer; 
+}
+
+.channel-card img { 
+    width: 100%; 
+    aspect-ratio: 1/1; 
+    object-fit: contain; 
+    background: #fff; 
+    border-radius: 5px; 
+    margin-bottom: 5px; 
+}
+
+.cat-item:hover, .channel-card:hover, .srv-btn.active, .nav-btn.active, .srv-btn:hover { 
+    color: var(--red); 
+    border-color: var(--red); 
+}
+
+/* ৮. বটম নেভিগেশন */
 .bottom-nav { 
     position: fixed; 
     bottom: 0; 
@@ -199,16 +252,28 @@ video:-webkit-full-screen {
     z-index: 1000; 
 }
 
-.nav-btn { color: #888; text-align: center; text-decoration: none; font-size: 11px; cursor: pointer; flex: 1; }
+.nav-btn { 
+    color: #888; 
+    text-align: center; 
+    text-decoration: none; 
+    font-size: 11px; 
+    cursor: pointer; 
+    flex: 1; 
+}
+
 .nav-btn i { font-size: 20px; display: block; margin-bottom: 3px; }
 
-/* মোবাইল অপ্টিমাইজেশন - এখানে সাইড স্ক্রিন বরাবর করা হয়েছে */
+/* ৯. মোবাইল অপ্টিমাইজেশন (Edge-to-Edge) */
 @media (max-width: 600px) {
     .player-wrapper { 
         width: 100%; 
         max-width: 100%; 
-        border-radius: 0; /* মোবাইলে কোণা রাউন্ড থাকবে না, স্ক্রিন বরাবর হবে */
-        margin-top: 0; /* টপ গ্যাপ কমানো হয়েছে */
+        border-radius: 0; 
+        margin-top: 0; 
+    }
+    video {
+        aspect-ratio: 16/9;
+        max-height: 35vh; /* মোবাইলে পোর্ট্রেট মোডে উচ্চতা নিয়ন্ত্রণ */
     }
     .container { padding: 10px; }
     .srv-btn { font-size: 9px; }
