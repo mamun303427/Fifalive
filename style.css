@@ -1,10 +1,11 @@
-/* ১. কালার ভেরিয়েবল এবং গ্লোবাল সেটিংস */
+/* ১. কালার ভেরিয়েবল এবং গ্লোবাল অপ্টিমাইজেশন */
 :root {
     --bg: #0b0f1a; 
     --text: #fff; 
     --card: #161b29; 
     --border: #242b3d; 
     --red: #ff0000;
+    --transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .light-theme {
@@ -18,24 +19,28 @@
     margin: 0; 
     padding: 0; 
     box-sizing: border-box; 
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
 }
 
 body { 
     background: var(--bg); 
     color: var(--text); 
-    font-family: sans-serif; 
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     padding-bottom: 80px; 
     overflow-x: hidden; 
+    scroll-behavior: smooth;
 }
 
-/* ২. হেডার এবং লোগো ডিজাইন */
+/* ২. হেডার এবং লোগো (সুপার ফাস্ট রেন্ডারিং) */
 header { 
     background: var(--bg); 
     border-bottom: 1px solid var(--border); 
-    padding: 12px 0; 
+    padding: 10px 0; 
     position: sticky; 
     top: 0; 
     z-index: 1000; 
+    will-change: transform;
 }
 
 .header-container { 
@@ -45,11 +50,11 @@ header {
     width: 100%; 
     max-width: 1100px; 
     margin: 0 auto; 
-    padding: 0 20px; 
+    padding: 0 15px; 
 }
 
 #site-logo { 
-    height: 45px; 
+    height: 42px; 
     width: auto; 
     object-fit: contain; 
 }
@@ -57,8 +62,8 @@ header {
 .theme-btn { 
     background: var(--card); 
     color: var(--red); 
-    width: 40px; 
-    height: 40px; 
+    width: 38px; 
+    height: 38px; 
     border-radius: 50%; 
     display: flex; 
     align-items: center; 
@@ -66,9 +71,10 @@ header {
     cursor: pointer; 
     border: 1px solid var(--border); 
     font-size: 18px;
+    transition: var(--transition);
 }
 
-/* ৩. ভিডিও প্লেয়ার সেকশন */
+/* ৩. ভিডিও প্লেয়ার সেকশন (Hardware Accelerated) */
 .player-wrapper { 
     position: relative;
     width: 95%; 
@@ -78,6 +84,7 @@ header {
     border-radius: 12px; 
     overflow: hidden; 
     box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
+    will-change: transform;
 }
 
 video { 
@@ -86,19 +93,17 @@ video {
     aspect-ratio: 16/9;
     background: #000; 
     display: block;
-    object-fit: fill !important; /* ভিডিও টেনে পুরো স্ক্রিন ভরাট করবে */
+    object-fit: fill !important; 
 }
 
-/* ফুল স্ক্রিনে কোনো কালো দাগ থাকবে না */
 video:fullscreen { object-fit: fill !important; width: 100vw; height: 100vh; }
-video:-webkit-full-screen { object-fit: fill !important; width: 100vw; height: 100vh; }
 
-/* ৪. লাইভ স্ট্যাটাস বার (পালস ডট বামে) */
+/* ৪. পালস অ্যানিমেশন (GPU Optimized) */
 .status-bar { 
     display: flex; 
     align-items: center; 
     justify-content: center; 
-    padding: 10px; 
+    padding: 8px; 
     gap: 10px; 
     background: var(--bg); 
 }
@@ -108,23 +113,25 @@ video:-webkit-full-screen { object-fit: fill !important; width: 100vw; height: 1
     height: 8px; 
     background: #fff; 
     border-radius: 50%; 
-    animation: pulse 1.5s infinite; 
+    animation: pulse 1.5s infinite ease-in-out; 
+    will-change: transform, box-shadow;
 }
 
 .live-txt { 
     color: var(--red); 
     font-weight: bold; 
-    font-size: 14px; 
+    font-size: 13px; 
     text-transform: uppercase; 
+    letter-spacing: 1px;
 }
 
 @keyframes pulse { 
     0% { transform: scale(0.9); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7); } 
-    70% { transform: scale(1.1); box-shadow: 0 0 0 10px rgba(255, 255, 255, 0); } 
+    70% { transform: scale(1.1); box-shadow: 0 0 0 8px rgba(255, 255, 255, 0); } 
     100% { transform: scale(0.9); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); } 
 }
 
-/* ৫. ১০টি সার্ভার গ্রিড (২ লাইনে ৫টি করে) */
+/* ৫. সার্ভার গ্রিড (৫ কলাম অপ্টিমাইজড) */
 .server-box { 
     margin: 15px auto 25px; 
     max-width: 850px; 
@@ -152,28 +159,32 @@ video:-webkit-full-screen { object-fit: fill !important; width: 100vw; height: 1
     justify-content: center; 
     gap: 4px; 
     white-space: nowrap; 
+    transition: var(--transition);
 }
 
 .srv-btn .hd { 
     background: var(--red); 
     color: #fff; 
     font-size: 8px; 
-    padding: 1px 3px; 
+    padding: 1px 4px; 
     border-radius: 2px; 
 }
 
 .srv-btn.active, .srv-btn:hover { 
     border-color: var(--red); 
     color: var(--red); 
+    transform: translateY(-2px);
 }
 
-/* ৬. ক্যাটেগরি ডিজাইন (২ কলাম এবং গোল আইকন) */
-.cat-grid-new { 
+/* ৬. ক্যাটেগরি এবং চ্যানেল গ্রিড (Rendering Optimized) */
+.cat-grid-new, .grid { 
     display: grid; 
-    grid-template-columns: 1fr 1fr; 
     gap: 15px; 
     margin-top: 10px; 
+    content-visibility: auto; /* অফ-স্ক্রিন আইটেম লোড হবে না, সাইট ফাস্ট হবে */
 }
+
+.cat-grid-new { grid-template-columns: 1fr 1fr; }
 
 .cat-item { 
     background: var(--card); 
@@ -184,12 +195,11 @@ video:-webkit-full-screen { object-fit: fill !important; width: 100vw; height: 1
     align-items: center; 
     gap: 15px; 
     cursor: pointer; 
-    transition: 0.3s; 
+    transition: var(--transition);
 }
 
 .cat-circle { 
-    width: 55px; 
-    height: 55px; 
+    width: 55px; height: 55px; 
     background: #fff; 
     border-radius: 50%; 
     display: flex; 
@@ -199,30 +209,31 @@ video:-webkit-full-screen { object-fit: fill !important; width: 100vw; height: 1
     flex-shrink: 0; 
 }
 
-.cat-circle i { font-size: 26px; color: var(--red); }
+.cat-circle i { font-size: 24px; color: var(--red); }
 .cat-circle img { width: 100%; height: 100%; object-fit: cover; }
-.cat-item span { font-size: 14px; font-weight: bold; color: var(--text); }
+.cat-item span { font-size: 14px; font-weight: bold; }
 
 /* ৭. রিকমেন্ডেড চ্যানেল গ্রিড */
-.container { padding: 15px; max-width: 1100px; margin: 0 auto; }
+.container { padding: 10px; max-width: 1100px; margin: 0 auto; }
 .extra-heading { 
-    margin: 20px 0 15px; 
-    font-size: 18px; 
+    margin: 20px 0 12px; 
+    font-size: 17px; 
     font-weight: bold; 
     color: var(--red); 
     border-left: 4px solid var(--red); 
     padding-left: 10px; 
 }
 
-.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 12px; }
+.grid { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 10px; }
 
 .channel-card { 
     background: var(--card); 
     border-radius: 10px; 
-    padding: 10px; 
+    padding: 8px; 
     text-align: center; 
     border: 1px solid var(--border); 
     cursor: pointer; 
+    transition: var(--transition);
 }
 
 .channel-card img { 
@@ -230,25 +241,25 @@ video:-webkit-full-screen { object-fit: fill !important; width: 100vw; height: 1
     aspect-ratio: 1/1; 
     object-fit: contain; 
     background: #fff; 
-    border-radius: 5px; 
+    border-radius: 8px; 
     margin-bottom: 5px; 
 }
 
-/* রেড হবার ইফেক্ট */
-.cat-item:hover, .channel-card:hover, .nav-btn.active, .nav-btn:hover { 
-    color: var(--red); 
+.cat-item:hover, .channel-card:hover { 
     border-color: var(--red); 
+    transform: scale(1.03);
 }
 
-/* ৮. বটম নেভিগেশন */
+/* ৮. বটম নেভিগেশন (Backdrop Blur) */
 .bottom-nav { 
     position: fixed; 
     bottom: 0; 
     width: 100%; 
-    background: var(--card); 
+    background: rgba(22, 27, 41, 0.9); /* হালকা ট্রান্সপারেন্ট */
+    backdrop-filter: blur(10px); /* প্রফেশনাল ব্লার ইফেক্ট */
     display: flex; 
     justify-content: space-around; 
-    padding: 10px 0; 
+    padding: 12px 0; 
     border-top: 1px solid var(--border); 
     z-index: 1000; 
 }
@@ -260,32 +271,32 @@ video:-webkit-full-screen { object-fit: fill !important; width: 100vw; height: 1
     font-size: 11px; 
     cursor: pointer; 
     flex: 1; 
+    transition: var(--transition);
 }
 
-.nav-btn i { font-size: 20px; display: block; margin-bottom: 3px; }
+.nav-btn i { font-size: 20px; display: block; margin-bottom: 2px; }
+.nav-btn.active { color: var(--red); }
 
 /* ৯. মোবাইল অপ্টিমাইজেশন (Edge-to-Edge) */
 @media (max-width: 600px) {
-    .player-wrapper { 
-        width: 100%; 
-        max-width: 100%; 
-        border-radius: 0; 
-        margin-top: 0; 
-    }
+    .player-wrapper { width: 100%; border-radius: 0; margin-top: 0; }
     .server-grid-10 { gap: 5px; }
     .srv-btn { font-size: 9px; padding: 8px 1px; }
     #site-logo { height: 35px; }
-    .cat-item { padding: 10px; gap: 10px; }
-    .cat-circle { width: 45px; height: 45px; }
+    .cat-item { padding: 12px; gap: 10px; }
+    .cat-circle { width: 48px; height: 48px; }
 }
 
 .back-btn { 
     background: var(--red); 
     color: #fff; 
     border: none; 
-    padding: 8px 15px; 
-    border-radius: 5px; 
+    padding: 10px 20px; 
+    border-radius: 6px; 
     font-weight: bold; 
-    margin-bottom: 15px; 
+    margin: 10px 0; 
     cursor: pointer; 
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
 }
