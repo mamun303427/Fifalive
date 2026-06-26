@@ -1,60 +1,291 @@
+/* ১. কালার ভেরিয়েবল এবং গ্লোবাল সেটিংস */
 :root {
-    --bg: #0b0f1a; --text: #fff; --card: #161b29; --border: #242b3d; --red: #ff0000;
+    --bg: #0b0f1a; 
+    --text: #fff; 
+    --card: #161b29; 
+    --border: #242b3d; 
+    --red: #ff0000;
 }
+
 .light-theme {
-    --bg: #f0f2f5; --text: #111; --card: #fff; --border: #ccc;
+    --bg: #f0f2f5; 
+    --text: #111; 
+    --card: #fff; 
+    --border: #ccc;
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { background: var(--bg); color: var(--text); font-family: sans-serif; padding-bottom: 80px; overflow-x: hidden; }
+* { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+}
 
-header { background: var(--bg); border-bottom: 1px solid var(--border); padding: 12px 0; position: sticky; top: 0; z-index: 1000; }
-.header-container { display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: 1100px; margin: 0 auto; padding: 0 20px; }
-#site-logo { height: 45px; width: auto; object-fit: contain; }
+body { 
+    background: var(--bg); 
+    color: var(--text); 
+    font-family: sans-serif; 
+    padding-bottom: 80px; 
+    overflow-x: hidden; 
+}
 
-.theme-btn { background: var(--card); color: var(--red); width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; border: 1px solid var(--border); }
+/* ২. হেডার এবং লোগো ডিজাইন */
+header { 
+    background: var(--bg); 
+    border-bottom: 1px solid var(--border); 
+    padding: 12px 0; 
+    position: sticky; 
+    top: 0; 
+    z-index: 1000; 
+}
 
+.header-container { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    width: 100%; 
+    max-width: 1100px; 
+    margin: 0 auto; 
+    padding: 0 20px; 
+}
+
+#site-logo { 
+    height: 45px; 
+    width: auto; 
+    object-fit: contain; 
+}
+
+.theme-btn { 
+    background: var(--card); 
+    color: var(--red); 
+    width: 40px; 
+    height: 40px; 
+    border-radius: 50%; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    cursor: pointer; 
+    border: 1px solid var(--border); 
+    font-size: 18px;
+}
+
+/* ৩. ভিডিও প্লেয়ার সেকশন */
 .player-wrapper { 
-    position: relative; width: 95%; max-width: 850px; margin: 10px auto 15px; 
-    background: #000; border-radius: 12px; overflow: hidden; 
+    position: relative;
+    width: 95%; 
+    max-width: 850px; 
+    margin: 10px auto 15px; 
+    background: #000; 
+    border-radius: 12px; 
+    overflow: hidden; 
     box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
 }
 
-video { width: 100%; aspect-ratio: 16/9; background: #000; display: block; object-fit: fill !important; }
+video { 
+    width: 100%; 
+    height: 100%;
+    aspect-ratio: 16/9;
+    background: #000; 
+    display: block;
+    object-fit: fill !important; /* ভিডিও টেনে পুরো স্ক্রিন ভরাট করবে */
+}
 
+/* ফুল স্ক্রিনে কোনো কালো দাগ থাকবে না */
 video:fullscreen { object-fit: fill !important; width: 100vw; height: 100vh; }
 video:-webkit-full-screen { object-fit: fill !important; width: 100vw; height: 100vh; }
 
-.status-bar { display: flex; align-items: center; justify-content: center; padding: 10px; gap: 8px; background: var(--bg); }
-.dot { width: 7px; height: 7px; background: #fff; border-radius: 50%; animation: blink 1s infinite; }
-.live-txt { color: var(--red); font-weight: bold; font-size: 13px; text-transform: uppercase; }
-@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.2; } }
+/* ৪. লাইভ স্ট্যাটাস বার (পালস ডট বামে) */
+.status-bar { 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    padding: 10px; 
+    gap: 10px; 
+    background: var(--bg); 
+}
 
-.server-box { margin: 10px auto 25px; max-width: 850px; width: 95%; }
-.server-one-line { display: flex; justify-content: space-between; gap: 5px; width: 100%; }
-.srv-btn { flex: 1; background: var(--card); border: 1px solid var(--border); color: var(--text); padding: 10px 2px; border-radius: 6px; cursor: pointer; font-size: 11px; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 4px; white-space: nowrap; }
-.srv-btn .hd { background: var(--red); color: #fff; font-size: 8px; padding: 1px 3px; border-radius: 2px; }
+.dot { 
+    width: 8px; 
+    height: 8px; 
+    background: #fff; 
+    border-radius: 50%; 
+    animation: pulse 1.5s infinite; 
+}
 
-.cat-grid-new { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 10px; }
-.cat-item { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 15px; display: flex; align-items: center; gap: 15px; cursor: pointer; transition: 0.3s; }
-.cat-circle { width: 55px; height: 55px; background: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0; }
+.live-txt { 
+    color: var(--red); 
+    font-weight: bold; 
+    font-size: 14px; 
+    text-transform: uppercase; 
+}
+
+@keyframes pulse { 
+    0% { transform: scale(0.9); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7); } 
+    70% { transform: scale(1.1); box-shadow: 0 0 0 10px rgba(255, 255, 255, 0); } 
+    100% { transform: scale(0.9); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); } 
+}
+
+/* ৫. ১০টি সার্ভার গ্রিড (২ লাইনে ৫টি করে) */
+.server-box { 
+    margin: 15px auto 25px; 
+    max-width: 850px; 
+    width: 95%; 
+}
+
+.server-grid-10 { 
+    display: grid; 
+    grid-template-columns: repeat(5, 1fr); 
+    gap: 8px; 
+    width: 100%;
+}
+
+.srv-btn { 
+    background: var(--card); 
+    border: 1px solid var(--border); 
+    color: var(--text); 
+    padding: 10px 2px; 
+    border-radius: 6px; 
+    cursor: pointer; 
+    font-size: 11px; 
+    font-weight: bold; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    gap: 4px; 
+    white-space: nowrap; 
+}
+
+.srv-btn .hd { 
+    background: var(--red); 
+    color: #fff; 
+    font-size: 8px; 
+    padding: 1px 3px; 
+    border-radius: 2px; 
+}
+
+.srv-btn.active, .srv-btn:hover { 
+    border-color: var(--red); 
+    color: var(--red); 
+}
+
+/* ৬. ক্যাটেগরি ডিজাইন (২ কলাম এবং গোল আইকন) */
+.cat-grid-new { 
+    display: grid; 
+    grid-template-columns: 1fr 1fr; 
+    gap: 15px; 
+    margin-top: 10px; 
+}
+
+.cat-item { 
+    background: var(--card); 
+    border: 1px solid var(--border); 
+    border-radius: 12px; 
+    padding: 15px; 
+    display: flex; 
+    align-items: center; 
+    gap: 15px; 
+    cursor: pointer; 
+    transition: 0.3s; 
+}
+
+.cat-circle { 
+    width: 55px; 
+    height: 55px; 
+    background: #fff; 
+    border-radius: 50%; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    overflow: hidden; 
+    flex-shrink: 0; 
+}
+
 .cat-circle i { font-size: 26px; color: var(--red); }
 .cat-circle img { width: 100%; height: 100%; object-fit: cover; }
 .cat-item span { font-size: 14px; font-weight: bold; color: var(--text); }
 
+/* ৭. রিকমেন্ডেড চ্যানেল গ্রিড */
 .container { padding: 15px; max-width: 1100px; margin: 0 auto; }
+.extra-heading { 
+    margin: 20px 0 15px; 
+    font-size: 18px; 
+    font-weight: bold; 
+    color: var(--red); 
+    border-left: 4px solid var(--red); 
+    padding-left: 10px; 
+}
+
 .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 12px; }
-.channel-card { background: var(--card); border-radius: 8px; padding: 10px; text-align: center; border: 1px solid var(--border); cursor: pointer; }
-.channel-card img { width: 100%; aspect-ratio: 1/1; object-fit: contain; background: #fff; border-radius: 5px; margin-bottom: 5px; }
 
-.cat-item:hover, .channel-card:hover, .srv-btn.active, .nav-btn.active, .srv-btn:hover { color: var(--red); border-color: var(--red); }
+.channel-card { 
+    background: var(--card); 
+    border-radius: 10px; 
+    padding: 10px; 
+    text-align: center; 
+    border: 1px solid var(--border); 
+    cursor: pointer; 
+}
 
-.bottom-nav { position: fixed; bottom: 0; width: 100%; background: var(--card); display: flex; justify-content: space-around; padding: 10px 0; border-top: 1px solid var(--border); z-index: 1000; }
-.nav-btn { color: #888; text-align: center; text-decoration: none; font-size: 11px; cursor: pointer; flex: 1; }
+.channel-card img { 
+    width: 100%; 
+    aspect-ratio: 1/1; 
+    object-fit: contain; 
+    background: #fff; 
+    border-radius: 5px; 
+    margin-bottom: 5px; 
+}
+
+/* রেড হবার ইফেক্ট */
+.cat-item:hover, .channel-card:hover, .nav-btn.active, .nav-btn:hover { 
+    color: var(--red); 
+    border-color: var(--red); 
+}
+
+/* ৮. বটম নেভিগেশন */
+.bottom-nav { 
+    position: fixed; 
+    bottom: 0; 
+    width: 100%; 
+    background: var(--card); 
+    display: flex; 
+    justify-content: space-around; 
+    padding: 10px 0; 
+    border-top: 1px solid var(--border); 
+    z-index: 1000; 
+}
+
+.nav-btn { 
+    color: #888; 
+    text-align: center; 
+    text-decoration: none; 
+    font-size: 11px; 
+    cursor: pointer; 
+    flex: 1; 
+}
+
 .nav-btn i { font-size: 20px; display: block; margin-bottom: 3px; }
 
+/* ৯. মোবাইল অপ্টিমাইজেশন (Edge-to-Edge) */
 @media (max-width: 600px) {
-    .player-wrapper { width: 100%; max-width: 100%; border-radius: 0; margin-top: 0; }
-    .srv-btn { font-size: 9px; }
+    .player-wrapper { 
+        width: 100%; 
+        max-width: 100%; 
+        border-radius: 0; 
+        margin-top: 0; 
+    }
+    .server-grid-10 { gap: 5px; }
+    .srv-btn { font-size: 9px; padding: 8px 1px; }
     #site-logo { height: 35px; }
+    .cat-item { padding: 10px; gap: 10px; }
+    .cat-circle { width: 45px; height: 45px; }
+}
+
+.back-btn { 
+    background: var(--red); 
+    color: #fff; 
+    border: none; 
+    padding: 8px 15px; 
+    border-radius: 5px; 
+    font-weight: bold; 
+    margin-bottom: 15px; 
+    cursor: pointer; 
 }
