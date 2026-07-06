@@ -2,7 +2,7 @@
 const wcServers = [
     { name: "T Sports HD", url: "https://trs1.aynaott.com/tsports/index.m3u8" },
     { name: "T Sports Backup", url: "https://trs1.aynaott.com/tsports/tracks-v1a1/mono.ts.m3u8" },
-    { name: "Bein Sports", url: "https://cp11.adabmedia.com/hls2/sport.m3u8" },
+    { name: "Bein Sports 1", url: "https://1nyaler.streamhostingcdn.top/stream/23/index.m3u8" },
     { name: "Caze Tv", url: "https://dfr80qz435crc.cloudfront.net/MNOP/Amagi/Caze/Caze_TV_BR/1080p-vtt/index.m3u8" },
     { name: "Toffee", url: "https://sm-monirul.top/tof/live/toffee4/index.m3u8" },
     { name: "Server 6", url: "https://example.com/stream6.m3u8" },
