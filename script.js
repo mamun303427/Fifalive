@@ -20,7 +20,7 @@ const categoryLinks = {
     bd: 'https://raw.githubusercontent.com/mamun303427/Fifalive/refs/heads/main/Bangladeshi%20Tv.m3u',
     in: 'https://raw.githubusercontent.com/iptv-org/iptv/refs/heads/master/streams/in.m3u',
     pk: 'https://iptv-org.github.io/iptv/countries/pk.m3u',
-    homeExtra: 'https://go.skym3u.top/iv2h.m3u'
+    homeExtra: 'https://go.skym3u.top/upms.m3u'
 };
 
 const mainVid = document.getElementById('main-video');
