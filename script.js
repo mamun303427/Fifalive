@@ -1,7 +1,7 @@
 // ১. কনফিগারেশন
 const wcServers = [
     { name: "T Sports HD", url: "https://bdixserver.tvhunter.top/ant1009/tracks-v1a1/index.m3u8" },
-    { name: "T Sports Backup", url: "https://trs1.aynaott.com/tsports/tracks-v1a1/mono.ts.m3u8" },
+    { name: "Somoy Tv", url: "https://live.thebosstv.com:30443/dwlive/Somoy-TV/chunks.m3u8" },
     { name: "Bein Sports 1", url: "https://1nyaler.streamhostingcdn.top/stream/23/index.m3u8" },
     { name: "Bein Sports 3", url: "https://ua.online24.pm/play/1103/350B326FB34F4B8/video.m3u8" },
     { name: "Caze Tv", url: "https://dfr80qz435crc.cloudfront.net/MNOP/Amagi/Caze/Caze_TV_BR/1080p-vtt/index.m3u8" },
