@@ -7,7 +7,7 @@ const wcServers = [
     { name: "Caze Tv", url: "https://dfr80qz435crc.cloudfront.net/MNOP/Amagi/Caze/Caze_TV_BR/1080p-vtt/index.m3u8" },
     { name: "Server 6", url: "http://go8knm.optikl.ink/X/index.php/Besyria1/video.m3u8" },
     { name: "Server 7", url: "https://dfr80qz435crc.cloudfront.net/MNOP/Amagi/Caze/Caze_TV_BR/1080p-vtt/index.m3u8" },
-    { name: "Server 8", url: "https://tvsen5.aynaott.com/PtvSports/index.m3u8" },
+    { name: "Win Sports", url: "https://1nyaler.streamhostingcdn.top/stream/32/index.m3u8" },
     { name: "CCTV 5", url: "https://play1.gzxdby.com/live/783234345958_4547667094.m3u8" },
     { name: "Server 10", url: "https://trs1.aynaott.com/tsports/tracks-v1a1/mono.ts.m3u8" }
 ];
