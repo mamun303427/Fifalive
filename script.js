@@ -18,7 +18,7 @@ const categoryLinks = {
     kids: 'https://raw.githubusercontent.com/mamun303427/Fifalive/refs/heads/main/Kids%20Channels.m3u',
     islamic: 'https://raw.githubusercontent.com/mamun303427/Fifalive/refs/heads/main/Islamic%20Tv.m3u',
     bd: 'https://raw.githubusercontent.com/mamun303427/Fifalive/refs/heads/main/Bangladeshi%20TV.m3u',
-    in: 'https://raw.githubusercontent.com/iptv-org/iptv/refs/heads/master/streams/in.m3u',
+    in: 'https://raw.githubusercontent.com/mamun303427/Fifalive/refs/heads/main/Kolkata%20Bangla%20TV.m3u',
     pk: 'https://iptv-org.github.io/iptv/countries/pk.m3u',
     homeExtra: 'https://raw.githubusercontent.com/shidul100/Iptv/refs/heads/main/playlist.m3u'
 };
