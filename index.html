@@ -4,9 +4,88 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Fifa Live TV</title>
-    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* দ্রুত লেআউট ফিক্সের জন্য কিছু CSS এখানে দেওয়া হলো, এগুলো style.css এও রাখতে পারেন */
+        .view-layout {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 15px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .player-side {
+            flex: 1.8;
+            position: sticky;
+            top: 80px;
+            z-index: 10;
+        }
+
+        .list-side {
+            flex: 1.2;
+            height: calc(100vh - 180px);
+            overflow-y: auto;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 10px;
+        }
+
+        /* স্ক্রলবার ডিজাইন */
+        .list-side::-webkit-scrollbar { width: 5px; }
+        .list-side::-webkit-scrollbar-thumb { background: #444; border-radius: 10px; }
+
+        @media (max-width: 850px) {
+            .view-layout { flex-direction: column; }
+            .player-side { position: sticky; top: 0; width: 100%; }
+            .list-side { height: auto; overflow-y: visible; width: 100%; }
+        }
+
+        .server-grid-10 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .srv-btn {
+            background: #222;
+            color: #fff;
+            border: 1px solid #444;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: 0.3s;
+        }
+
+        .srv-btn.active { background: #e91e63; border-color: #e91e63; }
+        
+        .channel-card {
+            display: flex;
+            align-items: center;
+            background: #1a1a1a;
+            padding: 10px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .channel-card:hover { background: #333; }
+
+        .channel-card img {
+            width: 45px;
+            height: 45px;
+            object-fit: contain;
+            margin-right: 12px;
+            border-radius: 5px;
+            background: #000;
+        }
+    </style>
 </head>
 <body class="dark-theme">
 
@@ -20,95 +99,82 @@
     </header>
 
     <div class="main-content">
+        
         <!-- Home View -->
         <div id="home-view">
-            <div class="container">
-                <div class="player-wrapper home-player">
-                    <video id="main-video" playsinline webkit-playsinline controls autoplay></video>
-                    <div class="status-bar">
-                        <span class="dot"></span>
-                        <span class="live-txt">Live</span>
-                        <span id="main-name">Server 1</span>
+            <div class="view-layout">
+                <!-- বাম পাশ: প্লেয়ার এবং সার্ভার -->
+                <div class="player-side">
+                    <div class="player-wrapper">
+                        <video id="main-video" playsinline webkit-playsinline controls autoplay></video>
+                        <div class="status-bar">
+                            <span class="dot"></span>
+                            <span class="live-txt">Live</span>
+                            <span id="main-name">Connecting...</span>
+                        </div>
+                    </div>
+                    <div class="server-box" id="server-section">
+                        <div class="server-grid-10">
+                            <button class="srv-btn active" onclick="playWC(0, this)">Server 1</button>
+                            <button class="srv-btn" onclick="playWC(1, this)">Server 2</button>
+                            <button class="srv-btn" onclick="playWC(2, this)">Server 3</button>
+                            <button class="srv-btn" onclick="playWC(3, this)">Server 4</button>
+                            <button class="srv-btn" onclick="playWC(4, this)">Server 5</button>
+                            <button class="srv-btn" onclick="playWC(5, this)">Server 6</button>
+                            <button class="srv-btn" onclick="playWC(6, this)">Server 7</button>
+                            <button class="srv-btn" onclick="playWC(7, this)">Server 8</button>
+                            <button class="srv-btn" onclick="playWC(8, this)">Server 9</button>
+                            <button class="srv-btn" onclick="playWC(9, this)">Server 10</button>
+                        </div>
                     </div>
                 </div>
 
-                <div class="server-box" id="server-section">
-    <div class="server-grid-10">
-        <!-- প্রথম লাইন (১-৫) -->
-        <button class="srv-btn active" onclick="playWC(0, this)"><span class="hd">HD</span> Server 1</button>
-        <button class="srv-btn" onclick="playWC(1, this)"><span class="hd">HD</span> Server 2</button>
-        <button class="srv-btn" onclick="playWC(2, this)"><span class="hd">HD</span> Server 3</button>
-        <button class="srv-btn" onclick="playWC(3, this)"><span class="hd">HD</span> Server 4</button>
-        <button class="srv-btn" onclick="playWC(4, this)"><span class="hd">HD</span> Server 5</button>
-        
-        <!-- দ্বিতীয় লাইন (৬-১০) -->
-        <button class="srv-btn" onclick="playWC(5, this)"><span class="hd">HD</span> Server 6</button>
-        <button class="srv-btn" onclick="playWC(6, this)"><span class="hd">HD</span> Server 7</button>
-        <button class="srv-btn" onclick="playWC(7, this)"><span class="hd">HD</span> Server 8</button>
-        <button class="srv-btn" onclick="playWC(8, this)"><span class="hd">HD</span> Server 9</button>
-        <button class="srv-btn" onclick="playWC(9, this)"><span class="hd">HD</span> Server 10</button>
-    </div>
-</div>
-
-                <div class="extra-heading">Sports Channels</div>
-                <div class="grid" id="home-extra-grid"></div>
+                <!-- ডান পাশ: এক্সট্রা চ্যানেল লিস্ট -->
+                <div class="list-side">
+                    <h3 style="margin-top:0; color:#e91e63;"><i class="fas fa-bolt"></i> Quick Channels</h3>
+                    <div class="grid" id="home-extra-grid"></div>
+                </div>
             </div>
         </div>
 
-        <!-- Category View -->
+        <!-- Category Selection View (এটা ফুল গ্রিড থাকবে) -->
         <div id="cat-list-view" style="display: none;" class="container">
-            <h2 class="page-title"></h2>
+            <h2 class="page-title">Browse Categories</h2>
             <div class="cat-grid-new">
-                <div class="cat-item" onclick="openCat('sports')">
-                    <div class="cat-circle"><i class="fas fa-trophy"></i></div>
-                    <span>Sports</span>
-                </div>
-                <div class="cat-item" onclick="openCat('news')">
-                    <div class="cat-circle"><i class="fas fa-newspaper"></i></div>
-                    <span>News</span>
-                </div>
-                <div class="cat-item" onclick="openCat('kids')">
-                    <div class="cat-circle"><i class="fas fa-child"></i></div>
-                    <span>Kids</span>
-                </div>
-                <div class="cat-item" onclick="openCat('doc')">
-                    <div class="cat-circle"><i class="fas fa-globe-americas"></i></div>
-                    <span>Documentary</span>
-                </div>
-                <div class="cat-item" onclick="openCat('islamic')">
-                    <div class="cat-circle"><i class="fas fa-mosque"></i></div>
-                    <span>Islamic</span>
-                </div>
-                <div class="cat-item" onclick="openCat('bd')">
-                    <div class="cat-circle"><img src="https://flagcdn.com/w160/bd.png"></div>
-                    <span>Bangladesh</span>
-                </div>
-                <div class="cat-item" onclick="openCat('in')">
-                    <div class="cat-circle"><img src="https://flagcdn.com/w160/in.png"></div>
-                    <span>India</span>
-                </div>
-                <div class="cat-item" onclick="openCat('pk')">
-                    <div class="cat-circle"><img src="https://flagcdn.com/w160/pk.png"></div>
-                    <span>Pakistan</span>
-                </div>
+                <div class="cat-item" onclick="openCat('sports')"><div class="cat-circle"><i class="fas fa-trophy"></i></div><span>Sports</span></div>
+                <div class="cat-item" onclick="openCat('news')"><div class="cat-circle"><i class="fas fa-newspaper"></i></div><span>News</span></div>
+                <div class="cat-item" onclick="openCat('kids')"><div class="cat-circle"><i class="fas fa-child"></i></div><span>Kids</span></div>
+                <div class="cat-item" onclick="openCat('doc')"><div class="cat-circle"><i class="fas fa-globe-americas"></i></div><span>Documentary</span></div>
+                <div class="cat-item" onclick="openCat('islamic')"><div class="cat-circle"><i class="fas fa-mosque"></i></div><span>Islamic</span></div>
+                <div class="cat-item" onclick="openCat('bd')"><div class="cat-circle"><img src="https://flagcdn.com/w160/bd.png"></div><span>Bangladesh</span></div>
+                <div class="cat-item" onclick="openCat('in')"><div class="cat-circle"><img src="https://flagcdn.com/w160/in.png"></div><span>India</span></div>
+                <div class="cat-item" onclick="openCat('pk')"><div class="cat-circle"><img src="https://flagcdn.com/w160/pk.png"></div><span>Pakistan</span></div>
             </div>
         </div>
 
         <!-- Category Player View -->
         <div id="cat-player-view" style="display: none;">
-            <div class="player-wrapper">
-                <video id="cat-video" playsinline webkit-playsinline controls autoplay></video>
-                <div class="status-bar">
-                    <span class="dot"></span>
-                    <span class="live-txt">Live</span>
-                    <span id="cat-name">Selecting...</span>
+            <div class="view-layout">
+                <!-- বাম পাশ: ক্যাটাগরি প্লেয়ার -->
+                <div class="player-side">
+                    <div class="player-wrapper">
+                        <video id="cat-video" playsinline webkit-playsinline controls autoplay></video>
+                        <div class="status-bar">
+                            <span class="dot"></span>
+                            <span class="live-txt">Live</span>
+                            <span id="cat-name">Selecting Channel...</span>
+                        </div>
+                    </div>
+                    <button class="back-btn" onclick="navTo('cat')" style="margin-top:15px; width:100%; padding:12px; background:#444; color:#fff; border:none; border-radius:5px; cursor:pointer;">← Back to Categories</button>
+                </div>
+
+                <!-- ডান পাশ: ক্যাটাগরি চ্যানেল লিস্ট -->
+                <div class="list-side">
+                    <div class="grid" id="cat-grid"></div>
                 </div>
             </div>
-            <div class="container">
-                <button class="back-btn" onclick="navTo('cat')">← Back</button>
-                <div class="grid" id="cat-grid"></div>
-            </div>
         </div>
+
     </div>
 
     <!-- Bottom Navigation -->
